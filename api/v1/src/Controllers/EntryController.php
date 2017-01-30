@@ -28,7 +28,7 @@ class EntryController
 
         $query_create_entry = '
         INSERT INTO Entry
-        (EntryName)
+        (EntryName, EntryValue, CategoryId)
         VALUES 
         (:entryName, :entryValue, :categoryId)
         ';
@@ -57,13 +57,15 @@ class EntryController
         $dbo = DatabaseConnection::getInstance();
 
         $entryName = strip_tags($data->entryName);
-        $entryId = strip_tags($data->entryIdKK);
+        $entryId = strip_tags($data->entryId);
         $entryValue = strip_tags($data->entryValue);
         $categoryId = strip_tags($data->categoryId);
 
         $query_update_entry = '
         UPDATE Entry
-        SET EntryName = :entryName
+        SET EntryName = :entryName,
+            EntryValue = :entryValue,
+            CategoryId = :categoryId
         WHERE EntryId = :entryId
         ';
 

@@ -35,10 +35,15 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
         return (new \OnTrack\Controllers\CategoryController())->deleteCategory($args);
     };
 
+    $r->addRoute('GET', $baseURI . '/category/{id:\d+}', $handleGetCategory);
     $r->addRoute('GET', $baseURI . '/category/{id:\d+}/', $handleGetCategory);
+    $r->addRoute('GET', $baseURI . '/category', $handleGetCategories);
     $r->addRoute('GET', $baseURI . '/category/', $handleGetCategories);
+    $r->addRoute('POST', $baseURI . '/category', $handlePostCategory);
     $r->addRoute('POST', $baseURI . '/category/', $handlePostCategory);
+    $r->addRoute('PUT', $baseURI . '/category', $handlePutCategory);
     $r->addRoute('PUT', $baseURI . '/category/', $handlePutCategory);
+    $r->addRoute('DELETE', $baseURI . '/category', $handleDeleteCategory);
     $r->addRoute('DELETE', $baseURI . '/category/', $handleDeleteCategory);
 
 
@@ -60,10 +65,15 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
         return (new \OnTrack\Controllers\EntryController())->deleteEntry($args);
     };
 
+    $r->addRoute('GET', $baseURI . '/entry/{id:\d+}', $handleGetEntry);
     $r->addRoute('GET', $baseURI . '/entry/{id:\d+}/', $handleGetEntry);
+    $r->addRoute('GET', $baseURI . '/entry', $handleGetEntries);
     $r->addRoute('GET', $baseURI . '/entry/', $handleGetEntries);
+    $r->addRoute('POST', $baseURI . '/entry', $handlePostEntry);
     $r->addRoute('POST', $baseURI . '/entry/', $handlePostEntry);
+    $r->addRoute('PUT', $baseURI . '/entry', $handlePutEntry);
     $r->addRoute('PUT', $baseURI . '/entry/', $handlePutEntry);
+    $r->addRoute('DELETE', $baseURI . '/entry', $handleDeleteEntry);
     $r->addRoute('DELETE', $baseURI . '/entry/', $handleDeleteEntry);
 
 });
