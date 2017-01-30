@@ -6,13 +6,13 @@
  * Time: 8:31 PM
  */
 
-namespace Finance\Controllers;
+namespace OnTrack\Controllers;
 
 
-use Finance\Http\StatusCodes;
-use Finance\Models\Category;
+use OnTrack\Http\StatusCodes;
+use OnTrack\Models\Category;
 use PDO;
-use Finance\Utilities\DatabaseConnection;
+use OnTrack\Utilities\DatabaseConnection;
 
 class CategoryController
 {
@@ -130,7 +130,7 @@ class CategoryController
 
         $result = $statement_select_category->fetchAll(PDO::FETCH_ASSOC);
 
-        $category = Category(
+        $category = new Category(
             $result['CategoryId'],
             $result['CategoryName']
         );
@@ -141,7 +141,6 @@ class CategoryController
 
     public function getCategories($args)
     {
-
         $dbo = DatabaseConnection::getInstance();
 
 

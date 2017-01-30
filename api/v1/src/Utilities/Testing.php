@@ -6,11 +6,11 @@
  * Time: 2:59 PM
  */
 
-namespace Finance\Utilities;
+namespace OnTrack\Utilities;
 
 require_once __DIR__ . "/../../config.php";
 
-use Finance\Http\Methods;
+use OnTrack\Http\Methods;
 
 class Testing
 {
@@ -29,7 +29,7 @@ class Testing
      */
     public static function callAPIOverHTTP($endpoint, $method = Methods::GET, $body = "", $token = "", $type = self::JSON)
     {
-        $baseURI = '/~tg46219/Finance/v1';
+        $baseURI = '/~tg46219/cottages/api/v1';
         $url = "http://icarus.cs.weber.edu".$baseURI . $endpoint;
         $headers = array();
         array_push($headers, "Content-Length: " . strlen($body));

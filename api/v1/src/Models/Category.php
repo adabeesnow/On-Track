@@ -6,7 +6,7 @@
  * Time: 10:36 AM
  */
 
-namespace Finance\Models;
+namespace OnTrack\Models;
 
 
 class Category implements \JsonSerializable

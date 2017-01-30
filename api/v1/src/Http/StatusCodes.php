@@ -6,7 +6,7 @@
  * Time: 12:14 PM
  */
 
-namespace Finance\Http;
+namespace OnTrack\Http;
 
 
 class StatusCodes

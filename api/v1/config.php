@@ -8,4 +8,5 @@
 
 
 global $baseURI;
-$baseURI = '/~tg46219/cottages/finance/api/v1';
+$baseURI = '/~tg46219/cottages/api/v1';
+

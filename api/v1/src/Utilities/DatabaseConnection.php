@@ -4,7 +4,7 @@
  * User: iamcaptaincode
  */
 
-namespace Finance\Utilities;
+namespace OnTrack\Utilities;
 
 
 class DatabaseConnection

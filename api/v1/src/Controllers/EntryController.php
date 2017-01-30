@@ -6,13 +6,13 @@
  * Time: 8:31 PM
  */
 
-namespace Finance\Controllers;
+namespace OnTrack\Controllers;
 
 
 use Entry;
-use Finance\Http\StatusCodes;
+use OnTrack\Http\StatusCodes;
 use PDO;
-use Finance\Utilities\DatabaseConnection;
+use OnTrack\Utilities\DatabaseConnection;
 
 class EntryController
 {
@@ -57,7 +57,7 @@ class EntryController
         $dbo = DatabaseConnection::getInstance();
 
         $entryName = strip_tags($data->entryName);
-        $entryId = strip_tags($data->entryId);
+        $entryId = strip_tags($data->entryIdKK);
         $entryValue = strip_tags($data->entryValue);
         $categoryId = strip_tags($data->categoryId);
 
@@ -136,7 +136,7 @@ class EntryController
             );
         }
 
-        $result = $statement_select_entry->fetchAll(PDO::FETCH_ASSOC);
+        $result = $statement_select_entry->fetchAll(PDO::FETCH_ASSOC)[0];
 
         $entry = new Entry(
             $result['EntryId'],
@@ -149,7 +149,7 @@ class EntryController
         return $entry->jsonSerialize();
     }
 
-    public function getCategories($args)
+    public function getEntries($args)
     {
 
         $dbo = DatabaseConnection::getInstance();
@@ -171,16 +171,22 @@ class EntryController
 
         $result = $statement_select_entry->fetchAll(PDO::FETCH_ASSOC);
 
-        $categories = [];
+        $entries = [];
         foreach ($result as $entry) {
-            array_push($categories, array(
-                'EntryId'=>$entry['EntryId'],
-                'EntryName'=>$entry['EntryName'],
-                'EntryValue'=>$entry['EntryValue'],
-                'CategoryId'=>$entry['CategoryId']
+//            array_push($entries, array(
+//                'EntryId'=>$entry['EntryId'],
+//                'EntryName'=>$entry['EntryName'],
+//                'EntryValue'=>$entry['EntryValue'],
+//                'CategoryId'=>$entry['CategoryId']
+//            ));
+            array_push($entries, new Entry(
+                $entry['EntryId'],
+                $entry['EntryName'],
+                $entry['EntryValue'],
+                $entry['CategoryId']
             ));
         }
 
-        return $categories;
+        return $entries;
     }
 }

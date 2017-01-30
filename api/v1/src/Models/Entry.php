@@ -25,9 +25,9 @@ class Entry implements \JsonSerializable
     {
         return array(
             "id"=>$this->entryId,
-            "entryValue"=>$this->entryId,
-            "entryName"=>$this->entryId,
-            "categoryId"=>$this->entryId,
+            "entryValue"=>$this->entryValue,
+            "entryName"=>$this->entryName,
+            "categoryId"=>$this->categoryId,
         );
     }
 
