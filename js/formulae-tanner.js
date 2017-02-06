@@ -64,11 +64,8 @@ let car_miles = 4716.00;
 let car_registration = 110.50;
 let car_emissions = 27.00;
 let car_maintenance = 580.00;
-let employer_health_avg_number_of_single = 1;
-let employer_health_avg_number = 2;
-let employer_health_avg_number_of_family = 3;
 let employer_health_premium_in_avg_single = 1406.00;
-let employer_health_premium_in_avg = 2592.00;
+let employer_health_premium_in_avg_couple = 2592.00;
 let employer_health_premium_in_avg_family = 3412.00;
 let out_of_pocket_infant = 31.16;
 let out_of_pocket_preschooler = 31.16;
@@ -115,6 +112,24 @@ let credit_amount_married_filing_jointly_1_children_list = {};
 let credit_amount_married_filing_jointly_2_children_list = {};
 let credit_amount_married_filing_jointly_3_children_list = {};
 
+
+// Out of Pocket marketplace costs
+let marketplace_oop_infant = 46.74;
+let marketplace_oop_preschooler = 46.74;
+let marketplace_oop_schoolager = 139.86;
+let marketplace_oop_teenager = 139.86;
+let marketplace_oop_adult = 161.43;
+
+let employer_oop_infant = 31.16;
+let employer_oop_preschooler = 31.16;
+let employer_oop_schoolager = 93.24;
+let employer_oop_teenager = 93.24;
+let employer_oop_adult = 107.62;
+
+
+// Marketplace health insurance costs
+let adult_marketplace_cost = 2536;
+let child_marketplace_cost = 2536;
 
 // User input variables
 
@@ -164,8 +179,13 @@ let numCars = function () {
 // C16
 let housingCost = function () {
     let total = 0;
+    let beds = 0;
+    if (number_of_bedrooms == -1) {
+        beds = Math.ceil(number_of_adults / 2) + Math.ceil(numChildren() / 2)
+    }
+    else beds = number_of_bedrooms;
 
-    if (number_of_bedrooms == 1) {
+    if (beds == 1) {
         total =
             housing_1_bed_84401 +
             housing_1_bed_84403 +
@@ -173,21 +193,21 @@ let housingCost = function () {
             housing_1_bed_84405 +
             housing_1_bed_84408;
     }
-    else if (number_of_bedrooms == 2) {
+    else if (beds == 2) {
         total =
             housing_2_bed_84401 +
             housing_2_bed_84403 +
             housing_2_bed_84404 +
             housing_2_bed_84405 +
             housing_2_bed_84408;
-    } else if (number_of_bedrooms == 3) {
+    } else if (beds == 3) {
         total =
             housing_3_bed_84401 +
             housing_3_bed_84403 +
             housing_3_bed_84404 +
             housing_3_bed_84405 +
             housing_3_bed_84408;
-    } else if (number_of_bedrooms == 4) {
+    } else if (beds == 4) {
         total =
             housing_4_bed_84401 +
             housing_4_bed_84403 +
@@ -304,26 +324,95 @@ let childCareAnnualTotal = function () {
 
 // FOOD FUNCTIONS
 
-let foodAnnualInfant = function(){
+let foodAnnualInfant = function () {
     return low_cost_food_plan_price_per_mo_weber_county_infant * 12 * number_of_infants;
 };
-let foodAnnualPreschooler = function(){
+let foodAnnualPreschooler = function () {
     return low_cost_food_plan_price_per_mo_weber_county_preschooler * 12 * number_of_preschoolers;
 };
-let foodAnnualSchoolager = function(){
+let foodAnnualSchoolager = function () {
     return low_cost_food_plan_price_per_mo_weber_county_schoolager * 12 * number_of_schoolagers;
 };
-let foodAnnualTeenager = function(){
+let foodAnnualTeenager = function () {
     return low_cost_food_plan_price_per_mo_weber_county_teenager * 12 * number_of_teenagers;
 };
-let foodAnnualAdult = function(){
+let foodAnnualAdult = function () {
     return low_cost_food_plan_price_per_mo_weber_county_adult * 12 * number_of_adults;
 };
 
-let foodCostsTotal = function(){
+let foodCostAnnualTotal = function () {
     return foodAnnualAdult() +
         foodAnnualInfant() +
         foodAnnualPreschooler() +
         foodAnnualSchoolager() +
         foodAnnualTeenager()
 };
+
+let healthCareMarketplaceOOPInfant = function () {
+    return marketplace_oop_infant * number_of_infants;
+};
+let healthCareMarketplaceOOPPreschooler = function () {
+    return marketplace_oop_preschooler * number_of_preschoolers;
+};
+let healthCareMarketplaceOOPSchoolager = function () {
+    return marketplace_oop_schoolager * number_of_schoolagers;
+};
+let healthCareMarketplaceOOPTeenager = function () {
+    return marketplace_oop_teenager * number_of_teenagers;
+};
+let healthCareMarketplaceOOPAdult = function () {
+    return marketplace_oop_adult * number_of_adults;
+};
+let healthCareMarketplaceOOPTotal = function () {
+    return healthCareMarketplaceOOPInfant() +
+        healthCareMarketplaceOOPPreschooler() +
+        healthCareMarketplaceOOPSchoolager() +
+        healthCareMarketplaceOOPTeenager() +
+        healthCareMarketplaceOOPAdult();
+};
+
+let healthCareEmployerOOPInfant = function () {
+    return employer_oop_infant * number_of_infants;
+};
+let healthCareEmployerOOPPreschooler = function () {
+    return employer_oop_preschooler * number_of_preschoolers;
+};
+let healthCareEmployerOOPSchoolager = function () {
+    return employer_oop_schoolager * number_of_schoolagers;
+};
+let healthCareEmployerOOPTeenager = function () {
+    return employer_oop_teenager * number_of_teenagers;
+};
+let healthCareEmployerOOPAdult = function () {
+    return employer_oop_adult * number_of_adults;
+};
+let healthCareEmployerOOPTotal = function () {
+    return healthCareEmployerOOPInfant() +
+        healthCareEmployerOOPPreschooler() +
+        healthCareEmployerOOPSchoolager() +
+        healthCareEmployerOOPTeenager() +
+        healthCareEmployerOOPAdult();
+};
+
+let marketplaceHealthCareAdult = function(){
+    return adult_marketplace_cost * number_of_adults;
+};
+let marketplaceHealthCareChild = function(){
+    return child_marketplace_cost * numChildren();
+};
+
+let totalMarketplaceHealthCareCost = function(){
+    return marketplaceHealthCareAdult() + marketplaceHealthCareChild() + healthCareMarketplaceOOPTotal();
+};
+
+let employerSponsoredHealthCareCost = function(){
+    let size = familySize();
+    if(size == 1){
+        return employer_health_premium_in_avg_single
+    }else if (size == 2){
+        return employer_health_premium_in_avg_couple
+    }else{
+        return employer_health_premium_in_avg_family
+    }
+};
+
