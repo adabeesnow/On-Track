@@ -3,8 +3,6 @@
  */
 // CONSTANTS
 
-
-
 let center_care_avg_0_to_12_mo = 653.65;
 let center_care_avg_1_yr = 663.05;
 let center_care_avg_2_yr = 535.23;
@@ -118,28 +116,32 @@ let credit_amount_married_filing_jointly_2_children_list = {};
 let credit_amount_married_filing_jointly_3_children_list = {};
 
 
-let numInfants = 0; // B2
-let numPreschoolers = 0; // B3
-let numSchoolagers = 0; // B4
-let numTeenagers = 0; // B5
-let numAdults = 0; // B6
+// User input variables
+
+let number_of_adults = null;
+let number_of_infants = null;
+let number_of_preschoolers = null;
+let number_of_schoolagers = null;
+let number_of_teenagers = null;
+let estimated_babysitting_cost = null;
+let childcare_needed_bool = false;
+let use_family_care_bool = false;
+let number_of_bedrooms = null;
+let use_marketplace_health_insurance_bool = false;
+let number_of_cars = -1;
+let number_of_public_transport_passes_adult = null;
+let number_of_public_transport_passes_child = null;
+
 
 
 // B8
-let numChildren = function (numInfants,
-                            numPreschoolers,
-                            numSchoolagers,
-                            numTeenagers) {
-    return numInfants + numPreschoolers + numSchoolagers + numTeenagers
+let numChildren = function () {
+    return number_of_infants + number_of_preschoolers + number_of_schoolagers + number_of_teenagers
 };
 
 // B9
-let familySize = function (numInfants,
-                           numPreschoolers,
-                           numSchoolagers,
-                           numTeenagers,
-                           numAdults) {
-    return numInfants + numPreschoolers + numSchoolagers + numTeenagers + numAdults
+let familySize = function () {
+    return number_of_infants + number_of_preschoolers + number_of_schoolagers + number_of_teenagers + number_of_adults
 };
 
 //B11
@@ -148,22 +150,23 @@ let excessiveChildren = function (numChildren) {
 };
 
 //B12
-let excessiveAdults = function (numAdults) {
-    return Math.max(0, numAdults - 5);
+let excessiveAdults = function () {
+    return Math.max(0, number_of_adults - 5);
 };
 
 // B14
-let numCars = function (numAdults, standard, numCars) {
-    if (standard) return numAdults;
-    else return numCars;
+let numCars = function () {
+    if (number_of_cars == -1) return number_of_adults;
+    else return number_of_cars;
 };
 
 
 
 // C16
-let housingCost = function (bedrooms) {
+let housingCost = function () {
     let total = 0;
-    if(bedrooms == 1){
+
+    if(number_of_bedrooms == 1){
         total =
             housing_1_bed_84401 +
             housing_1_bed_84403 +
@@ -171,21 +174,21 @@ let housingCost = function (bedrooms) {
             housing_1_bed_84405 +
             housing_1_bed_84408;
     }
-    else if(bedrooms == 2){
+    else if(number_of_bedrooms == 2){
         total =
             housing_2_bed_84401 +
             housing_2_bed_84403 +
             housing_2_bed_84404 +
             housing_2_bed_84405 +
             housing_2_bed_84408;
-    }else if(bedrooms == 3){
+    }else if(number_of_bedrooms == 3){
         total =
             housing_3_bed_84401 +
             housing_3_bed_84403 +
             housing_3_bed_84404 +
             housing_3_bed_84405 +
             housing_3_bed_84408;
-    }else if(bedrooms == 4){
+    }else if(number_of_bedrooms == 4){
         total =
             housing_4_bed_84401 +
             housing_4_bed_84403 +
@@ -196,3 +199,4 @@ let housingCost = function (bedrooms) {
 
     return total/5;
 };
+
