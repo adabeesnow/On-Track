@@ -142,132 +142,134 @@ let qualifyingChildCareExpenses = function(){
         (num_kids)===0?qualifying_child_care_expense_zero:(
             (num_kids)==1?qualifying_child_care_expsnse_one:(
                 (num_kids)>1?qualifying_child_care_expense_2ormore:"False")));
-}
+};
 
 let federalPayrollTax = function(){
     return(federal_payroll_tax_multiplier * gross_income);
-}
+};
 
 let federalTaxOwed = function(){
     return fedTaxOwedLessNonRefundableTax - fedDeductionPlusStateExemption;
-}
+};
 
 let utahTaxesOwed = function(){
     return ((stateTaxBeforeCredits-utahTaxCredit)<0?utah_taxes_owed_less_than_zero:(stateTaxBeforeCredits-utahTaxCredit));
-}
+};
 
+//Use CostByAge!B19 formula 'overallCost'
 let totalExpenses = function(){
-    return 'CostByAge!B19';
-}
+    return 'overallCost';
+};
 
 let savings1PercentGross = function() {
     return gross_income * 0.01;
-}
+};
 
 let totalExpensesPlusSavings = function() {
     return savings1PercentGross + totalExpenses;
-}
+};
 
 let totalTax = function() {
     return federalTaxOwed+utahTaxesOwed+federalPayrollTax;
-}
+};
 
 let netYearlyIncome = function() {
     return gross_income-totalTax;
-}
+};
 
+//use CostByAge!B9 'familySize' formula
 let familySize = function() {
-    return 'CostByAge!B9';
-}
+    return 'familySize';
+};
 
 let standardDeduction = function() {
     return (number_of_adults===1?(familySize>1?9250:6300):12600);
-}
+};
 
 let federalExemptions = function() {
     return familySize * 4000;
-}
+};
 
 let stateExemptions = function() {
     return familySize * 3000;
-}
+};
 
 let grossTaxableFederal = function() {
     return ((gross_income-federalExemptions-standardDeduction<0)?0:gross_income-federalExemptions-standardDeduction);
-}
+};
 
 let utahStateCreditValueHolder = function() {
     return (number_of_adults===1?(familySize>=2?20707:13805):27610);
-}
+};
 
 let stateTaxBeforeCredits = function () {
     return gross_income * 0.05;
-}
+};
 
 let grossTaxFedUtahStateCreditValueHold = function () {
     return (gross_income-utahStateCreditValueHolder>0?gross_income-utahStateCreditValueHolder:0);
-}
+};
 
 let creditBeforePhaseOut = function () {
     return (standardDeduction+stateExemptions)*0.06;
-}
+};
 
 let phaseOutX = function () {
     return grossTaxFedUtahStateCreditValueHold*0.013;
-}
+};
 
 let numberOfChildren = function () {
     return (number_of_infants + number_of_preschoolers + number_of_schoolagers + number_of_teenagers);
-}
+};
 
 let federalTaxesOwedBeforeCredits = function () {
     return (number_of_adults===1?(familySize>1?((grossTaxableFederal-13150)<0?(grossTaxableFederal*0.1):((grossTaxableFederal-50200)<0?(grossTaxableFederal-13150)*0.15+1315:((grossTaxableFederal-129600)<0?(grossTaxableFederal-50200)*0.25+1315+5557.35:((grossTaxableFederal-209850)<0?(grossTaxableFederal-129600)*0.28+1315+5557.35+19849.75:((grossTaxableFederal-411500)<0?(grossTaxableFederal-209850)*0.33+1315+5557.35+19849.75+22469.72:(grossTaxableFederal-411500)*0.396+1315+5557.35+19849.75+22469.72+66544.17))))):((grossTaxableFederal-9225)<0?(grossTaxableFederal*0.1):((grossTaxableFederal-37450)<0?(grossTaxableFederal-9225)*0.15+922.5:((grossTaxableFederal-90750)<0?(grossTaxableFederal-37450)*0.25+922.5+4233.75:((grossTaxableFederal-189300)<0?(grossTaxableFederal-90751)*0.28+922.5+4233.75+13324.75:((grossTaxableFederal-411500)<0?(grossTaxableFederal-189301)*0.33+922.5+4233.75+13324.75+27593:(grossTaxableFederal-411500)*0.396+922.5+4233.75+13324.75+27593+73325.67)))))):((grossTaxableFederal-18450)<0?(grossTaxableFederal*0.1):((grossTaxableFederal-74900)<0?(grossTaxableFederal-18450)*0.15+1845:((grossTaxableFederal-181500)<0?(grossTaxableFederal-74900)*0.25+1845+8467.5:((grossTaxableFederal-378600)<0?(grossTaxableFederal-181500)*0.28+1845+8467.5+26650:((grossTaxableFederal-823000)<0?(grossTaxableFederal-378600)*0.33+1845+8467.5+26650+55188:(grossTaxableFederal-823000)*0.396+1845+8467.5+26650+55188+146652))))));
-}
+};
 
 let eitc = function () {
 
-}
+};
 
 let childTaxCredit = function () {
     return numberOfChildren * 1000;
-}
+};
 
 let adjustedChildTaxCredit = function () {
 
-}
+};
 
 let federalTaxesLessChildCareTaxCredit = function () {
     return (federalTaxesOwedBeforeCredits<childCareTaxCredit?0:federalTaxesOwedBeforeCredits-childCareTaxCredit);
-}
+};
 
 let adjustedChildTaxCreditUsed = function () {
     return (adjustedChildTaxCredit<federalTaxesLessChildCareTaxCredit?adjustedChildTaxCredit:federalTaxesLessChildCareTaxCredit);
-}
+};
 
 let additionalChildTaxCredit = function () {
     return ((numberOfChildren<=3?(((((gross_income-3000)<=0?0:(gross_income-3000))*0.15))<((((numberOfChildren*1000)-adjustedChildTaxCreditUsed)<=0?0:((numberOfChildren*1000)-adjustedChildTaxCreditUsed)))?(((gross_income-3000)<=0?0:(gross_income-3000))*0.15):((((numberOfChildren*1000)-adjustedChildTaxCreditUsed)<=0?0:((numberOfChildren*1000)-adjustedChildTaxCreditUsed)))):(((gross_income-3000)*0.15)>=((numberOfChildren*1000)-adjustedChildTaxCreditUsed)?((numberOfChildren*1000)-adjustedChildTaxCreditUsed):(((((0.0765*gross_income)-eitc)<0?0:((0.0765*gross_income)-eitc))>(((gross_income-3000)<=0?0:(gross_income-3000))*0.15)?(((0.0765*gross_income)-eitc)<0?0:(((0.0765*gross_income)-eitc))):(((gross_income-3000)<=0?0:(gross_income-3000))*0.15))<((((numberOfChildren*1000)-adjustedChildTaxCreditUsed)<=0?0:((numberOfChildren*1000)-adjustedChildTaxCreditUsed)))?((((0.0765*gross_income)-eitc)<0?0:((0.0765*gross_income)-eitc))>(((gross_income-3000)<=0?0:(gross_income-3000))*0.15)?(((0.0765*gross_income)-eitc)<0?0:(((0.0765*gross_income)-eitc))):(((gross_income-3000)<=0?0:(gross_income-3000))*0.15)):((numberOfChildren*1000)-adjustedChildTaxCreditUsed)))));
-}
+};
 
 let childCareTaxCredit = function () {
 
-}
+};
 
 let sumOfNonRefundableTaxCredits = function () {
     return childCareTaxCredit + adjustedChildTaxCredit;
-}
+};
 
 let sumOfRefundableTaxCredits = function () {
     return (eitc==null?0:eitc) + additionalChildTaxCredit; // not sure on this one
-}
+};
 
 let fedTaxOwedLessNonRefundableTax = function () {
     return (federalTaxesOwedBeforeCredits-sumOfNonRefundableTaxCredits<0?0:federalTaxesOwedBeforeCredits-sumOfNonRefundableTaxCredits);
-}
+};
 
 let fedDeductionPlusStateExemption = function () {
     return (stateExemptions+standardDeduction) * 0.06;
-}
+};
 
 let utahTaxCredit = function () {
     return (phaseOutX>creditBeforePhaseOut?0:creditBeforePhaseOut()-phaseOutX);
-}
+};
