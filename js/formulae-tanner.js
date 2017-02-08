@@ -101,16 +101,16 @@ let misc_for_5_or_more_70000_and_up = 932.00;
 let personal_products_for_5_or_more_70000_and_up = 980.00;
 let housekeeping_supplies_for_5_or_more_70000_and_up = 1115.00;
 let apparel_for_5_or_more_70000_and_up = 3095.00;
-let income_at_least_list = {};
-let income_less_than_list = {};
-let credit_amount_single_0_children_list = {};
-let credit_amount_single_1_children_list = {};
-let credit_amount_single_2_children_list = {};
-let credit_amount_single_3_children_list = {};
-let credit_amount_married_filing_jointly_0_children_list = {};
-let credit_amount_married_filing_jointly_1_children_list = {};
-let credit_amount_married_filing_jointly_2_children_list = {};
-let credit_amount_married_filing_jointly_3_children_list = {};
+let income_at_least_list = [];
+let income_less_than_list = [];
+let credit_amount_single_0_children_list = [];
+let credit_amount_single_1_children_list = [];
+let credit_amount_single_2_children_list = [];
+let credit_amount_single_3_children_list = [];
+let credit_amount_married_filing_jointly_0_children_list = [];
+let credit_amount_married_filing_jointly_1_children_list = [];
+let credit_amount_married_filing_jointly_2_children_list = [];
+let credit_amount_married_filing_jointly_3_children_list = [];
 
 
 // Out of Pocket marketplace costs
