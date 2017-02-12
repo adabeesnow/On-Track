@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css"/>
+    <script src="//www.jquery-steps.com/Scripts/jquery.steps.min.js"></script>
+
+    <link rel="stylesheet" href="form.css">
+
+</head>
+
+
+<body>
+
+<div class="col-lg-6 offset-lg-3">
+    <form id="wizard">
+        <h1>Step</h1>
+        <fieldset>
+            <div class="page-title">
+                <img src="gorilla.png" alt="" class="page-title-img">
+                <h3 class="page-title-text">
+                    Family Composition
+                </h3>
+            </div>
+            <div class="user-inputs col-xs-12 col-sm-10 offset-sm-1">
+                <div class="user-input">
+                    <div class="form-label">
+                        <label for="number_of_adults">Adults 19+</label>
+                    </div>
+                    <div class="form-input">
+                        <input type="text" id="number_of_adults">
+                    </div>
+                </div>
+
+                <div class="user-input">
+                    <div class="form-label">
+                        <label for="number_of_infants">Infants 0-2</label>
+                    </div>
+
+                    <div class="form-input">
+                        <input type="text" id="number_of_infants">
+                    </div>
+                </div>
+
+                <div class="user-input">
+                    <div class="form-label">
+                        <label for="number_of_preschoolers">Preschoolers 3-5</label>
+                    </div>
+                    <div class="form-input">
+                        <input type="text" id="number_of_preschoolers">
+                    </div>
+                </div>
+
+                <div class="user-input">
+
+                    <div class="form-label">
+                        <label for="number_of_schoolagers">Schoolagers 6-13</label>
+                    </div>
+
+                    <div class="form-input">
+                        <input type="text" id="number_of_schoolagers">
+                    </div>
+                </div>
+
+                <div class="user-input">
+                    <div class="form-label">
+                        <label for="number_of_teenagers">Teenagers 14-18</label>
+                    </div>
+                    <div class="form-input">
+                        <input type="text" id="number_of_teenagers">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="next-button">
+                <a class="btn btn-filled" href="#"
+                   onclick="wizard.steps('next')"
+                   role="menuitem">Next</a>
+            </div>
+        </fieldset>
+
+
+        <h1>Step</h1>
+        <fieldset>
+            <div class="page-title">
+                <img src="gorilla.png" alt="" class="page-title-img">
+                <h3 class="page-title-text">
+                    Family Composition
+                </h3>
+            </div>
+            <div class="user-inputs col-xs-12 col-sm-10 offset-sm-1">
+                <div class="user-input">
+                    <div class="form-label">
+                        <label for="number_of_rooms">Number of Rooms</label>
+                    </div>
+                    <div class="form-input">
+                        <select id="number_of_rooms">
+                            <option value="-1">Standard</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="next-button">
+                <a class="btn btn-filled" href="#"
+                   onclick="wizard.steps('next')"
+                   role="menuitem">Next</a>
+            </div>
+            <div class="previous-button">
+                <a class="btn btn-empty" href="#"
+                   onclick="wizard.steps('previous')"
+                   role="menuitem">Previous</a>
+            </div>
+        </fieldset>
+
+
+    </form>
+
+</div>
+
+<script src="form.js"></script>
+
+</body>
+</html>
