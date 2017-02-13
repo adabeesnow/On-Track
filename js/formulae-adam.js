@@ -199,7 +199,7 @@ let number_of_public_transport_passes_adult = null;
 let number_of_public_transport_passes_child = null;
 
 // Taxes!O9
-let eitc_2 = function () {
+let eitc_employer = function () {
     let credit_amount_list = [];
     if (numberOfChildren() == 1) {
         credit_amount_list = credit_amount_married_filing_jointly_1_children_list;
@@ -231,5 +231,109 @@ let eitc_2 = function () {
     // if (gross_income > 0) {
     //     if (gross_income )
     // }
-
 };
+
+// Taxes!O6
+let eitc_marketplace = function () {
+    let credit_amount_list = [];
+    if (numberOfChildren() == 1) {
+        credit_amount_list = credit_amount_married_filing_jointly_1_children_list;
+    } else
+    if (numberOfChildren() == 2) {
+        credit_amount_list = credit_amount_married_filing_jointly_2_children_list;
+    } else
+    if (numberOfChildren() == 0) {
+        credit_amount_list = credit_amount_married_filing_jointly_0_children_list;
+    } else
+    if (numberOfChildren() >= 3) {
+        credit_amount_list = credit_amount_married_filing_jointly_3_children_list;
+    }
+    else {
+        credit_amount_list = false;
+    }
+
+    let income_at_least = 0;
+    let income_less_than = 0;
+    let i = 0;
+    while (i < income_at_least_list.length-1) {
+        if (gross_income > income_at_least_list[i]) {
+            income_at_least_index = i;
+            break;
+        }
+        i++;
+    }
+    // TODO: The rest of eitc_2
+    // if (gross_income > 0) {
+    //     if (gross_income )
+    // }
+};
+
+// Taxes!F9
+let ehcGrossIncome = function() {
+    // Worksheets("Taxes").Cells(9, "AH").GoalSeek Goal:=Cells(9, "AF"), ChangingCell:=Worksheets("Taxes").Cells(9, "F")
+    // AH9: GoalSeek        netYearlyIncome
+    // AF9: Goal            totalExpensesPlusSavings
+    // F9:  ChangingCell    ehc_gross_income
+    // We want AH9 to match AF9, and we'll change F9 to achieve this.
+
+    // js goalSeek example:
+    // return goalSeek({
+    //     Func: fx1,
+    //     aFuncParams: [4, 5, 6],
+    //     oFuncArgTarget: {
+    //         Position: 2
+    //     },
+    //     Goal: 140,
+    //     Tol: 0.01,
+    //     maxIter: 1000
+    // });
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
