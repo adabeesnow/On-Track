@@ -198,8 +198,31 @@ let number_of_cars = -1;
 let number_of_public_transport_passes_adult = null;
 let number_of_public_transport_passes_child = null;
 
+let ehc_gross_income = 21999.30;
+let mhc_gross_income = 19069.30;
+
+let numAdults = function() {
+    return number_of_adults;
+};
+
+let numInfants = function() {
+    return number_of_infants;
+};
+
+let numPresschoolers= function() {
+    return number_of_preschoolers;
+};
+
+let numSchoolagers= function() {
+    return number_of_schoolagers;
+};
+
+let numTeenagers = function() {
+    return number_of_teenagers;
+};
+
 // Taxes!O9
-let eitc_employer = function () {
+let ehcEITC = function () {
     let credit_amount_list = [];
     if (numberOfChildren() == 1) {
         credit_amount_list = credit_amount_married_filing_jointly_1_children_list;
@@ -214,80 +237,115 @@ let eitc_employer = function () {
         credit_amount_list = credit_amount_married_filing_jointly_3_children_list;
     }
     else {
-        credit_amount_list = false;
+        return false;
     }
 
-    let income_at_least = 0;
-    let income_less_than = 0;
     let i = 0;
     while (i < income_at_least_list.length-1) {
         if (gross_income > income_at_least_list[i]) {
-            income_at_least_index = i;
             break;
         }
         i++;
     }
-    // TODO: The rest of eitc_2
-    // if (gross_income > 0) {
-    //     if (gross_income )
-    // }
+    return credit_amount_list[i];
 };
 
 // Taxes!O6
-let eitc_marketplace = function () {
+let mhcEITC = function () {
     let credit_amount_list = [];
     if (numberOfChildren() == 1) {
-        credit_amount_list = credit_amount_married_filing_jointly_1_children_list;
+        credit_amount_list = credit_amount_single_1_children_list;
     } else
     if (numberOfChildren() == 2) {
-        credit_amount_list = credit_amount_married_filing_jointly_2_children_list;
+        credit_amount_list = credit_amount_single_2_children_list;
     } else
     if (numberOfChildren() == 0) {
-        credit_amount_list = credit_amount_married_filing_jointly_0_children_list;
+        credit_amount_list = credit_amount_single_0_children_list;
     } else
     if (numberOfChildren() >= 3) {
-        credit_amount_list = credit_amount_married_filing_jointly_3_children_list;
+        credit_amount_list = credit_amount_single_3_children_list;
     }
     else {
-        credit_amount_list = false;
+        return false;
     }
 
-    let income_at_least = 0;
-    let income_less_than = 0;
     let i = 0;
     while (i < income_at_least_list.length-1) {
         if (gross_income > income_at_least_list[i]) {
-            income_at_least_index = i;
             break;
         }
         i++;
     }
-    // TODO: The rest of eitc_2
-    // if (gross_income > 0) {
-    //     if (gross_income )
-    // }
+    return credit_amount_list[i];
 };
 
-// Taxes!F9
-let ehcGrossIncome = function() {
-    // Worksheets("Taxes").Cells(9, "AH").GoalSeek Goal:=Cells(9, "AF"), ChangingCell:=Worksheets("Taxes").Cells(9, "F")
-    // AH9: GoalSeek        netYearlyIncome
-    // AF9: Goal            totalExpensesPlusSavings
-    // F9:  ChangingCell    ehc_gross_income
-    // We want AH9 to match AF9, and we'll change F9 to achieve this.
+/**
+ * Performs a goalSeek function 6x for accuracy, returns the new ehc_gross_income value.
+ * Changing cell:   gross
+ * Goal cell:       expense
+ * GoalSeek cell:   net
+ */
+let ehcCalcGross = function() {
+    let gross = ehc_gross_income;
+    let expense = ehcTotalExpenses();
+    // let net = ehcNetYearlyIncome();
+    let net = function(gross, tax) { return gross-tax; };
+    let tax = ehcTotalTax();
 
-    // js goalSeek example:
-    // return goalSeek({
-    //     Func: fx1,
-    //     aFuncParams: [4, 5, 6],
-    //     oFuncArgTarget: {
-    //         Position: 2
-    //     },
-    //     Goal: 140,
-    //     Tol: 0.01,
-    //     maxIter: 1000
-    // });
+    for (let i = 0; i < 6; i++) {
+        gross = goalSeek({
+            Func: net,                      // The function which should return the value of the goal cell.
+            aFuncParams: [gross, tax()],    // The params to be passed to the function above.
+            oFuncArgTarget: {
+                Position: 0                 // The position in the aFuncParams array of the value which will be changed.
+            },
+            Goal: expense,                  // The value which the function above should match.
+            Tol: 0.01,                      // The tolerance of the final result.
+            maxIter: 1000                   // The maximum number of iterations for the goalSeek function to take.
+        });
+    }
+
+    console.log('gross: ' + gross);
+    console.log('tax: ' + tax());
+    console.log('net: ' + net(gross, tax()));
+
+    return gross;
 };
+
+/**
+ * Performs a goalSeek function 6x for accuracy, returns the new mhc_gross_income value.
+ * Changing cell:   gross
+ * Goal cell:       expense
+ * GoalSeek cell:   net
+ */
+let mhcCalcGross = function() {
+    let gross = mhc_gross_income;
+    let expense = mhcTotalExpenses();
+    // let net = ehcNetYearlyIncome();
+    let net = function(gross, tax) { return gross-tax; };
+    let tax = mhcTotalTax();
+
+    for (let i = 0; i < 6; i++) {
+        gross = goalSeek({
+            Func: net,                      // The function which should return the value of the goal cell.
+            aFuncParams: [gross, tax()],    // The params to be passed to the function above.
+            oFuncArgTarget: {
+                Position: 0                 // The position in the aFuncParams array of the value which will be changed.
+            },
+            Goal: expense,                  // The value which the function above should match.
+            Tol: 0.01,                      // The tolerance of the final result.
+            maxIter: 1000                   // The maximum number of iterations for the goalSeek function to take.
+        });
+    }
+
+    console.log('gross: ' + gross);
+    console.log('tax: ' + tax());
+    console.log('net: ' + net(gross, tax()));
+
+    return gross;
+};
+
+
 
 
 
