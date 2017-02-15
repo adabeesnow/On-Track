@@ -27,7 +27,7 @@ let household_income_as_percentage_of_federal_poverty_line_list = {};
 let applicable_figure_list = {};
 let gross_income = 21999.30;
 let family_size_list = {};
-let poverty_level_list = {};
+let poverty_level_list = [11670, 15730, 19790, 23850, 27910, 31970, 36030, 40090];
 let housing_1_bed_84401 = 550.00;
 let housing_1_bed_84403 = 560.00;
 let housing_1_bed_84404 = 620.00;
@@ -131,6 +131,11 @@ let employer_oop_adult = 107.62;
 let adult_marketplace_cost = 2536;
 let child_marketplace_cost = 2536;
 
+// Taxes Constants
+let benchmark_silver_base = 2932;
+let benchmark_silver_additional = 1673;
+let child_tax_credit = 1000;
+
 // User input variables
 
 let number_of_adults = null;
@@ -151,6 +156,10 @@ let number_of_public_transport_passes_child = null;
 // B8
 let numChildren = function () {
     return number_of_infants + number_of_preschoolers + number_of_schoolagers + number_of_teenagers
+};
+
+let numChildrenSchoolageAndUnder = function () {
+    return number_of_infants + number_of_preschoolers + number_of_schoolagers;
 };
 
 // B9
@@ -394,25 +403,234 @@ let healthCareEmployerOOPTotal = function () {
         healthCareEmployerOOPAdult();
 };
 
-let marketplaceHealthCareAdult = function(){
+let marketplaceHealthCareAdult = function () {
     return adult_marketplace_cost * number_of_adults;
 };
-let marketplaceHealthCareChild = function(){
+let marketplaceHealthCareChild = function () {
     return child_marketplace_cost * numChildren();
 };
 
-let totalMarketplaceHealthCareCost = function(){
+let marketplaceHealthCareCostBeforeOOP = function () {
+    return marketplaceHealthCareChild() + marketplaceHealthCareAdult();
+};
+
+let totalMarketplaceHealthCareCost = function () {
     return marketplaceHealthCareAdult() + marketplaceHealthCareChild() + healthCareMarketplaceOOPTotal();
 };
 
-let employerSponsoredHealthCareCost = function(){
+let healthCareEmployerCost = function () {
     let size = familySize();
-    if(size == 1){
+    if (size == 1) {
         return employer_health_premium_in_avg_single
-    }else if (size == 2){
+    } else if (size == 2) {
         return employer_health_premium_in_avg_couple
-    }else{
+    } else {
         return employer_health_premium_in_avg_family
     }
 };
 
+let healthCareEmployerCombinedTotal = function () {
+    return healthCareEmployerCost() + healthCareEmployerOOPTotal();
+};
+
+let mhcQualifyingChildCareExpenses = function () {
+    return qualifyingChildCareExpenses();
+};
+
+let mhcBenchmarkSilverPlan = function () {
+    return benchmark_silver_base + (
+            numChildren() * benchmark_silver_additional
+        )
+};
+
+let mhcFamilySize = function () {
+    return familySize();
+};
+
+let mhcFederalPovertyLine = function () {
+    let family_size = mhcFamilySize();
+    if (family_size <= poverty_level_list.length) {
+        return poverty_level_list[family_size]
+    }
+    else return 0;
+};
+
+let mhcGrossIncomeOverFederalPovertyLine = function () {
+    return mhc_gross_income / mhcFederalPovertyLine() * 100.0;
+};
+
+let mhcValueFromApplicableFigureTable = function () {
+    let percent_of_poverty_line = Math.floor(mhcGrossIncomeOverFederalPovertyLine());
+    if (percent_of_poverty_line < 133) {
+        return applicable_figure_list[0]
+    }
+    else if (percent_of_poverty_line > 299) {
+        return applicable_figure_list[-1]
+    }
+    else {
+        return applicable_figure_list[percent_of_poverty_line - 133]
+    }
+};
+
+let mhcApplicableFigureXGrossIncome = function () {
+    return mhcValueFromApplicableFigureTable() * mhc_gross_income;
+};
+
+
+let mhcBenchApplicableFigureXGrossIncome = function () {
+    return mhcApplicableFigureXGrossIncome() - mhcBenchmarkSilverPlan();
+};
+
+let mhcMarketPlacePlanChosen = function () {
+    return marketplaceHealthCareCostBeforeOOP()
+};
+
+let mhcPremiumTaxCredit = function () {
+    return Math.max(mhcMarketPlacePlanChosen(), mhcBenchApplicableFigureXGrossIncome())
+};
+
+let mhcEligibleExpenses = function () {
+    return mhcMarketPlacePlanChosen() - mhcPremiumTaxCredit();
+};
+
+let mhcUtahsHealthBenefitPlanCredit = function () {
+    return mhcEligibleExpenses() * .05;
+};
+
+let mhcNumberOfChildren = function () {
+    return numChildren();
+};
+
+let mhcChildTaxCredit = function () {
+    return mhcNumberOfChildren() * child_tax_credit;
+};
+
+let mhcAdjustedChildTaxCredit = function () {
+    return ((mhc_gross_income < 75000 ? mhcChildTaxCredit() : (((mhc_gross_income - 75000) * 0.05))));
+};
+
+let mhcFedTaxOwedBeforeCredits = function () {
+    return federalTaxesOwedBeforeCredits();
+};
+
+let mhcChildCareTaxCredit = function () {
+    let base_level = 43000;
+
+    if (mhc_gross_income > 75000) {
+        return 0
+    } else {
+        let difference_points = base_level - mhc_gross_income;
+        if (difference_points < 0) {
+            return .2;
+        }
+        else {
+            difference_points = Math.floor(difference_points / 2000);
+            return difference_points * .01 + .2;
+        }
+    }
+};
+
+let mhcFedTaxLessChildCareTaxCredit = function () {
+    return mhcFedTaxOwedBeforeCredits() - mhcChildCareTaxCredit()
+};
+
+let mhcAdjustedChildTaxCreditUsed = function () {
+    return Math.max(
+        mhcAdjustedChildTaxCredit(),
+        mhcFedTaxLessChildCareTaxCredit()
+    );
+};
+
+let mhcAdditionalChildTaxCredit = function () {
+    return (mhcNumberOfChildren() <= 3 ? (((((mhc_gross_income - 3000) <= 0 ? 0 : (mhc_gross_income - 3000)) * 0.15)) <
+    ((((mhcNumberOfChildren() * 1000) - mhcAdjustedChildTaxCreditUsed()) <= 0 ? 0 : ((mhcNumberOfChildren() * 1000) - mhcAdjustedChildTaxCreditUsed()))) ? (((mhc_gross_income - 3000) <= 0 ? 0 : (mhc_gross_income - 3000)) * 0.15) :
+        ((((mhcNumberOfChildren() * 1000) - mhcAdjustedChildTaxCreditUsed()) <= 0 ? 0 : ((mhcNumberOfChildren() * 1000) - mhcAdjustedChildTaxCreditUsed())))) : (((mhc_gross_income - 3000) * 0.15) >= ((mhcNumberOfChildren() * 1000) - mhcAdjustedChildTaxCreditUsed()) ? ((mhcNumberOfChildren() * 1000) - mhcAdjustedChildTaxCreditUsed()) :
+        (((((0.0765 * mhc_gross_income) - mhcEITC()) < 0 ? 0 : ((0.0765 * mhc_gross_income) - mhcEITC())) > (((mhc_gross_income - 3000) <= 0 ? 0 : (mhc_gross_income - 3000)) * 0.15) ? (((0.0765 * mhc_gross_income) - mhcEITC())
+        < 0 ? 0 : (((0.0765 * mhc_gross_income) - mhcEITC()))) : (((mhc_gross_income - 3000) <= 0 ? 0 : (mhc_gross_income - 3000)) * 0.15)) < ((((mhcNumberOfChildren() * 1000) - mhcAdjustedChildTaxCreditUsed()) <= 0 ? 0 :
+            ((mhcNumberOfChildren() * 1000) - mhcAdjustedChildTaxCreditUsed()))) ? ((((0.0765 * mhc_gross_income) - mhcEITC()) < 0 ? 0 : ((0.0765 * mhc_gross_income) - mhcEITC()))
+        > (((mhc_gross_income - 3000) <= 0 ? 0 : (mhc_gross_income - 3000)) * 0.15) ? (((0.0765 * mhc_gross_income) - mhcEITC()) < 0 ? 0 : (((0.0765 * mhc_gross_income) - mhcEITC()))) :
+            (((mhc_gross_income - 3000) <= 0 ? 0 : (mhc_gross_income - 3000)) * 0.15)) : ((mhcNumberOfChildren() * 1000) - mhcAdjustedChildTaxCreditUsed()))))
+};
+
+let mhcStandardDeduction = function () {
+    return standardDeduction();
+};
+let mhcFederalExemptions = function () {
+    return federalExemptions();
+};
+let mhcStateExemptions = function () {
+    return stateExemptions();
+};
+
+let mhcFederalGrossTaxible = function () {
+    return Math.max(
+        mhc_gross_income - mhcStandardDeduction() - mhcFederalExemptions(),
+        0
+    )
+};
+let mhcUtahStateCreditValueHolder = function () {
+    return utahStateCreditValueHolder();
+};
+let mhcStateTaxBeforeCredits = function () {
+    return mhc_gross_income * .05;
+};
+let mhcGrossTaxFedMinusUtahStateCredValueHolder = function () {
+    return Math.max(
+        mhc_gross_income - mhcUtahStateCreditValueHolder(),
+        0
+    );
+};
+let mhcCreditBeforePhaseOut = function () {
+    return creditBeforePhaseOut();
+};
+let mhcPhaseOutX13 = function () {
+    return mhcGrossTaxFedMinusUtahStateCredValueHolder() * .013;
+};
+let mhcSumOfNonRefundableTaxCredits = function () {
+    return mhcChildCareTaxCredit() + mhcAdjustedChildTaxCredit();
+};
+let mhcSumOfRefundableTaxCredits = function () {
+    return mhcEITC() + mhcAdditionalChildTaxCredit() + mhcPremiumTaxCredit();
+};
+let mhcFedTaxOwedLessNonRefundTaxCredits = function () {
+    return Math.max(
+        mhcFedTaxOwedBeforeCredits() - mhcSumOfNonRefundableTaxCredits(),
+        0
+    )
+};
+let mhcFedDeductionPlusStateExemptionX6Per = function () {
+    return (mhcStandardDeduction() + mhcStateExemptions()) * .06
+};
+let mhcUtahTaxCredit = function () {
+    return Math.max(
+        0,
+        mhcCreditBeforePhaseOut() - mhcPhaseOutX13()
+    )
+};
+let mhcFederalPayrollTax = function () {
+    return mhc_gross_income * federal_payroll_tax_multiplier;
+};
+let mhcFederalTaxOwed = function () {
+    return mhcFedTaxOwedLessNonRefundTaxCredits() - mhcSumOfRefundableTaxCredits();
+};
+let mhcUtahTaxesOwed = function () {
+    return Math.max(
+        0,
+        mhcStateTaxBeforeCredits() - mhcUtahTaxCredit() - mhcUtahsHealthBenefitPlanCredit()
+    )
+};
+let mhcTotalExpenses = function () {
+    return overallCost()
+};
+let mhcSavings1PercentGross = function () {
+    return mhc_gross_income * .01;
+};
+let mhcTotalExpensesPlusSavings = function () {
+    return mhcTotalExpenses() + mhcSavings1PercentGross();
+};
+let mhcTotalTax = function () {
+    return mhcFederalPayrollTax() + mhcFederalTaxOwed() + mhcUtahTaxesOwed()
+};
+let mhcNetYearlyIncome = function(){
+    return mhc_gross_income - mhcTotalTax();
+};

@@ -8,6 +8,9 @@
 
 
 $url = 'https://taxmap.ntis.gov/taxmap/instr/i1040gi-015.htm';
+
+$url = $_GET['url'];
+
 $output = file_get_contents($url);
 
 $dom = new DOMDocument;
@@ -29,18 +32,41 @@ $types = [
 
 foreach ($tables as $table) {
 
-    if($table->childNodes->length > 100){
+    if ($table->childNodes->length > 100) {
+        $count = 5;
         foreach ($table->childNodes as $node) {
             $index = 0;
-            $current_min = $node->childNodes[0]->textContent;
+            $current_min = str_replace("$", "", $node->childNodes[0]->textContent);
             foreach ($node->childNodes as $cell) {
-                if($index != 0 and $index != 1){
+                if ($index != 0 and $index != 1) {
+                    $count++;
+                    $entry_name = $types[$index] . '_' . $current_min;
                     echo $types[$index];
                     echo '_';
                     echo $current_min;
                     echo ' - ';
-                    echo $cell->textContent;
+                    echo $index + 5;
+                    echo ' - ';
+                    echo str_replace("$", "", $cell->textContent);
                     echo '<br/>';
+
+                    $icarus = 'http://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/';
+
+                    $json_data = json_encode(array(
+                        "entryId"=>$count,
+                        "entryName"=>$entry_name,
+                        "entryValue"=>str_replace("$", "", $cell->textContent),
+                        "categoryId"=>$index + 5
+                    ));
+
+                    $curl = curl_init($icarus);
+                    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, $json_data);
+
+
+                    $json_response = curl_exec($curl);
+
                 }
                 $index++;
             }
