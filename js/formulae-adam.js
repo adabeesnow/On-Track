@@ -274,7 +274,7 @@ let ehcCalcGross = function() {
 
     return gross;
 };
-
+// TODO: Make mhc/ehcCalcGross functions change the actual variables, not local ones.
 /**
  * Performs a goalSeek function 6x for accuracy, returns the new mhc_gross_income value.
  * Changing cell:   gross
