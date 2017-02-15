@@ -126,7 +126,6 @@ let employer_oop_schoolager = 93.24;
 let employer_oop_teenager = 93.24;
 let employer_oop_adult = 107.62;
 
-
 // Marketplace health insurance costs
 let adult_marketplace_cost = 2536;
 let child_marketplace_cost = 2536;
@@ -135,6 +134,11 @@ let child_marketplace_cost = 2536;
 let benchmark_silver_base = 2932;
 let benchmark_silver_additional = 1673;
 let child_tax_credit = 1000;
+
+// Public Transportation Constants
+let public_transportation_child_cost = 753;
+let public_transportation_adult_cost = 1005;
+
 
 // User input variables
 
@@ -633,4 +637,38 @@ let mhcTotalTax = function () {
 };
 let mhcNetYearlyIncome = function(){
     return mhc_gross_income - mhcTotalTax();
+};
+
+let publicTransportationAdult = function(){
+    return number_of_public_transport_passes_adult * public_transportation_adult_cost
+};
+let publicTransportationChild = function(){
+    return number_of_public_transport_passes_child * public_transportation_child_cost
+};
+
+let publicTransportationCost = function(){
+    return publicTransportationAdult() + publicTransportationChild()
+};
+
+let annualGrossIncome = function(){
+    if(use_marketplace_health_insurance_bool){
+        return mhc_gross_income
+    }
+    else{
+        return ehc_gross_income
+    }
+};
+let annualNetIncome = function(){
+    if(use_marketplace_health_insurance_bool){
+        return mhcNetYearlyIncome()
+    }
+    else{
+        return netYearlyIncome()
+    }
+};
+let hourlyGrossIncome = function(){
+    return annualGrossIncome() / 52 / 40;
+};
+let hourlyNetIncome = function(){
+    return annualNetIncome() / 52 / 40;
 };
