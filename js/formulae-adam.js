@@ -332,7 +332,7 @@ let overallCost = function() {  // -1 == 'Standard'
             ) +
             carInsurance() +
             carOwnership() +
-            (use_marketplace_health_insurance_bool == false ? combinedHealthCost() : totalMarketplaceCost()) +
+            (use_marketplace_health_insurance_bool == false ? healthCareEmployerCombinedTotal() : totalMarketplaceHealthCareCost()) +
             entertainmentCost() +
             miscCost() +
             excessiveChildrenCost() +
@@ -447,8 +447,8 @@ let miscCost = function() {
                 (familySize() == 2 ? miscTwo :
                     (familySize() == 3 ? miscThree :
                         (familySize() == 4 ? miscFour:
-                            (familySize() == 5 ? miscFive:
-                                miscSixOrMore
+                            (familySize() == 5 ? miscFiveOrMore():
+                                miscFiveOrMore70kPlus()
                             )
                         )
                     )
