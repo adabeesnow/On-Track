@@ -158,7 +158,7 @@ let utahTaxesOwed = function(){
 
 //Use CostByAge!B19 formula 'overallCost'
 let totalExpenses = function(){
-    return 'overallCost';
+    return overallCost();
 };
 
 let savings1PercentGross = function() {
