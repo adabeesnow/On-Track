@@ -639,15 +639,15 @@ let mhcNetYearlyIncome = function(){
     return mhc_gross_income - mhcTotalTax();
 };
 
-let publicTransportationAdult = function(){
+let publicTransitAdult = function(){
     return number_of_public_transport_passes_adult * public_transportation_adult_cost
 };
-let publicTransportationChild = function(){
+let publicTransitSchoolager = function(){
     return number_of_public_transport_passes_child * public_transportation_child_cost
 };
 
-let publicTransportationCost = function(){
-    return publicTransportationAdult() + publicTransportationChild()
+let publicTransitCost = function(){
+    return publicTransitAdult() + publicTransitSchoolager()
 };
 
 let annualGrossIncome = function(){
