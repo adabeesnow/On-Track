@@ -198,7 +198,10 @@ let ehcEITC = function () {
     }
 
     let i = 0;
-    while (i < income_at_least_list.length-1) {
+    while (i <= income_at_least_list.length) {
+        if (i >= income_at_least_list.length) {
+            return false;
+        }
         if (gross_income > income_at_least_list[i]) {
             break;
         }
@@ -227,7 +230,10 @@ let mhcEITC = function () {
     }
 
     let i = 0;
-    while (i < income_at_least_list.length-1) {
+    while (i <= income_at_least_list.length) {
+        if (i >= income_at_least_list.length) {
+            return false;
+        }
         if (gross_income > income_at_least_list[i]) {
             break;
         }

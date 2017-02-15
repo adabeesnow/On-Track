@@ -235,7 +235,7 @@ let childTaxCredit = function () {
 };
 
 let adjustedChildTaxCredit = function () {
-
+    return mhcAdjustedChildTaxCredit();
 };
 
 let federalTaxesLessChildCareTaxCredit = function () {
@@ -251,7 +251,7 @@ let additionalChildTaxCredit = function () {
 };
 
 let childCareTaxCredit = function () {
-
+    return mhcChildCareTaxCredit();
 };
 
 let sumOfNonRefundableTaxCredits = function () {
@@ -259,7 +259,10 @@ let sumOfNonRefundableTaxCredits = function () {
 };
 
 let sumOfRefundableTaxCredits = function () {
-    return (eitc==null?0:eitc) + additionalChildTaxCredit; // not sure on this one
+    if(mhcEITC() == false)
+        return additionalChildTaxCredit();
+    else
+        return mhcEITC() + additionalChildTaxCredit();
 };
 
 let fedTaxOwedLessNonRefundableTax = function () {
@@ -273,3 +276,5 @@ let fedDeductionPlusStateExemption = function () {
 let utahTaxCredit = function () {
     return (phaseOutX>creditBeforePhaseOut?0:creditBeforePhaseOut()-phaseOutX);
 };
+
+
