@@ -15,11 +15,11 @@ let ehcFederalPayrollTax = function(){
 };
 
 let ehcFederalTaxOwed = function(){
-    return fedTaxOwedLessNonRefundableTax() - fedDeductionPlusStateExemption();
+    return ehcFedTaxOwedLessNonRefundableTax() - ehcFedDeductionPlusStateExemption();
 };
 
 let ehcUtahTaxesOwed = function(){
-    return ((ehcStateTaxBeforeCredits()-utahTaxCredit())<0?utah_taxes_owed_less_than_zero:(ehcStateTaxBeforeCredits()-utahTaxCredit()));
+    return ((ehcStateTaxBeforeCredits()-ehcUtahTaxCredit())<0?utah_taxes_owed_less_than_zero:(ehcStateTaxBeforeCredits()-ehcUtahTaxCredit()));
 };
 
 //Use CostByAge!B19 formula 'overallCost'
@@ -115,4 +115,88 @@ let ehcChildTaxCredit = function () {
 
 let ehcAdjustedChildTaxCredit = function () {
     return mhcAdjustedChildTaxCredit();
+};
+
+
+
+
+
+let ehcEITC = function () {
+    let credit_amount_list = [];
+    if (ehcNumberOfChildren() == 1) {
+        credit_amount_list = credit_amount_married_filing_jointly_1_children_list;
+    } else
+    if (ehcNumberOfChildren() == 2) {
+        credit_amount_list = credit_amount_married_filing_jointly_2_children_list;
+    } else
+    if (ehcNumberOfChildren() == 0) {
+        credit_amount_list = credit_amount_married_filing_jointly_0_children_list;
+    } else
+    if (ehcNumberOfChildren() >= 3) {
+        credit_amount_list = credit_amount_married_filing_jointly_3_children_list;
+    }
+    else {
+        return false;
+    }
+
+    let i = 0;
+    while (i <= income_at_least_list.length) {
+        if (i >= income_at_least_list.length) {
+            return false;
+        }
+        if (gross_income > income_at_least_list[i]) {
+            break;
+        }
+        i++;
+    }
+    return credit_amount_list[i];
+};
+
+let ehcFederalTaxesLessChildCareTaxCredit = function () {
+    return (ehcFederalTaxesOwedBeforeCredits<ehcChildCareTaxCredit?0:ehcFederalTaxesOwedBeforeCredits-ehcChildCareTaxCredit);
+};
+
+let ehcAdjustedChildTaxCreditUsed = function () {
+    return (ehcAdjustedChildTaxCredit<ehcFederalTaxesLessChildCareTaxCredit?ehcAdjustedChildTaxCredit:ehcFederalTaxesLessChildCareTaxCredit);
+};
+
+let ehcAdditionalChildTaxCredit = function () {
+    return ((ehcNumberOfChildren<=3?(((((gross_income-3000)<=0?0:(gross_income-3000))*0.15))<((((ehcNumberOfChildren*1000)
+    -ehcAdjustedChildTaxCreditUsed)<=0?0:((ehcNumberOfChildren*1000)-ehcAdjustedChildTaxCreditUsed)))?
+        (((gross_income-3000)<=0?0:(gross_income-3000))*0.15):((((ehcNumberOfChildren*1000)-ehcAdjustedChildTaxCreditUsed)<=0?0:
+        ((ehcNumberOfChildren*1000)-ehcAdjustedChildTaxCreditUsed)))):(((gross_income-3000)*0.15)>=((ehcNumberOfChildren*1000)
+    -ehcAdjustedChildTaxCreditUsed)?((ehcNumberOfChildren*1000)-ehcAdjustedChildTaxCreditUsed):(((((0.0765*gross_income)-ehcEITC)<0?0:
+        ((0.0765*gross_income)-ehcEITC))>(((gross_income-3000)<=0?0:(gross_income-3000))*0.15)?(((0.0765*gross_income)-ehcEITC)<0?0:
+        (((0.0765*gross_income)-ehcEITC))):(((gross_income-3000)<=0?0:(gross_income-3000))*0.15))<((((ehcNumberOfChildren*1000)
+    -ehcAdjustedChildTaxCreditUsed)<=0?0:((ehcNumberOfChildren*1000)-ehcAdjustedChildTaxCreditUsed)))?((((0.0765*gross_income)-ehcEITC)<0?0:
+        ((0.0765*gross_income)-ehcEITC))>(((gross_income-3000)<=0?0:(gross_income-3000))*0.15)?(((0.0765*gross_income)-ehcEITC)
+    <0?0:(((0.0765*gross_income)-ehcEITC))):(((gross_income-3000)<=0?0:(gross_income-3000))*0.15)):((ehcNumberOfChildren*1000)
+    -ehcAdjustedChildTaxCreditUsed)))));
+};
+
+let ehcChildCareTaxCredit = function () {
+    return mhcChildCareTaxCredit(); //uses mhcFunction
+};
+
+let ehcSumOfNonRefundableTaxCredits = function () {
+    return ehcChildCareTaxCredit + ehcAdjustedChildTaxCredit;
+};
+
+let ehcSumOfRefundableTaxCredits = function () {
+    if(ehcEITC() == false)
+        return ehcAdditionalChildTaxCredit();
+    else
+        return ehcEITC() + ehcAdditionalChildTaxCredit();
+};
+
+let ehcFedTaxOwedLessNonRefundableTax = function () {
+    return (ehcFederalTaxesOwedBeforeCredits-ehcSumOfNonRefundableTaxCredits<0?0:ehcFederalTaxesOwedBeforeCredits-ehcSumOfNonRefundableTaxCredits);
+};
+
+let ehcFedDeductionPlusStateExemption = function () {
+    return (ehcStateExemptions+ehcStandardDeduction) * 0.06;
+};
+
+let ehcUtahTaxCredit = function () {
+    return (ehcPhaseOutX>ehcCreditBeforePhaseOut?0:ehcCreditBeforePhaseOut()-ehcPhaseOutX);
 };

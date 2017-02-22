@@ -262,43 +262,53 @@ let number_of_public_transport_passes_child = null;
 
 
 
-// let federalTaxesLessChildCareTaxCredit = function () {
-//     return (federalTaxesOwedBeforeCredits<childCareTaxCredit?0:federalTaxesOwedBeforeCredits-childCareTaxCredit);
+// let ehcFederalTaxesLessChildCareTaxCredit = function () {
+//     return (ehcFederalTaxesOwedBeforeCredits<ehcChildCareTaxCredit?0:ehcFederalTaxesOwedBeforeCredits-ehcChildCareTaxCredit);
 // };
 //
-// let adjustedChildTaxCreditUsed = function () {
-//     return (adjustedChildTaxCredit<federalTaxesLessChildCareTaxCredit?adjustedChildTaxCredit:federalTaxesLessChildCareTaxCredit);
+// let ehcAdjustedChildTaxCreditUsed = function () {
+//     return (ehcAdjustedChildTaxCredit<ehcFederalTaxesLessChildCareTaxCredit?ehcAdjustedChildTaxCredit:ehcFederalTaxesLessChildCareTaxCredit);
 // };
 //
-// let additionalChildTaxCredit = function () {
-//     return ((numberOfChildren<=3?(((((gross_income-3000)<=0?0:(gross_income-3000))*0.15))<((((numberOfChildren*1000)-adjustedChildTaxCreditUsed)<=0?0:((numberOfChildren*1000)-adjustedChildTaxCreditUsed)))?(((gross_income-3000)<=0?0:(gross_income-3000))*0.15):((((numberOfChildren*1000)-adjustedChildTaxCreditUsed)<=0?0:((numberOfChildren*1000)-adjustedChildTaxCreditUsed)))):(((gross_income-3000)*0.15)>=((numberOfChildren*1000)-adjustedChildTaxCreditUsed)?((numberOfChildren*1000)-adjustedChildTaxCreditUsed):(((((0.0765*gross_income)-eitc)<0?0:((0.0765*gross_income)-eitc))>(((gross_income-3000)<=0?0:(gross_income-3000))*0.15)?(((0.0765*gross_income)-eitc)<0?0:(((0.0765*gross_income)-eitc))):(((gross_income-3000)<=0?0:(gross_income-3000))*0.15))<((((numberOfChildren*1000)-adjustedChildTaxCreditUsed)<=0?0:((numberOfChildren*1000)-adjustedChildTaxCreditUsed)))?((((0.0765*gross_income)-eitc)<0?0:((0.0765*gross_income)-eitc))>(((gross_income-3000)<=0?0:(gross_income-3000))*0.15)?(((0.0765*gross_income)-eitc)<0?0:(((0.0765*gross_income)-eitc))):(((gross_income-3000)<=0?0:(gross_income-3000))*0.15)):((numberOfChildren*1000)-adjustedChildTaxCreditUsed)))));
+// let ehcAdditionalChildTaxCredit = function () {
+//     return ((numberOfChildren<=3?(((((gross_income-3000)<=0?0:(gross_income-3000))*0.15))<((((numberOfChildren*1000)
+//     -ehcAdjustedChildTaxCreditUsed)<=0?0:((numberOfChildren*1000)-ehcAdjustedChildTaxCreditUsed)))?
+//         (((gross_income-3000)<=0?0:(gross_income-3000))*0.15):((((numberOfChildren*1000)-ehcAdjustedChildTaxCreditUsed)<=0?0:
+//         ((numberOfChildren*1000)-ehcAdjustedChildTaxCreditUsed)))):(((gross_income-3000)*0.15)>=((numberOfChildren*1000)
+//     -ehcAdjustedChildTaxCreditUsed)?((numberOfChildren*1000)-ehcAdjustedChildTaxCreditUsed):(((((0.0765*gross_income)-eitc)<0?0:
+//         ((0.0765*gross_income)-eitc))>(((gross_income-3000)<=0?0:(gross_income-3000))*0.15)?(((0.0765*gross_income)-eitc)<0?0:
+//         (((0.0765*gross_income)-eitc))):(((gross_income-3000)<=0?0:(gross_income-3000))*0.15))<((((numberOfChildren*1000)
+//     -ehcAdjustedChildTaxCreditUsed)<=0?0:((numberOfChildren*1000)-ehcAdjustedChildTaxCreditUsed)))?((((0.0765*gross_income)-eitc)<0?0:
+//         ((0.0765*gross_income)-eitc))>(((gross_income-3000)<=0?0:(gross_income-3000))*0.15)?(((0.0765*gross_income)-eitc)
+//     <0?0:(((0.0765*gross_income)-eitc))):(((gross_income-3000)<=0?0:(gross_income-3000))*0.15)):((numberOfChildren*1000)
+//     -ehcAdjustedChildTaxCreditUsed)))));
 // };
 //
-// let childCareTaxCredit = function () {
-//     return mhcChildCareTaxCredit();
+// let ehcChildCareTaxCredit = function () {
+//     return mhcChildCareTaxCredit(); //uses mhcFunction
 // };
 //
-// let sumOfNonRefundableTaxCredits = function () {
-//     return childCareTaxCredit + adjustedChildTaxCredit;
+// let ehcSumOfNonRefundableTaxCredits = function () {
+//     return ehcChildCareTaxCredit + adjustedChildTaxCredit;
 // };
 //
-// let sumOfRefundableTaxCredits = function () {
-//     if(mhcEITC() == false)
-//         return additionalChildTaxCredit();
+// let ehcSumOfRefundableTaxCredits = function () {
+//     if(ehcEITC() == false)
+//         return ehcAdditionalChildTaxCredit();
 //     else
-//         return mhcEITC() + additionalChildTaxCredit();
+//         return ehcEITC() + ehcAdditionalChildTaxCredit();
 // };
 //
-// let fedTaxOwedLessNonRefundableTax = function () {
-//     return (federalTaxesOwedBeforeCredits-sumOfNonRefundableTaxCredits<0?0:federalTaxesOwedBeforeCredits-sumOfNonRefundableTaxCredits);
+// let ehcFedTaxOwedLessNonRefundableTax = function () {
+//     return (federalTaxesOwedBeforeCredits-ehcSumOfNonRefundableTaxCredits<0?0:federalTaxesOwedBeforeCredits-ehcSumOfNonRefundableTaxCredits);
 // };
 //
-// let fedDeductionPlusStateExemption = function () {
+// let ehcFedDeductionPlusStateExemption = function () {
 //     return (stateExemptions+standardDeduction) * 0.06;
 // };
 //
-// let utahTaxCredit = function () {
+// let ehcUtahTaxCredit = function () {
 //     return (phaseOutX>creditBeforePhaseOut?0:creditBeforePhaseOut()-phaseOutX);
 // };
-//
+
 
