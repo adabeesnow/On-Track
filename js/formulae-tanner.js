@@ -650,25 +650,25 @@ let publicTransitCost = function(){
     return publicTransitAdult() + publicTransitSchoolager()
 };
 
-let annualGrossIncome = function(){
-    if(use_marketplace_health_insurance_bool){
-        return mhc_gross_income
-    }
-    else{
-        return ehc_gross_income
-    }
-};
-let annualNetIncome = function(){
-    if(use_marketplace_health_insurance_bool){
-        return mhcNetYearlyIncome()
-    }
-    else{
-        return netYearlyIncome()
-    }
-};
-let hourlyGrossIncome = function(){
-    return annualGrossIncome() / 52 / 40;
-};
-let hourlyNetIncome = function(){
-    return annualNetIncome() / 52 / 40;
-};
+// let annualGrossIncome = function(){
+//     if(use_marketplace_health_insurance_bool){
+//         return mhc_gross_income
+//     }
+//     else{
+//         return ehc_gross_income
+//     }
+// };
+// let annualNetIncome = function(){
+//     if(use_marketplace_health_insurance_bool){
+//         return mhcNetYearlyIncome()
+//     }
+//     else{
+//         return netYearlyIncome()
+//     }
+// };
+// let grossHourlyIncome = function(){
+//     return annualGrossIncome() / 52 / 40;
+// };
+// let netHourlyIncome = function(){
+//     return annualNetIncome() / 52 / 40;
+// };

@@ -119,61 +119,61 @@ let qualifying_child_care_expsnse_one = 3000;
 let qualifying_child_care_expense_2ormore = 6000;
 let utah_taxes_owed_less_than_zero = 0;
 
-let annualTotalExpenses = function(){
-    return(annualHousingCosts + annualChildcareCosts + annualFoodCosts + annualCarInsurance + annualCarOwnership +
-        annualPublicTransportation + annualHealthInsurance + annualOutOfPocketCosts + annualEntertainmentCosts + annualMiscellaneousCosts);
-};
+// let annualTotalExpenses = function(){
+//     return(annualHousingCosts + annualChildcareCosts + annualFoodCosts + annualCarInsurance + annualCarOwnership +
+//         annualPublicTransportation + annualHealthInsurance + annualOutOfPocketCosts + annualEntertainmentCosts + annualMiscellaneousCosts);
+// };
 
-let annualFoodCosts = function() {
-    return foodCostAnnualTotal();
-};
+// let annualFoodCosts = function() {
+//     return foodCostAnnualTotal();
+// };
+//
+// let annualCarInsurance = function() {
+//     return carInsurance();
+// };
+//
+// let annualCarOwnership = function() {
+//     return carOwnership();
+// };
+//
+// let annualPublicTransportation = function() {
+//     return publicTransitCost();
+// };
 
-let annualCarInsurance = function() {
-    return carInsurance();
-};
+// let annualEntertainmentCosts = function() {
+//     return entertainmentCost();
+// };
 
-let annualCarOwnership = function() {
-    return carOwnership();
-};
+// let annualMiscellaneousCosts = function() {
+//     return miscCost();
+// };
 
-let annualPublicTransportation = function() {
-    return publicTransitCost();
-};
+// let housingCostsYearly = function() {
+//     return (annualOneBedAverage() + annualTwoBedAverage() + annualThreeBedAverage() + annualFourBedAverage());
+// };
 
-let annualEntertainmentCosts = function() {
-    return entertainmentCost();
-};
+// let savingsYearly = function() {
+//     return ehcSavings1PercentGross();
+// };
 
-let annualMiscellaneousCosts = function() {
-    return miscCost();
-};
+// let annualHealthInsurance = function() {
+//     return (use_marketplace_health_insurance_bool===false?healthCareEmployerCost():marketplaceHealthCareCostBeforeOOP());
+// };
 
-let housingCostsYearly = function() {
-    return (annualOneBedAverage() + annualTwoBedAverage() + annualThreeBedAverage() + annualFourBedAverage());
-};
+// let netTaxesYearly = function() {
+//     return (use_marketplace_health_insurance_bool===false?ehcTotalTax():mhcTotalTax());
+// };
 
-let savingsYearly = function() {
-    return ehcSavings1PercentGross();
-};
+// let annualOutOfPocketCosts = function() {
+//     return (use_marketplace_health_insurance_bool===false?healthCareEmployerOOPTotal():healthCareMarketplaceOOPTotal());
+// };
 
-let annualHealthInsurance = function() {
-    return (use_marketplace_health_insurance_bool===false?healthCareEmployerCost():marketplaceHealthCareCostBeforeOOP());
-};
-
-let netTaxesYearly = function() {
-    return (use_marketplace_health_insurance_bool===false?ehcTotalTax():mhcTotalTax());
-};
-
-let annualOutOfPocketCosts = function() {
-    return (use_marketplace_health_insurance_bool===false?healthCareEmployerOOPTotal():healthCareMarketplaceOOPTotal());
-};
-
-let annualHousingCosts = function() {
-    return (number_of_bedrooms==-1?housingCost():(number_of_bedrooms==1?annualOneBedAverage():
-    (number_of_bedrooms==2?annualTwoBedAverage():(number_of_bedrooms==3?annualThreeBedAverage():
-        (number_of_bedrooms==4?annualFourBedAverage:0)))));
-};
-
-let annualChildcareCosts = function() {
-    return (estimated_babysitting_cost>0?estimated_babysitting_cost:(use_family_care_bool===true?familyChildCareCost():childCareAnnualTotal()));
-};
+// let annualHousingCosts = function() {
+//     return (number_of_bedrooms==-1?housingCost():(number_of_bedrooms==1?annualOneBedAverage():
+//     (number_of_bedrooms==2?annualTwoBedAverage():(number_of_bedrooms==3?annualThreeBedAverage():
+//         (number_of_bedrooms==4?annualFourBedAverage:0)))));
+// };
+//
+// let annualChildcareCosts = function() {
+//     return (estimated_babysitting_cost>0?estimated_babysitting_cost:(use_family_care_bool===true?familyChildCareCost():childCareAnnualTotal()));
+// };

@@ -341,47 +341,47 @@ let overallCost = function() {  // -1 == 'Standard'
             foodCostAnnualTotal()
 };
 
-let monthlyOneBedAverage = function() {
-    return (housing_1_bed_84401  +
-            housing_1_bed_84403  +
-            housing_1_bed_84404  +
-            housing_1_bed_84405  +
-            housing_1_bed_84408) / 5;
-};
-
-let annualOneBedAverage = function() {
-    return monthlyOneBedAverage() * 12;
-};
-let monthlyTwoBedAverage = function() {
-    return (housing_2_bed_84401  +
-            housing_2_bed_84403  +
-            housing_2_bed_84404  +
-            housing_2_bed_84405  +
-            housing_2_bed_84408) / 5;
-};
-let annualTwoBedAverage = function() {
-    return monthlyTwoBedAverage() * 12;
-};
-let monthlyThreeBedAverage = function() {
-    return (housing_3_bed_84401  +
-            housing_3_bed_84403  +
-            housing_3_bed_84404  +
-            housing_3_bed_84405  +
-            housing_3_bed_84408) / 5;
-};
-let annualThreeBedAverage = function() {
-    return monthlyThreeBedAverage() * 12;
-};
-let monthlyFourBedAverage = function() {
-    return (housing_4_bed_84401  +
-            housing_4_bed_84403  +
-            housing_4_bed_84404  +
-            housing_4_bed_84405  +
-            housing_4_bed_84408) / 5;
-};
-let annualFourBedAverage = function() {
-    return monthlyFourBedAverage() * 12;
-};
+// let monthlyOneBedAverage = function() {
+//     return (housing_1_bed_84401  +
+//             housing_1_bed_84403  +
+//             housing_1_bed_84404  +
+//             housing_1_bed_84405  +
+//             housing_1_bed_84408) / 5;
+// };
+//
+// let annualOneBedAverage = function() {
+//     return monthlyOneBedAverage() * 12;
+// };
+// let monthlyTwoBedAverage = function() {
+//     return (housing_2_bed_84401  +
+//             housing_2_bed_84403  +
+//             housing_2_bed_84404  +
+//             housing_2_bed_84405  +
+//             housing_2_bed_84408) / 5;
+// };
+// let annualTwoBedAverage = function() {
+//     return monthlyTwoBedAverage() * 12;
+// };
+// let monthlyThreeBedAverage = function() {
+//     return (housing_3_bed_84401  +
+//             housing_3_bed_84403  +
+//             housing_3_bed_84404  +
+//             housing_3_bed_84405  +
+//             housing_3_bed_84408) / 5;
+// };
+// let annualThreeBedAverage = function() {
+//     return monthlyThreeBedAverage() * 12;
+// };
+// let monthlyFourBedAverage = function() {
+//     return (housing_4_bed_84401  +
+//             housing_4_bed_84403  +
+//             housing_4_bed_84404  +
+//             housing_4_bed_84405  +
+//             housing_4_bed_84408) / 5;
+// };
+// let annualFourBedAverage = function() {
+//     return monthlyFourBedAverage() * 12;
+// };
 
 let familyChildCareCost = function() {
     return  familyCareAnnualPreschooler() +
@@ -406,29 +406,29 @@ let totalCostPerCar = function() {
             gasYearly();
 };
 
-let taxOnCarPurchase = function() {
-    return car_miles_per_gallon * 0.071;
-};
+// let taxOnCarPurchase = function() {
+//     return car_miles_per_gallon * 0.071;
+// };
 
-let carPaymentMonthly = function() {
-    return car_monthly_payment / 2;
-};
+// let carPaymentMonthly = function() {
+//     return car_monthly_payment / 2;
+// };
 
-let taxOnCarPurchaseYearly = function() {
-    return taxOnCarPurchase() / 6;
-};
-
-let carPaymentYearly = function() {
-    return  carPaymentMonthly() * 12;
-};
-
-let gasYearly = function() {
-    return car_gas_price * (car_miles / car_miles_per_gallon);
-};
-
-let totalCostTwoCars = function() {
-    return totalCostPerCar() * 2;
-};
+// let taxOnCarPurchaseYearly = function() {
+//     return taxOnCarPurchase() / 6;
+// };
+//
+// let carPaymentYearly = function() {
+//     return  carPaymentMonthly() * 12;
+// };
+//
+// let gasYearly = function() {
+//     return car_gas_price * (car_miles / car_miles_per_gallon);
+// };
+//
+// let totalCostTwoCars = function() {
+//     return totalCostPerCar() * 2;
+// };
 
 let entertainmentCost = function() {
     return  (familySize() == 1 ? entertainment_household_of_1 :
@@ -464,96 +464,96 @@ let excessiveAdultsCost = function() {
     return excessiveAdults() * 8000;
 };
 
-let miscOne = function() {
-    return  misc_for_1_15000_to_19999 +
-            personal_products_for_1_15000_to_19999 +
-            housekeeping_supplies_for_1_15000_to_19999 +
-            apparel_for_1_15000_to_19999;
-};
+// let miscOne = function() {
+//     return  misc_for_1_15000_to_19999 +
+//             personal_products_for_1_15000_to_19999 +
+//             housekeeping_supplies_for_1_15000_to_19999 +
+//             apparel_for_1_15000_to_19999;
+// };
+//
+// let miscTwo = function() {
+//     return  misc_for_2_20000_to_29999 +
+//             personal_products_for_2_20000_to_29999 +
+//             housekeeping_supplies_for_2_20000_to_29999 +
+//             apparel_for_2_20000_to_29999;
+// };
+//
+// let miscThree = function() {
+//     return  misc_for_3_30000_to_39999 +
+//             personal_products_for_3_30000_to_39999 +
+//             housekeeping_supplies_for_3_30000_to_39999 +
+//             apparel_for_3_30000_to_39999;
+// };
+//
+// let miscFour = function() {
+//     return  misc_for_4_50000_to_69999 +
+//             personal_products_for_4_50000_to_69999 +
+//             housekeeping_supplies_for_4_50000_to_69999 +
+//             apparel_for_4_50000_to_69999;
+// };
+//
+// let miscFiveOrMore = function() {
+//     return  misc_for_5_or_more_50000_to_69999 +
+//             personal_products_for_5_or_more_50000_to_69999 +
+//             housekeeping_supplies_for_5_or_more_50000_to_69999 +
+//             apparel_for_5_or_more_50000_to_69999;
+// };
+//
+// let miscFiveOrMore70kPlus = function() {
+//     return  misc_for_5_or_more_70000_and_up +
+//             personal_products_for_5_or_more_70000_and_up +
+//             housekeeping_supplies_for_5_or_more_70000_and_up +
+//             apparel_for_5_or_more_70000_and_up;
+// };
 
-let miscTwo = function() {
-    return  misc_for_2_20000_to_29999 +
-            personal_products_for_2_20000_to_29999 +
-            housekeeping_supplies_for_2_20000_to_29999 +
-            apparel_for_2_20000_to_29999;
-};
+// let foodFamilyType = function() {
+//     let multiplier = 0;
+//
+//     if (numAdults() == 1 && numChildren() == 0){
+//         multiplier = 1.20;
+//     }
+//     else if (numAdults() == 1 && numChildren() == 1){
+//         multiplier = 1.10;
+//     }
+//     else if (numAdults() == 1 && numChildren() == 2){
+//         multiplier = 1.05;
+//     }
+//     else if (numAdults() == 1 && numChildren() == 3) {
+//         multiplier = 1.0;
+//     }
+//     else if (numAdults() == 1 && (numChildren() == 4 || numChildren() >= 5)){
+//         multiplier = 0.95;
+//     }
+//     else if (numAdults() == 2 && numChildren() == 0){
+//         multiplier = 1.10;
+//     }
+//     else if (numAdults() == 2 && numChildren() == 1){
+//         multiplier = 1.05;
+//     }
+//     else if (numAdults() == 2 && numChildren() == 2){
+//         multiplier = 1.0;
+//     }
+//     else if (numAdults() == 2 && numChildren() == 3 || numChildren() == 4) {
+//         multiplier = 0.95;
+//     }
+//     else if (numAdults() == 2 && (numChildren() >= 5)){
+//         multiplier = 0.90;
+//     }
+//     else {
+//         return 0;
+//     }
+//
+//     return multiplier * (   numAdults() * low_cost_food_plan_price_per_mo_weber_county_adult +
+//                             numInfants() * low_cost_food_plan_price_per_mo_weber_county_infant +
+//                             numPreschoolers() * low_cost_food_plan_price_per_mo_weber_county_preschooler +
+//                             numSchoolagers() * low_cost_food_plan_price_per_mo_weber_county_schoolager +
+//                             numTeenagers() * low_cost_food_plan_price_per_mo_weber_county_teenager
+//                             );
+// };
 
-let miscThree = function() {
-    return  misc_for_3_30000_to_39999 +
-            personal_products_for_3_30000_to_39999 +
-            housekeeping_supplies_for_3_30000_to_39999 +
-            apparel_for_3_30000_to_39999;
-};
-
-let miscFour = function() {
-    return  misc_for_4_50000_to_69999 +
-            personal_products_for_4_50000_to_69999 +
-            housekeeping_supplies_for_4_50000_to_69999 +
-            apparel_for_4_50000_to_69999;
-};
-
-let miscFiveOrMore = function() {
-    return  misc_for_5_or_more_50000_to_69999 +
-            personal_products_for_5_or_more_50000_to_69999 +
-            housekeeping_supplies_for_5_or_more_50000_to_69999 +
-            apparel_for_5_or_more_50000_to_69999;
-};
-
-let miscFiveOrMore70kPlus = function() {
-    return  misc_for_5_or_more_70000_and_up +
-            personal_products_for_5_or_more_70000_and_up +
-            housekeeping_supplies_for_5_or_more_70000_and_up +
-            apparel_for_5_or_more_70000_and_up;
-};
-
-let foodFamilyType = function() {
-    let multiplier = 0;
-
-    if (numAdults() == 1 && numChildren() == 0){
-        multiplier = 1.20;
-    }
-    else if (numAdults() == 1 && numChildren() == 1){
-        multiplier = 1.10;
-    }
-    else if (numAdults() == 1 && numChildren() == 2){
-        multiplier = 1.05;
-    }
-    else if (numAdults() == 1 && numChildren() == 3) {
-        multiplier = 1.0;
-    }
-    else if (numAdults() == 1 && (numChildren() == 4 || numChildren() >= 5)){
-        multiplier = 0.95;
-    }
-    else if (numAdults() == 2 && numChildren() == 0){
-        multiplier = 1.10;
-    }
-    else if (numAdults() == 2 && numChildren() == 1){
-        multiplier = 1.05;
-    }
-    else if (numAdults() == 2 && numChildren() == 2){
-        multiplier = 1.0;
-    }
-    else if (numAdults() == 2 && numChildren() == 3 || numChildren() == 4) {
-        multiplier = 0.95;
-    }
-    else if (numAdults() == 2 && (numChildren() >= 5)){
-        multiplier = 0.90;
-    }
-    else {
-        return 0;
-    }
-
-    return multiplier * (   numAdults() * low_cost_food_plan_price_per_mo_weber_county_adult +
-                            numInfants() * low_cost_food_plan_price_per_mo_weber_county_infant +
-                            numPreschoolers() * low_cost_food_plan_price_per_mo_weber_county_preschooler +
-                            numSchoolagers() * low_cost_food_plan_price_per_mo_weber_county_schoolager +
-                            numTeenagers() * low_cost_food_plan_price_per_mo_weber_county_teenager
-                            );
-};
-
-let annualFoodCostFamilyType = function() {
-    return foodFamilyType() * 12;
-};
+// let annualFoodCostFamilyType = function() {
+//     return foodFamilyType() * 12;
+// };
 
 
 
