@@ -200,3 +200,37 @@ let ehcFedDeductionPlusStateExemption = function () {
 let ehcUtahTaxCredit = function () {
     return (ehcPhaseOutX>ehcCreditBeforePhaseOut?0:ehcCreditBeforePhaseOut()-ehcPhaseOutX);
 };
+
+// TODO: Make mhc/ehcCalcGross functions change the actual variables, not local ones.
+/**
+ * Performs a goalSeek function 6x for accuracy, returns the new ehc_gross_income value.
+ * Changing cell:   gross
+ * Goal cell:       expense
+ * GoalSeek cell:   net
+ */
+let ehcCalcGross = function() {
+    let gross = ehc_gross_income;
+    let expense = ehcTotalExpenses();
+    // let net = ehcNetYearlyIncome();
+    let net = function(gross, tax) { return gross-tax; };
+    let tax = ehcTotalTax();
+
+    for (let i = 0; i < 6; i++) {
+        gross = goalSeek({
+            Func: net,                      // The function which should return the value of the goal cell.
+            aFuncParams: [gross, tax()],    // The params to be passed to the function above.
+            oFuncArgTarget: {
+                Position: 0                 // The position in the aFuncParams array of the value which will be changed.
+            },
+            Goal: expense,                  // The value which the function above should match.
+            Tol: 0.01,                      // The tolerance of the final result.
+            maxIter: 1000                   // The maximum number of iterations for the goalSeek function to take.
+        });
+    }
+
+    console.log('gross: ' + gross);
+    console.log('tax: ' + tax());
+    console.log('net: ' + net(gross, tax()));
+
+    return gross;
+};
