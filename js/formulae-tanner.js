@@ -158,208 +158,211 @@ let number_of_public_transport_passes_child = null;
 
 
 // B8
-let numChildren = function () {
-    return number_of_infants + number_of_preschoolers + number_of_schoolagers + number_of_teenagers
-};
+// let numChildren = function () {
+//     return number_of_infants + number_of_preschoolers + number_of_schoolagers + number_of_teenagers
+// };
 
 let numChildrenSchoolageAndUnder = function () {
     return number_of_infants + number_of_preschoolers + number_of_schoolagers;
 };
 
 // B9
-let familySize = function () {
-    return number_of_infants + number_of_preschoolers + number_of_schoolagers + number_of_teenagers + number_of_adults
-};
+// let familySize = function () {
+//     return number_of_infants + number_of_preschoolers + number_of_schoolagers + number_of_teenagers + number_of_adults
+// };
 
 //B11
-let excessiveChildren = function () {
-    numChildren = numChildren();
-    return Math.max(0, numChildren - 5);
-};
-
-//B12
-let excessiveAdults = function () {
-    return Math.max(0, number_of_adults - 5);
-};
-
-// B14
-let numCars = function () {
-    if (number_of_cars == -1) return number_of_adults;
-    else return number_of_cars;
-};
+// let excessiveChildren = function () {
+//     numChildren = numChildren();
+//     return Math.max(0, numChildren - 5);
+// };
+//
+// //B12
+// let excessiveAdults = function () {
+//     return Math.max(0, number_of_adults - 5);
+// };
+//
+// // B14
+// let numCars = function () {
+//     if (number_of_cars == -1) return number_of_adults;
+//     else return number_of_cars;
+// };
 
 
 // C16
-let housingCost = function () {
-    let total = 0;
-    let beds = 0;
-    if (number_of_bedrooms == -1) {
-        beds = Math.ceil(number_of_adults / 2) + Math.ceil(numChildren() / 2)
-    }
-    else beds = number_of_bedrooms;
-
-    if (beds == 1) {
-        total =
-            housing_1_bed_84401 +
-            housing_1_bed_84403 +
-            housing_1_bed_84404 +
-            housing_1_bed_84405 +
-            housing_1_bed_84408;
-    }
-    else if (beds == 2) {
-        total =
-            housing_2_bed_84401 +
-            housing_2_bed_84403 +
-            housing_2_bed_84404 +
-            housing_2_bed_84405 +
-            housing_2_bed_84408;
-    } else if (beds == 3) {
-        total =
-            housing_3_bed_84401 +
-            housing_3_bed_84403 +
-            housing_3_bed_84404 +
-            housing_3_bed_84405 +
-            housing_3_bed_84408;
-    } else if (beds == 4) {
-        total =
-            housing_4_bed_84401 +
-            housing_4_bed_84403 +
-            housing_4_bed_84404 +
-            housing_4_bed_84405 +
-            housing_4_bed_84408;
-    }
-
-    return total / 5;
-};
+// let housingCost = function () {
+//     let total = 0;
+//     let beds = 0;
+//     if (number_of_bedrooms == -1) {
+//         beds = Math.ceil(number_of_adults / 2) + Math.ceil(numChildren() / 2)
+//     }
+//     else beds = number_of_bedrooms;
+//
+//     if (beds == 1) {
+//         total =
+//             housing_1_bed_84401 +
+//             housing_1_bed_84403 +
+//             housing_1_bed_84404 +
+//             housing_1_bed_84405 +
+//             housing_1_bed_84408;
+//     }
+//     else if (beds == 2) {
+//         total =
+//             housing_2_bed_84401 +
+//             housing_2_bed_84403 +
+//             housing_2_bed_84404 +
+//             housing_2_bed_84405 +
+//             housing_2_bed_84408;
+//     } else if (beds == 3) {
+//         total =
+//             housing_3_bed_84401 +
+//             housing_3_bed_84403 +
+//             housing_3_bed_84404 +
+//             housing_3_bed_84405 +
+//             housing_3_bed_84408;
+//     } else if (beds == 4) {
+//         total =
+//             housing_4_bed_84401 +
+//             housing_4_bed_84403 +
+//             housing_4_bed_84404 +
+//             housing_4_bed_84405 +
+//             housing_4_bed_84408;
+//     }
+//
+//     return total / 5;
+// };
 
 
 // CHILD CARE FUNCTIONS
 
-let centerCareMonthlyAvgInfant = function () {
-    let avg_cost = (
-            center_care_avg_0_to_12_mo +
-            center_care_avg_1_yr +
-            center_care_avg_2_yr
-        ) / 3;
+// let centerCareMonthlyAvgInfant = function () {
+//     let avg_cost = (
+//             center_care_avg_0_to_12_mo +
+//             center_care_avg_1_yr +
+//             center_care_avg_2_yr
+//         ) / 3;
+//
+//     return avg_cost * number_of_infants
+// };
 
-    return avg_cost * number_of_infants
-};
+// let centerCareMonthlyAvgPreschooler = function () {
+//     let avg_cost = (
+//             center_care_avg_3_yr +
+//             center_care_avg_4_yr +
+//             center_care_avg_5_yr
+//         ) / 3;
+//
+//     return avg_cost * number_of_preschoolers;
+// };
 
-let centerCareMonthlyAvgPreschooler = function () {
-    let avg_cost = (
-            center_care_avg_3_yr +
-            center_care_avg_4_yr +
-            center_care_avg_5_yr
-        ) / 3;
+// let centerCareMonthlyAvgSchoolagerIn = function () {
+//     return center_care_avg_kindergarten_in * .14 + center_care_avg_schoolage_in * .86;
+// };
 
-    return avg_cost * number_of_preschoolers;
-};
+// let centerCareMonthlyAvgSchoolagerOut = function () {
+//     return center_care_avg_kindergarten_out * .14 + center_care_avg_schoolage_out * .86;
+// };
 
-let centerCareMonthlyAvgSchoolagerIn = function () {
-    return center_care_avg_kindergarten_in * .14 + center_care_avg_schoolage_in * .86;
-};
-let centerCareMonthlyAvgSchoolagerOut = function () {
-    return center_care_avg_kindergarten_out * .14 + center_care_avg_schoolage_out * .86;
-};
-let centerCareMonthlyAvgSchoolager = function () {
-    return (centerCareMonthlyAvgSchoolagerIn() * .75 + centerCareMonthlyAvgSchoolagerOut() * .25) * number_of_schoolagers;
-};
+// let centerCareMonthlyAvgSchoolager = function () {
+//     return (centerCareMonthlyAvgSchoolagerIn() * .75 + centerCareMonthlyAvgSchoolagerOut() * .25) * number_of_schoolagers;
+// };
 
 
-let familyCareMonthlyAvgInfant = function () {
-    let avg_cost = (
-            family_care_avg_0_to_12_mo +
-            family_care_avg_1_yr +
-            family_care_avg_2_yr
-        ) / 3;
-    return avg_cost * number_of_infants
-};
-let familyCareMonthlyAvgPreschooler = function () {
-    let avg_cost = (
-        family_care_avg_3_yr +
-        family_care_avg_4_yr +
-        family_care_avg_5_yr
-    );
-    return avg_cost * number_of_preschoolers
-};
-let familyCareMonthlyAvgSchoolagerIn = function () {
-    return family_care_avg_kindergarten_in * .14 + family_care_avg_schoolage_in * .86;
-};
-let familyCareMonthlyAvgSchoolagerOut = function () {
-    return family_care_avg_kindergarten_out * .14 + family_care_avg_schoolage_out * .86;
-};
-let familyCareMonthlyAvgSchoolager = function () {
-    return (familyCareMonthlyAvgSchoolagerIn() * .75 + familyCareMonthlyAvgSchoolagerOut() * .25) * number_of_schoolagers;
-};
+// let familyCareMonthlyAvgInfant = function () {
+//     let avg_cost = (
+//             family_care_avg_0_to_12_mo +
+//             family_care_avg_1_yr +
+//             family_care_avg_2_yr
+//         ) / 3;
+//     return avg_cost * number_of_infants
+// };
+// let familyCareMonthlyAvgPreschooler = function () {
+//     let avg_cost = (
+//         family_care_avg_3_yr +
+//         family_care_avg_4_yr +
+//         family_care_avg_5_yr
+//     );
+//     return avg_cost * number_of_preschoolers
+// };
+// let familyCareMonthlyAvgSchoolagerIn = function () {
+//     return family_care_avg_kindergarten_in * .14 + family_care_avg_schoolage_in * .86;
+// };
+// let familyCareMonthlyAvgSchoolagerOut = function () {
+//     return family_care_avg_kindergarten_out * .14 + family_care_avg_schoolage_out * .86;
+// };
 
-let centerCareAnnualInfant = function () {
-    return centerCareMonthlyAvgInfant() * 12;
-};
-let centerCareAnnualPreschooler = function () {
-    return centerCareMonthlyAvgPreschooler() * 12;
-};
-let centerCareAnnualSchoolager = function () {
-    return centerCareMonthlyAvgSchoolager() * 12;
-};
-let familyCareAnnualInfant = function () {
-    return familyCareMonthlyAvgInfant() * 12;
-};
-let familyCareAnnualPreschooler = function () {
-    return familyCareMonthlyAvgPreschooler() * 12;
-};
-let familyCareAnnualSchoolager = function () {
-    return familyCareMonthlyAvgSchoolager() * 12;
-};
+// let familyCareMonthlyAvgSchoolager = function () {
+//     return (familyCareMonthlyAvgSchoolagerIn() * .75 + familyCareMonthlyAvgSchoolagerOut() * .25) * number_of_schoolagers;
+// };
 
-let childCareAnnualInfant = function () {
-    if (use_family_care_bool) {
-        return familyCareAnnualInfant();
-    } else return centerCareAnnualInfant();
-};
-let childCareAnnualPreschooler = function () {
-    if (use_family_care_bool) {
-        return familyCareAnnualPreschooler();
-    } else return centerCareAnnualPreschooler();
-};
-let childCareAnnualSchoolager = function () {
-    if (use_family_care_bool) {
-        return familyCareAnnualSchoolager();
-    } else return centerCareAnnualSchoolager();
-};
-let childCareAnnualTotal = function () {
-    if (childcare_needed_bool) {
-        return childCareAnnualInfant() +
-            childCareAnnualPreschooler() +
-            childCareAnnualSchoolager()
-    } else return 0;
-};
+// let centerCareAnnualInfant = function () {
+//     return centerCareMonthlyAvgInfant() * 12;
+// };
+// let centerCareAnnualPreschooler = function () {
+//     return centerCareMonthlyAvgPreschooler() * 12;
+// };
+// let centerCareAnnualSchoolager = function () {
+//     return centerCareMonthlyAvgSchoolager() * 12;
+// };
+// let familyCareAnnualInfant = function () {
+//     return familyCareMonthlyAvgInfant() * 12;
+// };
+// let familyCareAnnualPreschooler = function () {
+//     return familyCareMonthlyAvgPreschooler() * 12;
+// };
+// let familyCareAnnualSchoolager = function () {
+//     return familyCareMonthlyAvgSchoolager() * 12;
+// };
+
+// let childCareAnnualInfant = function () {
+//     if (use_family_care_bool) {
+//         return familyCareAnnualInfant();
+//     } else return centerCareAnnualInfant();
+// };
+// let childCareAnnualPreschooler = function () {
+//     if (use_family_care_bool) {
+//         return familyCareAnnualPreschooler();
+//     } else return centerCareAnnualPreschooler();
+// };
+// let childCareAnnualSchoolager = function () {
+//     if (use_family_care_bool) {
+//         return familyCareAnnualSchoolager();
+//     } else return centerCareAnnualSchoolager();
+// };
+// let childCareAnnualTotal = function () {
+//     if (childcare_needed_bool) {
+//         return childCareAnnualInfant() +
+//             childCareAnnualPreschooler() +
+//             childCareAnnualSchoolager()
+//     } else return 0;
+// };
 
 
 // FOOD FUNCTIONS
 
-let foodAnnualInfant = function () {
-    return low_cost_food_plan_price_per_mo_weber_county_infant * 12 * number_of_infants;
-};
-let foodAnnualPreschooler = function () {
-    return low_cost_food_plan_price_per_mo_weber_county_preschooler * 12 * number_of_preschoolers;
-};
-let foodAnnualSchoolager = function () {
-    return low_cost_food_plan_price_per_mo_weber_county_schoolager * 12 * number_of_schoolagers;
-};
-let foodAnnualTeenager = function () {
-    return low_cost_food_plan_price_per_mo_weber_county_teenager * 12 * number_of_teenagers;
-};
-let foodAnnualAdult = function () {
-    return low_cost_food_plan_price_per_mo_weber_county_adult * 12 * number_of_adults;
-};
+// let foodAnnualInfant = function () {
+//     return low_cost_food_plan_price_per_mo_weber_county_infant * 12 * number_of_infants;
+// };
+// let foodAnnualPreschooler = function () {
+//     return low_cost_food_plan_price_per_mo_weber_county_preschooler * 12 * number_of_preschoolers;
+// };
+// let foodAnnualSchoolager = function () {
+//     return low_cost_food_plan_price_per_mo_weber_county_schoolager * 12 * number_of_schoolagers;
+// };
+// let foodAnnualTeenager = function () {
+//     return low_cost_food_plan_price_per_mo_weber_county_teenager * 12 * number_of_teenagers;
+// };
+// let foodAnnualAdult = function () {
+//     return low_cost_food_plan_price_per_mo_weber_county_adult * 12 * number_of_adults;
+// };
 
-let foodCostAnnualTotal = function () {
-    return foodAnnualAdult() +
-        foodAnnualInfant() +
-        foodAnnualPreschooler() +
-        foodAnnualSchoolager() +
-        foodAnnualTeenager()
-};
+// let foodCostAnnualTotal = function () {
+//     return foodAnnualAdult() +
+//         foodAnnualInfant() +
+//         foodAnnualPreschooler() +
+//         foodAnnualSchoolager() +
+//         foodAnnualTeenager()
+// };
 
 let healthCareMarketplaceOOPInfant = function () {
     return marketplace_oop_infant * number_of_infants;

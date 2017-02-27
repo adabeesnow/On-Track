@@ -158,25 +158,25 @@ let number_of_public_transport_passes_child = null;
 let ehc_gross_income = 21999.30;
 let mhc_gross_income = 19069.30;
 
-let numAdults = function() {
-    return number_of_adults;
-};
+// let numAdults = function() {
+//     return number_of_adults;
+// };
 
-let numInfants = function() {
-    return number_of_infants;
-};
+// let numInfants = function() {
+//     return number_of_infants;
+// };
 
-let numPreschoolers= function() {
-    return number_of_preschoolers;
-};
-
-let numSchoolagers= function() {
-    return number_of_schoolagers;
-};
-
-let numTeenagers = function() {
-    return number_of_teenagers;
-};
+// let numPreschoolers= function() {
+//     return number_of_preschoolers;
+// };
+//
+// let numSchoolagers= function() {
+//     return number_of_schoolagers;
+// };
+//
+// let numTeenagers = function() {
+//     return number_of_teenagers;
+// };
 
 // Taxes!O9
 // let ehcEITC = function () {
@@ -308,10 +308,10 @@ let mhcCalcGross = function() {
     return gross;
 };
 
-let carInsurance6Mo = function() {
-    return (numCars() === 1 ? car_insurance_avg_per_mo_single : car_insurance_avg_per_mo_married * 2);
-    // TODO: Make this handle adult numbers other than 1 or 2.
-};
+// let carInsurance6Mo = function() {
+//     return (numCars() === 1 ? car_insurance_avg_per_mo_single : car_insurance_avg_per_mo_married * 2);
+//     // TODO: Make this handle adult numbers other than 1 or 2.
+// };
 
 let overallCost = function() {  // -1 == 'Standard'
   return    (number_of_bedrooms == -1 ? housingCost() :
