@@ -25,14 +25,14 @@ let totalCostPerCar = function() {
     return car_registration +
         car_emissions +
         car_maintenance +
-        taxOnCarPurchase() +
+        taxOnCarPurchaseYearly() +
         carPaymentYearly() +
         gasYearly();
 };
 
-let totalCostTwoCars = function() {
-    return totalCostPerCar() * 2;
-};
+// let totalCostTwoCars = function() { //Not used
+//     return totalCostPerCar() * 2;
+// };
 
 
 
