@@ -241,3 +241,35 @@ let mhcCalcGross = function() {
 
     return gross;
 };
+
+// Taxes!O6
+let mhcEITC = function () {
+    let credit_amount_list = [];
+    if (numberOfChildren() == 1) {
+        credit_amount_list = credit_amount_single_1_children_list;
+    } else
+    if (numberOfChildren() == 2) {
+        credit_amount_list = credit_amount_single_2_children_list;
+    } else
+    if (numberOfChildren() == 0) {
+        credit_amount_list = credit_amount_single_0_children_list;
+    } else
+    if (numberOfChildren() >= 3) {
+        credit_amount_list = credit_amount_single_3_children_list;
+    }
+    else {
+        return false;
+    }
+
+    let i = 0;
+    while (i <= income_at_least_list.length) {
+        if (i >= income_at_least_list.length) {
+            return false;
+        }
+        if (gross_income > income_at_least_list[i]) {
+            break;
+        }
+        i++;
+    }
+    return credit_amount_list[i];
+};
