@@ -1,7 +1,7 @@
 /**
  * Created by adsal on 2/27/2017.
  */
-
+//generated-standard formulas
 $( document ).ready(function() {
     console.log("annualHousingCosts(): " + annualHousingCosts());
     console.log("annualChildcareCosts(): " + annualChildcareCosts());
@@ -21,3 +21,51 @@ $( document ).ready(function() {
     console.log("grossHourlyIncome(): " + grossHourlyIncome());
     console.log("netHourlyIncome(): " + netHourlyIncome());
 });
+
+//car-insurance formulas
+$( document ).ready(function() {
+    console.log("carInsurance6Mo(): " + carInsurance6Mo());
+    console.log("numberOfCars(): " + numberOfCars());
+});
+
+//childcare-costs formulas
+$( document ).ready(function() {
+    console.log("functionName(): " + functionName());
+});
+
+//cost-by-age formulas
+$( document ).ready(function() {
+    console.log("functionName(): " + functionName());
+});
+
+//cost-of-car-ownership formulas
+$( document ).ready(function() {
+    console.log("functionName(): " + functionName());
+});
+
+//food-costs formulas
+$( document ).ready(function() {
+    console.log("functionName(): " + functionName());
+});
+
+//housing formulas
+$( document ).ready(function() {
+    console.log("functionName(): " + functionName());
+});
+
+//misc formulas
+$( document ).ready(function() {
+    console.log("functionName(): " + functionName());
+});
+
+//taxes-ehc formulas
+$( document ).ready(function() {
+    console.log("functionName(): " + functionName());
+});
+
+//taxes-mhc formulas
+$( document ).ready(function() {
+    console.log("functionName(): " + functionName());
+});
+
+
