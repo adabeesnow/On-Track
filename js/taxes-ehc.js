@@ -6,7 +6,7 @@ let ehcQualifyingChildCareExpenses = function(){
     let num_kids = number_of_infants + number_of_preschoolers + number_of_schoolagers;
     return (
         (num_kids)===0?qualifying_child_care_expense_zero:(
-            (num_kids)==1?qualifying_child_care_expsnse_one:(
+            (num_kids)==1?qualifying_child_care_expense_one:(
                 (num_kids)>1?qualifying_child_care_expense_2ormore:"False")));
 };
 
