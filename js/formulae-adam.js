@@ -313,33 +313,33 @@
 //     // TODO: Make this handle adult numbers other than 1 or 2.
 // };
 
-let overallCost = function() {  // -1 == 'Standard'
-  return    (number_of_bedrooms == -1 ? housingCost() :
-                (number_of_bedrooms == 1 ? annualOneBedAverage() :
-                    (number_of_bedrooms == 2 ? annualTwoBedAverage() :
-                        (number_of_bedrooms == 3 ? annualThreeBedAverage() :
-                            (number_of_bedrooms == 4 ? annualFourBedAverage() :
-                                0
-                            )
-                        )
-                    )
-                )
-            ) +
-            (estimated_babysitting_cost > 0 ? estimated_babysitting_cost :
-                (use_family_care_bool == true ? familyChildCareCost() :
-                    childCareAnnualTotal()
-                )
-            ) +
-            carInsurance() +
-            carOwnership() +
-            (use_marketplace_health_insurance_bool == false ? healthCareEmployerCombinedTotal() : totalMarketplaceHealthCareCost()) +
-            entertainmentCost() +
-            miscCost() +
-            excessiveChildrenCost() +
-            excessiveAdultsCost() +
-            publicTransitCost() +
-            foodCostAnnualTotal()
-};
+// let overallCost = function() {  // -1 == 'Standard'
+//   return    (number_of_bedrooms == -1 ? housingCost() :
+//                 (number_of_bedrooms == 1 ? annualOneBedAverage() :
+//                     (number_of_bedrooms == 2 ? annualTwoBedAverage() :
+//                         (number_of_bedrooms == 3 ? annualThreeBedAverage() :
+//                             (number_of_bedrooms == 4 ? annualFourBedAverage() :
+//                                 0
+//                             )
+//                         )
+//                     )
+//                 )
+//             ) +
+//             (estimated_babysitting_cost > 0 ? estimated_babysitting_cost :
+//                 (use_family_care_bool == true ? familyChildCareCost() :
+//                     childCareAnnualTotal()
+//                 )
+//             ) +
+//             carInsurance() +
+//             carOwnership() +
+//             (use_marketplace_health_insurance_bool == false ? healthCareEmployerCombinedTotal() : totalMarketplaceHealthCareCost()) +
+//             entertainmentCost() +
+//             miscCost() +
+//             excessiveChildrenCost() +
+//             excessiveAdultsCost() +
+//             publicTransitCost() +
+//             foodCostAnnualTotal()
+// };
 
 // let monthlyOneBedAverage = function() {
 //     return (housing_1_bed_84401  +
@@ -383,19 +383,19 @@ let overallCost = function() {  // -1 == 'Standard'
 //     return monthlyFourBedAverage() * 12;
 // };
 
-let familyChildCareCost = function() {
-    return  familyCareAnnualPreschooler() +
-            familyCareAnnualSchoolager() +
-            familyCareAnnualInfant();
-};
+// let familyChildCareCost = function() {
+//     return  familyCareAnnualPreschooler() +
+//             familyCareAnnualSchoolager() +
+//             familyCareAnnualInfant();
+// };
 
-let carInsurance = function() {
-    return numCars() * car_insurance_avg_per_mo_single;
-};
+// let carInsurance = function() {
+//     return numCars() * car_insurance_avg_per_mo_single;
+// };
 
-let carOwnership = function() {
-    return numCars() * totalCostPerCar();
-};
+// let carOwnership = function() {
+//     return numCars() * totalCostPerCar();
+// };
 
 let totalCostPerCar = function() {
     return car_registration +
@@ -430,39 +430,39 @@ let totalCostPerCar = function() {
 //     return totalCostPerCar() * 2;
 // };
 
-let entertainmentCost = function() {
-    return  (familySize() == 1 ? entertainment_household_of_1 :
-                (familySize() == 2 ? entertainment_household_of_2:
-                    (familySize() == 3 ? entertainment_household_of_3 :
-                        (familySize() == 4 ? entertainment_household_of_4 :
-                            entertainment_household_of_5_or_more
-                        )
-                    )
-                )
-            );
-};
-
-let miscCost = function() {
-    return  (familySize() == 1 ? miscOne :
-                (familySize() == 2 ? miscTwo :
-                    (familySize() == 3 ? miscThree :
-                        (familySize() == 4 ? miscFour:
-                            (familySize() == 5 ? miscFiveOrMore():
-                                miscFiveOrMore70kPlus()
-                            )
-                        )
-                    )
-                )
-            );
-};
-
-let excessiveChildrenCost = function() {
-    return excessiveChildren() * 6000;
-};
-
-let excessiveAdultsCost = function() {
-    return excessiveAdults() * 8000;
-};
+// let entertainmentCost = function() {
+//     return  (familySize() == 1 ? entertainment_household_of_1 :
+//                 (familySize() == 2 ? entertainment_household_of_2:
+//                     (familySize() == 3 ? entertainment_household_of_3 :
+//                         (familySize() == 4 ? entertainment_household_of_4 :
+//                             entertainment_household_of_5_or_more
+//                         )
+//                     )
+//                 )
+//             );
+// };
+//
+// let miscCost = function() {
+//     return  (familySize() == 1 ? miscOne :
+//                 (familySize() == 2 ? miscTwo :
+//                     (familySize() == 3 ? miscThree :
+//                         (familySize() == 4 ? miscFour:
+//                             (familySize() == 5 ? miscFiveOrMore():
+//                                 miscFiveOrMore70kPlus()
+//                             )
+//                         )
+//                     )
+//                 )
+//             );
+// };
+//
+// let excessiveChildrenCost = function() {
+//     return excessiveChildren() * 6000;
+// };
+//
+// let excessiveAdultsCost = function() {
+//     return excessiveAdults() * 8000;
+// };
 
 // let miscOne = function() {
 //     return  misc_for_1_15000_to_19999 +

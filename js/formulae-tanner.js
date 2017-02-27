@@ -162,9 +162,9 @@
 //     return number_of_infants + number_of_preschoolers + number_of_schoolagers + number_of_teenagers
 // };
 
-let numChildrenSchoolageAndUnder = function () {
-    return number_of_infants + number_of_preschoolers + number_of_schoolagers;
-};
+// let numChildrenSchoolageAndUnder = function () {
+//     return number_of_infants + number_of_preschoolers + number_of_schoolagers;
+// };
 
 // B9
 // let familySize = function () {
@@ -364,81 +364,81 @@ let numChildrenSchoolageAndUnder = function () {
 //         foodAnnualTeenager()
 // };
 
-let healthCareMarketplaceOOPInfant = function () {
-    return marketplace_oop_infant * number_of_infants;
-};
-let healthCareMarketplaceOOPPreschooler = function () {
-    return marketplace_oop_preschooler * number_of_preschoolers;
-};
-let healthCareMarketplaceOOPSchoolager = function () {
-    return marketplace_oop_schoolager * number_of_schoolagers;
-};
-let healthCareMarketplaceOOPTeenager = function () {
-    return marketplace_oop_teenager * number_of_teenagers;
-};
-let healthCareMarketplaceOOPAdult = function () {
-    return marketplace_oop_adult * number_of_adults;
-};
-let healthCareMarketplaceOOPTotal = function () {
-    return healthCareMarketplaceOOPInfant() +
-        healthCareMarketplaceOOPPreschooler() +
-        healthCareMarketplaceOOPSchoolager() +
-        healthCareMarketplaceOOPTeenager() +
-        healthCareMarketplaceOOPAdult();
-};
+// let healthCareMarketplaceOOPInfant = function () {
+//     return marketplace_oop_infant * number_of_infants;
+// };
+// let healthCareMarketplaceOOPPreschooler = function () {
+//     return marketplace_oop_preschooler * number_of_preschoolers;
+// };
+// let healthCareMarketplaceOOPSchoolager = function () {
+//     return marketplace_oop_schoolager * number_of_schoolagers;
+// };
+// let healthCareMarketplaceOOPTeenager = function () {
+//     return marketplace_oop_teenager * number_of_teenagers;
+// };
+// let healthCareMarketplaceOOPAdult = function () {
+//     return marketplace_oop_adult * number_of_adults;
+// };
+// let healthCareMarketplaceOOPTotal = function () {
+//     return healthCareMarketplaceOOPInfant() +
+//         healthCareMarketplaceOOPPreschooler() +
+//         healthCareMarketplaceOOPSchoolager() +
+//         healthCareMarketplaceOOPTeenager() +
+//         healthCareMarketplaceOOPAdult();
+// };
 
-let healthCareEmployerOOPInfant = function () {
-    return employer_oop_infant * number_of_infants;
-};
-let healthCareEmployerOOPPreschooler = function () {
-    return employer_oop_preschooler * number_of_preschoolers;
-};
-let healthCareEmployerOOPSchoolager = function () {
-    return employer_oop_schoolager * number_of_schoolagers;
-};
-let healthCareEmployerOOPTeenager = function () {
-    return employer_oop_teenager * number_of_teenagers;
-};
-let healthCareEmployerOOPAdult = function () {
-    return employer_oop_adult * number_of_adults;
-};
-let healthCareEmployerOOPTotal = function () {
-    return healthCareEmployerOOPInfant() +
-        healthCareEmployerOOPPreschooler() +
-        healthCareEmployerOOPSchoolager() +
-        healthCareEmployerOOPTeenager() +
-        healthCareEmployerOOPAdult();
-};
+// let healthCareEmployerOOPInfant = function () {
+//     return employer_oop_infant * number_of_infants;
+// };
+// let healthCareEmployerOOPPreschooler = function () {
+//     return employer_oop_preschooler * number_of_preschoolers;
+// };
+// let healthCareEmployerOOPSchoolager = function () {
+//     return employer_oop_schoolager * number_of_schoolagers;
+// };
+// let healthCareEmployerOOPTeenager = function () {
+//     return employer_oop_teenager * number_of_teenagers;
+// };
+// let healthCareEmployerOOPAdult = function () {
+//     return employer_oop_adult * number_of_adults;
+// };
+// let healthCareEmployerOOPTotal = function () {
+//     return healthCareEmployerOOPInfant() +
+//         healthCareEmployerOOPPreschooler() +
+//         healthCareEmployerOOPSchoolager() +
+//         healthCareEmployerOOPTeenager() +
+//         healthCareEmployerOOPAdult();
+// };
 
-let marketplaceHealthCareAdult = function () {
-    return adult_marketplace_cost * number_of_adults;
-};
-let marketplaceHealthCareChild = function () {
-    return child_marketplace_cost * numChildren();
-};
+// let marketplaceHealthCareAdult = function () {
+//     return adult_marketplace_cost * number_of_adults;
+// };
+// let marketplaceHealthCareChild = function () {
+//     return child_marketplace_cost * numChildren();
+// };
+//
+// let marketplaceHealthCareCostBeforeOOP = function () {
+//     return marketplaceHealthCareChild() + marketplaceHealthCareAdult();
+// };
+//
+// let totalMarketplaceHealthCareCost = function () {
+//     return marketplaceHealthCareAdult() + marketplaceHealthCareChild() + healthCareMarketplaceOOPTotal();
+// };
 
-let marketplaceHealthCareCostBeforeOOP = function () {
-    return marketplaceHealthCareChild() + marketplaceHealthCareAdult();
-};
+// let healthCareEmployerCost = function () {
+//     let size = familySize();
+//     if (size == 1) {
+//         return employer_health_premium_in_avg_single
+//     } else if (size == 2) {
+//         return employer_health_premium_in_avg_couple
+//     } else {
+//         return employer_health_premium_in_avg_family
+//     }
+// };
 
-let totalMarketplaceHealthCareCost = function () {
-    return marketplaceHealthCareAdult() + marketplaceHealthCareChild() + healthCareMarketplaceOOPTotal();
-};
-
-let healthCareEmployerCost = function () {
-    let size = familySize();
-    if (size == 1) {
-        return employer_health_premium_in_avg_single
-    } else if (size == 2) {
-        return employer_health_premium_in_avg_couple
-    } else {
-        return employer_health_premium_in_avg_family
-    }
-};
-
-let healthCareEmployerCombinedTotal = function () {
-    return healthCareEmployerCost() + healthCareEmployerOOPTotal();
-};
+// let healthCareEmployerCombinedTotal = function () {
+//     return healthCareEmployerCost() + healthCareEmployerOOPTotal();
+// };
 
 // let mhcQualifyingChildCareExpenses = function () {
 //     return qualifyingChildCareExpenses();
@@ -642,16 +642,16 @@ let healthCareEmployerCombinedTotal = function () {
 //     return mhc_gross_income - mhcTotalTax();
 // };
 
-let publicTransitAdult = function(){
-    return number_of_public_transport_passes_adult * public_transportation_adult_cost
-};
-let publicTransitSchoolager = function(){
-    return number_of_public_transport_passes_child * public_transportation_child_cost
-};
-
-let publicTransitCost = function(){
-    return publicTransitAdult() + publicTransitSchoolager()
-};
+// let publicTransitAdult = function(){
+//     return number_of_public_transport_passes_adult * public_transportation_adult_cost
+// };
+// let publicTransitSchoolager = function(){
+//     return number_of_public_transport_passes_child * public_transportation_child_cost
+// };
+//
+// let publicTransitCost = function(){
+//     return publicTransitAdult() + publicTransitSchoolager()
+// };
 
 // let annualGrossIncome = function(){
 //     if(use_marketplace_health_insurance_bool){
