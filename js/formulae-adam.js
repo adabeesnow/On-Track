@@ -397,14 +397,14 @@
 //     return numCars() * totalCostPerCar();
 // };
 
-let totalCostPerCar = function() {
-    return car_registration +
-            car_emissions +
-            car_maintenance +
-            taxOnCarPurchase() +
-            carPaymentYearly() +
-            gasYearly();
-};
+// let totalCostPerCar = function() {
+//     return car_registration +
+//             car_emissions +
+//             car_maintenance +
+//             taxOnCarPurchase() +
+//             carPaymentYearly() +
+//             gasYearly();
+// };
 
 // let taxOnCarPurchase = function() {
 //     return car_miles_per_gallon * 0.071;

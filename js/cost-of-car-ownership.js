@@ -21,6 +21,15 @@ let gasYearly = function() {
     return car_gas_price * (car_miles / car_miles_per_gallon);
 };
 
+let totalCostPerCar = function() {
+    return car_registration +
+        car_emissions +
+        car_maintenance +
+        taxOnCarPurchase() +
+        carPaymentYearly() +
+        gasYearly();
+};
+
 let totalCostTwoCars = function() {
     return totalCostPerCar() * 2;
 };
