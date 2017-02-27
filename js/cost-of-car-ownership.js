@@ -2,7 +2,7 @@
  * Created by bpalm_000 on 2/22/2017.
  */
 let taxOnCarPurchase = function() {
-    return car_miles_per_gallon * 0.071;
+    return car_price * 0.071;
 };
 
 let carPaymentMonthly = function() {
