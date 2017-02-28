@@ -73,12 +73,12 @@ let annualNetIncome = function(){
         return mhcNetYearlyIncome()
     }
     else{
-        return netYearlyIncome()
+        return ehcNetYearlyIncome()
     }
 };
 
 let annualTotalExpenses = function(){
-    return(annualHousingCosts + annualChildcareCosts + annualFoodCosts + annualCarInsurance + annualCarOwnership +
-    annualPublicTransportation + annualHealthInsurance + annualOutOfPocketCosts + annualEntertainmentCosts + annualMiscellaneousCosts);
+    return(annualHousingCosts() + annualChildcareCosts() + annualFoodCosts() + annualCarInsurance() + annualCarOwnership() +
+    annualPublicTransportation() + annualHealthInsurance() + annualOutOfPocketCosts() + annualEntertainmentCosts() + annualMiscellaneousCosts());
 };
 

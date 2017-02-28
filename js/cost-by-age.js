@@ -122,8 +122,9 @@ let overallCost = function() {  // -1 == 'Standard'
 let housingCost = function () {
     let total = 0;
     let beds = 0;
+    let numChildren = numChildren();
     if (number_of_bedrooms == -1) {
-        beds = Math.ceil(number_of_adults / 2) + Math.ceil(numChildren() / 2)
+        beds = Math.ceil(number_of_adults / 2) + Math.ceil(numChildren / 2)
     }
     else beds = number_of_bedrooms;
 

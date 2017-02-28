@@ -11,7 +11,7 @@ let ehcQualifyingChildCareExpenses = function(){
 };
 
 let ehcFederalPayrollTax = function(){
-    return(federal_payroll_tax_multiplier * gross_income);
+    return(federal_payroll_tax_multiplier * ehc_gross_income);
 };
 
 let ehcFederalTaxOwed = function(){
@@ -28,7 +28,7 @@ let ehcTotalExpenses = function(){
 };
 
 let ehcSavings1PercentGross = function() {
-    return gross_income * 0.01;
+    return ehc_gross_income * 0.01;
 };
 
 let ehcTotalExpensesPlusSavings = function() {
@@ -40,7 +40,7 @@ let ehcTotalTax = function() {
 };
 
 let ehcNetYearlyIncome = function() {
-    return gross_income - ehcTotalTax();
+    return ehc_gross_income - ehcTotalTax();
 };
 
 //use CostByAge!B9 'familySize' formula
@@ -61,7 +61,7 @@ let ehcStateExemptions = function() {
 };
 
 let ehcGrossTaxablefederal = function() {
-    return ((gross_income-ehcFederalExemptions()-ehcStandardDeduction()<0)?0:gross_income-ehcFederalExemptions()-ehcStandardDeduction());
+    return ((ehc_gross_income-ehcFederalExemptions()-ehcStandardDeduction()<0)?0:ehc_gross_income-ehcFederalExemptions()-ehcStandardDeduction());
 };
 
 let ehcUtahStateCreditValueHolder = function() {
@@ -69,11 +69,11 @@ let ehcUtahStateCreditValueHolder = function() {
 };
 
 let ehcStateTaxBeforeCredits = function () {
-    return gross_income * 0.05;
+    return ehc_gross_income * 0.05;
 };
 
 let ehcGrossTaxFedUtahStateCreditValueHold = function () {
-    return (gross_income-ehcUtahStateCreditValueHolder()>0?gross_income-ehcUtahStateCreditValueHolder():0);
+    return (ehc_gross_income-ehcUtahStateCreditValueHolder()>0?ehc_gross_income-ehcUtahStateCreditValueHolder():0);
 };
 
 let ehcCreditBeforePhaseOut = function () {
@@ -114,7 +114,10 @@ let ehcChildTaxCredit = function () {
 };
 
 let ehcAdjustedChildTaxCredit = function () {
-    return mhcAdjustedChildTaxCredit();
+    return Math.max(
+        ehcAdjustedChildTaxCredit(),
+        ehcFederalTaxesLessChildCareTaxCredit()
+    );
 };
 
 
@@ -144,7 +147,7 @@ let ehcEITC = function () {
         if (i >= income_at_least_list.length) {
             return false;
         }
-        if (gross_income > income_at_least_list[i]) {
+        if (ehc_gross_income > income_at_least_list[i]) {
             break;
         }
         i++;
@@ -161,21 +164,34 @@ let ehcAdjustedChildTaxCreditUsed = function () {
 };
 
 let ehcAdditionalChildTaxCredit = function () {
-    return ((ehcNumberOfChildren<=3?(((((gross_income-3000)<=0?0:(gross_income-3000))*0.15))<((((ehcNumberOfChildren*1000)
+    return ((ehcNumberOfChildren<=3?(((((ehc_gross_income-3000)<=0?0:(ehc_gross_income-3000))*0.15))<((((ehcNumberOfChildren*1000)
     -ehcAdjustedChildTaxCreditUsed)<=0?0:((ehcNumberOfChildren*1000)-ehcAdjustedChildTaxCreditUsed)))?
-        (((gross_income-3000)<=0?0:(gross_income-3000))*0.15):((((ehcNumberOfChildren*1000)-ehcAdjustedChildTaxCreditUsed)<=0?0:
-        ((ehcNumberOfChildren*1000)-ehcAdjustedChildTaxCreditUsed)))):(((gross_income-3000)*0.15)>=((ehcNumberOfChildren*1000)
-    -ehcAdjustedChildTaxCreditUsed)?((ehcNumberOfChildren*1000)-ehcAdjustedChildTaxCreditUsed):(((((0.0765*gross_income)-ehcEITC)<0?0:
-        ((0.0765*gross_income)-ehcEITC))>(((gross_income-3000)<=0?0:(gross_income-3000))*0.15)?(((0.0765*gross_income)-ehcEITC)<0?0:
-        (((0.0765*gross_income)-ehcEITC))):(((gross_income-3000)<=0?0:(gross_income-3000))*0.15))<((((ehcNumberOfChildren*1000)
-    -ehcAdjustedChildTaxCreditUsed)<=0?0:((ehcNumberOfChildren*1000)-ehcAdjustedChildTaxCreditUsed)))?((((0.0765*gross_income)-ehcEITC)<0?0:
-        ((0.0765*gross_income)-ehcEITC))>(((gross_income-3000)<=0?0:(gross_income-3000))*0.15)?(((0.0765*gross_income)-ehcEITC)
-    <0?0:(((0.0765*gross_income)-ehcEITC))):(((gross_income-3000)<=0?0:(gross_income-3000))*0.15)):((ehcNumberOfChildren*1000)
+        (((ehc_gross_income-3000)<=0?0:(ehc_gross_income-3000))*0.15):((((ehcNumberOfChildren*1000)-ehcAdjustedChildTaxCreditUsed)<=0?0:
+        ((ehcNumberOfChildren*1000)-ehcAdjustedChildTaxCreditUsed)))):(((ehc_gross_income-3000)*0.15)>=((ehcNumberOfChildren*1000)
+    -ehcAdjustedChildTaxCreditUsed)?((ehcNumberOfChildren*1000)-ehcAdjustedChildTaxCreditUsed):(((((0.0765*ehc_gross_income)-ehcEITC)<0?0:
+        ((0.0765*ehc_gross_income)-ehcEITC))>(((ehc_gross_income-3000)<=0?0:(ehc_gross_income-3000))*0.15)?(((0.0765*ehc_gross_income)-ehcEITC)<0?0:
+        (((0.0765*ehc_gross_income)-ehcEITC))):(((ehc_gross_income-3000)<=0?0:(ehc_gross_income-3000))*0.15))<((((ehcNumberOfChildren*1000)
+    -ehcAdjustedChildTaxCreditUsed)<=0?0:((ehcNumberOfChildren*1000)-ehcAdjustedChildTaxCreditUsed)))?((((0.0765*ehc_gross_income)-ehcEITC)<0?0:
+        ((0.0765*ehc_gross_income)-ehcEITC))>(((ehc_gross_income-3000)<=0?0:(ehc_gross_income-3000))*0.15)?(((0.0765*ehc_gross_income)-ehcEITC)
+    <0?0:(((0.0765*ehc_gross_income)-ehcEITC))):(((ehc_gross_income-3000)<=0?0:(ehc_gross_income-3000))*0.15)):((ehcNumberOfChildren*1000)
     -ehcAdjustedChildTaxCreditUsed)))));
 };
 
 let ehcChildCareTaxCredit = function () {
-    return mhcChildCareTaxCredit(); //uses mhcFunction
+    let base_level = 43000;
+
+    if (ehc_gross_income > 75000) {
+        return 0
+    } else {
+        let difference_points = base_level - ehc_gross_income;
+        if (difference_points < 0) {
+            return .2;
+        }
+        else {
+            difference_points = Math.floor(difference_points / 2000);
+            return difference_points * .01 + .2;
+        }
+    }
 };
 
 let ehcSumOfNonRefundableTaxCredits = function () {
@@ -201,7 +217,7 @@ let ehcUtahTaxCredit = function () {
     return (ehcPhaseOutX>ehcCreditBeforePhaseOut?0:ehcCreditBeforePhaseOut()-ehcPhaseOutX);
 };
 
-// TODO: Make mhc/ehcCalcGross functions change the actual variables, not local ones.
+// TODO: Make hcCalcGross functions change the actual variables, not local ones.
 /**
  * Performs a goalSeek function 6x for accuracy, returns the new ehc_gross_income value.
  * Changing cell:   gross
@@ -218,7 +234,7 @@ let ehcCalcGross = function() {
     for (let i = 0; i < 6; i++) {
         gross = goalSeek({
             Func: net,                      // The function which should return the value of the goal cell.
-            aFuncParams: [gross, tax()],    // The params to be passed to the function above.
+            aFuncParams: [gross, tax],      // The params to be passed to the function above.
             oFuncArgTarget: {
                 Position: 0                 // The position in the aFuncParams array of the value which will be changed.
             },
@@ -229,8 +245,8 @@ let ehcCalcGross = function() {
     }
 
     console.log('gross: ' + gross);
-    console.log('tax: ' + tax());
-    console.log('net: ' + net(gross, tax()));
+    console.log('tax: ' + tax);
+    console.log('net: ' + net(gross, tax));
 
     return gross;
 };
