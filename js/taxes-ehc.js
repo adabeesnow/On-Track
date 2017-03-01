@@ -15,11 +15,12 @@ let ehcFederalPayrollTax = function(){
 };
 
 let ehcFederalTaxOwed = function(){
-    return ehcFedTaxOwedLessNonRefundableTax() - ehcFedDeductionPlusStateExemption();
+    return ehcFedTaxOwedLessNonRefundableTax() - ehcSumOfRefundableTaxCredits();
 };
 
 let ehcUtahTaxesOwed = function(){
-    return ((ehcStateTaxBeforeCredits()-ehcUtahTaxCredit())<0?utah_taxes_owed_less_than_zero:(ehcStateTaxBeforeCredits()-ehcUtahTaxCredit()));
+    return ((ehcStateTaxBeforeCredits()-ehcUtahTaxCredit())<0?utah_taxes_owed_less_than_zero:
+                (ehcStateTaxBeforeCredits()-ehcUtahTaxCredit()));
 };
 
 //Use CostByAge!B19 formula 'overallCost'
@@ -31,7 +32,7 @@ let ehcSavings1PercentGross = function() {
     return ehc_gross_income * 0.01;
 };
 
-let ehcTotalExpensesPlusSavings = function() {
+let ehcTotalExpensesPlusSavings = function() {  // Used in goalSeek (ehcEITC) function.
     return ehcSavings1PercentGross() + ehcTotalExpenses();
 };
 
@@ -45,7 +46,7 @@ let ehcNetYearlyIncome = function() {
 
 //use CostByAge!B9 'familySize' formula
 let ehcFamilySize = function() {
-    return 'familySize';
+    return familySize();
 };
 
 let ehcStandardDeduction = function() {
@@ -61,7 +62,8 @@ let ehcStateExemptions = function() {
 };
 
 let ehcGrossTaxablefederal = function() {
-    return ((ehc_gross_income-ehcFederalExemptions()-ehcStandardDeduction()<0)?0:ehc_gross_income-ehcFederalExemptions()-ehcStandardDeduction());
+    return ((ehc_gross_income-ehcFederalExemptions()-ehcStandardDeduction()<0)?0:
+                ehc_gross_income-ehcFederalExemptions()-ehcStandardDeduction());
 };
 
 let ehcUtahStateCreditValueHolder = function() {
@@ -109,13 +111,13 @@ let ehcFederalTaxesOwedBeforeCredits = function () {
                         (ehcGrossTaxablefederal()-823000)*0.396+1845+8467.5+26650+55188+146652))))));
 };
 
-let ehcChildTaxCredit = function () {
+let ehcChildTaxCredit = function () {   // Documentation lists this as being used in ehcAdjustedChildTaxCredit (below)
     return ehcNumberOfChildren() * 1000;
 };
 
 let ehcAdjustedChildTaxCredit = function () {
     return Math.max(
-        ehcAdjustedChildTaxCredit(),
+        ehcChildTaxCredit(),    // TODO: this was ehcAdjustedChildTaxCredit (same function)?
         ehcFederalTaxesLessChildCareTaxCredit()
     );
 };
@@ -156,25 +158,27 @@ let ehcEITC = function () {
 };
 
 let ehcFederalTaxesLessChildCareTaxCredit = function () {
-    return (ehcFederalTaxesOwedBeforeCredits<ehcChildCareTaxCredit?0:ehcFederalTaxesOwedBeforeCredits-ehcChildCareTaxCredit);
+    return (ehcFederalTaxesOwedBeforeCredits()<ehcChildCareTaxCredit()?0:
+                ehcFederalTaxesOwedBeforeCredits()-ehcChildCareTaxCredit());
 };
 
 let ehcAdjustedChildTaxCreditUsed = function () {
-    return (ehcAdjustedChildTaxCredit<ehcFederalTaxesLessChildCareTaxCredit?ehcAdjustedChildTaxCredit:ehcFederalTaxesLessChildCareTaxCredit);
+    return (ehcAdjustedChildTaxCredit()<ehcFederalTaxesLessChildCareTaxCredit()?ehcAdjustedChildTaxCredit():
+                ehcFederalTaxesLessChildCareTaxCredit());
 };
 
 let ehcAdditionalChildTaxCredit = function () {
-    return ((ehcNumberOfChildren<=3?(((((ehc_gross_income-3000)<=0?0:(ehc_gross_income-3000))*0.15))<((((ehcNumberOfChildren*1000)
-    -ehcAdjustedChildTaxCreditUsed)<=0?0:((ehcNumberOfChildren*1000)-ehcAdjustedChildTaxCreditUsed)))?
-        (((ehc_gross_income-3000)<=0?0:(ehc_gross_income-3000))*0.15):((((ehcNumberOfChildren*1000)-ehcAdjustedChildTaxCreditUsed)<=0?0:
-        ((ehcNumberOfChildren*1000)-ehcAdjustedChildTaxCreditUsed)))):(((ehc_gross_income-3000)*0.15)>=((ehcNumberOfChildren*1000)
-    -ehcAdjustedChildTaxCreditUsed)?((ehcNumberOfChildren*1000)-ehcAdjustedChildTaxCreditUsed):(((((0.0765*ehc_gross_income)-ehcEITC)<0?0:
-        ((0.0765*ehc_gross_income)-ehcEITC))>(((ehc_gross_income-3000)<=0?0:(ehc_gross_income-3000))*0.15)?(((0.0765*ehc_gross_income)-ehcEITC)<0?0:
-        (((0.0765*ehc_gross_income)-ehcEITC))):(((ehc_gross_income-3000)<=0?0:(ehc_gross_income-3000))*0.15))<((((ehcNumberOfChildren*1000)
-    -ehcAdjustedChildTaxCreditUsed)<=0?0:((ehcNumberOfChildren*1000)-ehcAdjustedChildTaxCreditUsed)))?((((0.0765*ehc_gross_income)-ehcEITC)<0?0:
-        ((0.0765*ehc_gross_income)-ehcEITC))>(((ehc_gross_income-3000)<=0?0:(ehc_gross_income-3000))*0.15)?(((0.0765*ehc_gross_income)-ehcEITC)
-    <0?0:(((0.0765*ehc_gross_income)-ehcEITC))):(((ehc_gross_income-3000)<=0?0:(ehc_gross_income-3000))*0.15)):((ehcNumberOfChildren*1000)
-    -ehcAdjustedChildTaxCreditUsed)))));
+    return ((ehcNumberOfChildren()<=3?(((((ehc_gross_income-3000)<=0?0:(ehc_gross_income-3000))*0.15))<((((ehcNumberOfChildren()*1000)
+    -ehcAdjustedChildTaxCreditUsed())<=0?0:((ehcNumberOfChildren()*1000)-ehcAdjustedChildTaxCreditUsed())))?
+        (((ehc_gross_income-3000)<=0?0:(ehc_gross_income-3000))*0.15):((((ehcNumberOfChildren()*1000)-ehcAdjustedChildTaxCreditUsed())<=0?0:
+        ((ehcNumberOfChildren()*1000)-ehcAdjustedChildTaxCreditUsed())))):(((ehc_gross_income-3000)*0.15)>=((ehcNumberOfChildren()*1000)
+    -ehcAdjustedChildTaxCreditUsed())?((ehcNumberOfChildren()*1000)-ehcAdjustedChildTaxCreditUsed()):(((((0.0765*ehc_gross_income)-ehcEITC())<0?0:
+        ((0.0765*ehc_gross_income)-ehcEITC()))>(((ehc_gross_income-3000)<=0?0:(ehc_gross_income-3000))*0.15)?(((0.0765*ehc_gross_income)-ehcEITC())<0?0:
+        (((0.0765*ehc_gross_income)-ehcEITC()))):(((ehc_gross_income-3000)<=0?0:(ehc_gross_income-3000))*0.15))<((((ehcNumberOfChildren()*1000)
+    -ehcAdjustedChildTaxCreditUsed())<=0?0:((ehcNumberOfChildren()*1000)-ehcAdjustedChildTaxCreditUsed())))?((((0.0765*ehc_gross_income)-ehcEITC())<0?0:
+        ((0.0765*ehc_gross_income)-ehcEITC()))>(((ehc_gross_income-3000)<=0?0:(ehc_gross_income-3000))*0.15)?(((0.0765*ehc_gross_income)-ehcEITC())
+    <0?0:(((0.0765*ehc_gross_income)-ehcEITC()))):(((ehc_gross_income-3000)<=0?0:(ehc_gross_income-3000))*0.15)):((ehcNumberOfChildren()*1000)
+    -ehcAdjustedChildTaxCreditUsed())))));
 };
 
 let ehcChildCareTaxCredit = function () {
@@ -195,7 +199,7 @@ let ehcChildCareTaxCredit = function () {
 };
 
 let ehcSumOfNonRefundableTaxCredits = function () {
-    return ehcChildCareTaxCredit + ehcAdjustedChildTaxCredit;
+    return ehcChildCareTaxCredit() + ehcAdjustedChildTaxCredit();
 };
 
 let ehcSumOfRefundableTaxCredits = function () {
@@ -206,18 +210,19 @@ let ehcSumOfRefundableTaxCredits = function () {
 };
 
 let ehcFedTaxOwedLessNonRefundableTax = function () {
-    return (ehcFederalTaxesOwedBeforeCredits-ehcSumOfNonRefundableTaxCredits<0?0:ehcFederalTaxesOwedBeforeCredits-ehcSumOfNonRefundableTaxCredits);
+    return (ehcFederalTaxesOwedBeforeCredits()-ehcSumOfNonRefundableTaxCredits()<0?0:
+                ehcFederalTaxesOwedBeforeCredits()-ehcSumOfNonRefundableTaxCredits());
 };
 
-let ehcFedDeductionPlusStateExemption = function () {
-    return (ehcStateExemptions+ehcStandardDeduction) * 0.06;
+let ehcFedDeductionPlusStateExemption = function () {   // Not used in original spreadsheet.
+    return (ehcStateExemptions+ehcStandardDeduction()) * 0.06;
 };
 
 let ehcUtahTaxCredit = function () {
-    return (ehcPhaseOutX>ehcCreditBeforePhaseOut?0:ehcCreditBeforePhaseOut()-ehcPhaseOutX);
+    return (ehcPhaseOutX()>ehcCreditBeforePhaseOut()?0:ehcCreditBeforePhaseOut()-ehcPhaseOutX());
 };
 
-// TODO: Make hcCalcGross functions change the actual variables, not local ones.
+// TODO: Make ehcCalcGross function change the actual variables, not local ones.
 /**
  * Performs a goalSeek function 6x for accuracy, returns the new ehc_gross_income value.
  * Changing cell:   gross
@@ -226,10 +231,14 @@ let ehcUtahTaxCredit = function () {
  */
 let ehcCalcGross = function() {
     let gross = ehc_gross_income;
-    let expense = ehcTotalExpenses();
-    // let net = ehcNetYearlyIncome();
-    let net = function(gross, tax) { return gross-tax; };
+    let expense = ehcTotalExpensesPlusSavings();
     let tax = ehcTotalTax();
+    let net = function(gross, tax) { return gross-tax; };
+
+    console.log('INIT gross: ' + gross);
+    console.log('INIT tax: ' + tax);
+    console.log('INIT net: ' + net(gross, tax));
+
 
     for (let i = 0; i < 6; i++) {
         gross = goalSeek({
@@ -244,9 +253,9 @@ let ehcCalcGross = function() {
         });
     }
 
-    console.log('gross: ' + gross);
-    console.log('tax: ' + tax);
-    console.log('net: ' + net(gross, tax));
+    console.log('CALC gross: ' + gross);
+    console.log('CALC tax: ' + tax);
+    console.log('CALC net: ' + net(gross, tax));
 
     return gross;
 };

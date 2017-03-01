@@ -23,10 +23,7 @@ let family_care_avg_kindergarten_in = 412.79;
 let family_care_avg_kindergarten_out = 437.43;
 let family_care_avg_schoolage_in = 384.65;
 let family_care_avg_schoolage_out = 439.08;
-let household_income_as_percentage_of_federal_poverty_line_list = {};
-let applicable_figure_list = {};
 // let gross_income = 21999.30; use ehc_gross_income
-let family_size_list = {};
 let poverty_level_list = [11670, 15730, 19790, 23850, 27910, 31970, 36030, 40090];
 let housing_1_bed_84401 = 550.00;
 let housing_1_bed_84403 = 560.00;
@@ -116,6 +113,9 @@ let qualifying_child_care_expense_zero = 0;
 let qualifying_child_care_expense_one = 3000;
 let qualifying_child_care_expense_2ormore = 6000;
 let utah_taxes_owed_less_than_zero = 0;
+let household_income_as_percentage_of_federal_poverty_line_list = [];
+let applicable_figure_list = [];
+let family_size_list = [];
 
 // Out of Pocket marketplace costs
 let marketplace_oop_infant = 46.74;

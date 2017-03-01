@@ -68,16 +68,16 @@ let foodAnnualAdult = function () {
 };
 
 let numChildren = function () {
-    return number_of_infants + number_of_preschoolers + number_of_schoolagers + number_of_teenagers
+    return number_of_infants + number_of_preschoolers + number_of_schoolagers + number_of_teenagers;
 };
 
 let familySize = function () {
-    return number_of_infants + number_of_preschoolers + number_of_schoolagers + number_of_teenagers + number_of_adults
+    return number_of_infants + number_of_preschoolers + number_of_schoolagers + number_of_teenagers + number_of_adults;
 };
 
 let excessiveChildren = function () {
-    numChildren = numChildren();
-    return Math.max(0, numChildren - 5);
+    let num_kids = numChildren();
+    return Math.max(0, num_kids - 5);
 };
 
 //B12
@@ -122,9 +122,9 @@ let overallCost = function() {  // -1 == 'Standard'
 let housingCost = function () {
     let total = 0;
     let beds = 0;
-    let numChildren = numChildren();
+    let num_kids = numChildren();
     if (number_of_bedrooms == -1) {
-        beds = Math.ceil(number_of_adults / 2) + Math.ceil(numChildren / 2)
+        beds = Math.ceil(number_of_adults / 2) + Math.ceil(num_kids / 2)
     }
     else beds = number_of_bedrooms;
 

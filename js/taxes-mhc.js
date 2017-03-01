@@ -249,7 +249,7 @@ let mhcEITC = function () {
  */
 let mhcCalcGross = function() {
     let gross = mhc_gross_income;
-    let expense = mhcTotalExpenses();
+    let expense = mhcTotalExpensesPlusSavings();
     // let net = ehcNetYearlyIncome();
     let net = function(gross, tax) { return gross-tax; };
     let tax = mhcTotalTax();
