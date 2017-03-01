@@ -16,4 +16,3 @@ let use_marketplace_health_insurance_bool = false;
 let number_of_cars = -1;
 let number_of_public_transport_passes_adult = 0;
 let number_of_public_transport_passes_child = 0;
-
