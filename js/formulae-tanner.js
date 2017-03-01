@@ -190,7 +190,7 @@
 
 
 // C16
-// let housingCost = function () {
+// let housingCostAutomatic = function () {
 //     let total = 0;
 //     let beds = 0;
 //     if (number_of_bedrooms == -1) {

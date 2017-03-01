@@ -314,7 +314,7 @@
 // };
 
 // let overallCost = function() {  // -1 == 'Standard'
-//   return    (number_of_bedrooms == -1 ? housingCost() :
+//   return    (number_of_bedrooms == -1 ? housingCostAutomatic() :
 //                 (number_of_bedrooms == 1 ? annualOneBedAverage() :
 //                     (number_of_bedrooms == 2 ? annualTwoBedAverage() :
 //                         (number_of_bedrooms == 3 ? annualThreeBedAverage() :

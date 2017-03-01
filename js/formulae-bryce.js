@@ -169,7 +169,7 @@
 // };
 
 // let annualHousingCosts = function() {
-//     return (number_of_bedrooms==-1?housingCost():(number_of_bedrooms==1?annualOneBedAverage():
+//     return (number_of_bedrooms==-1?housingCostAutomatic():(number_of_bedrooms==1?annualOneBedAverage():
 //     (number_of_bedrooms==2?annualTwoBedAverage():(number_of_bedrooms==3?annualThreeBedAverage():
 //         (number_of_bedrooms==4?annualFourBedAverage:0)))));
 // };

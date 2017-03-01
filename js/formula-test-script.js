@@ -3,7 +3,7 @@
  */
 
 //generated-standard formulas
-$( document ).ready(function() {
+$(document).ready(function () {
     number_of_adults = 2;
     number_of_infants = 1;
     number_of_preschoolers = 1;
@@ -14,8 +14,13 @@ $( document ).ready(function() {
     $.ajax({
         url: 'http://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/',
         method: 'GET',
-        success: function(response) {
-            parsedJSON = $.parseJSON( response );
+        success: function (response) {
+            parsedJSON = $.parseJSON(response);
+            parsedJSON = parsedJSON.sort(
+                function (a, b) {
+                    return alphanum(a.entryName.replace(/\D/g, ''), b.entryName.replace(/\D/g, ''));
+                }
+            );
             for (let i = 0; i < parsedJSON.length; i++) {
                 if (parsedJSON[i].entryName.includes("single_no_children")) {
                     credit_amount_single_0_children_list.push(parsedJSON[i].entryValue);
@@ -42,9 +47,22 @@ $( document ).ready(function() {
                     credit_amount_married_filing_jointly_3_children_list.push(parsedJSON[i].entryValue);
                 }
             }
+
+            credit_amount_single_0_children_list = credit_amount_single_0_children_list.slice(1, credit_amount_single_0_children_list.length);
+            credit_amount_single_1_children_list = credit_amount_single_1_children_list.slice(1, credit_amount_single_1_children_list.length);
+            credit_amount_single_2_children_list = credit_amount_single_2_children_list.slice(1, credit_amount_single_2_children_list.length);
+            credit_amount_single_3_children_list = credit_amount_single_3_children_list.slice(1, credit_amount_single_3_children_list.length);
+            credit_amount_married_filing_jointly_0_children_list = credit_amount_married_filing_jointly_0_children_list.slice(1, credit_amount_married_filing_jointly_0_children_list.length);
+            credit_amount_married_filing_jointly_1_children_list = credit_amount_married_filing_jointly_1_children_list.slice(1, credit_amount_married_filing_jointly_1_children_list.length);
+            credit_amount_married_filing_jointly_2_children_list = credit_amount_married_filing_jointly_2_children_list.slice(1, credit_amount_married_filing_jointly_2_children_list.length);
+            credit_amount_married_filing_jointly_3_children_list = credit_amount_married_filing_jointly_3_children_list.slice(1, credit_amount_married_filing_jointly_3_children_list.length);
+
+            console.log("single no kids: " + credit_amount_single_0_children_list);
             console.log("Successfully retrieved EITC entries.");
 
-            ehc_gross_income = ehcCalcGross();
+            for (let i = 0; i < 1000; i++) {
+                ehc_gross_income = ehcCalcGross();
+            }
 
             console.log("annualHousingCosts(): " + annualHousingCosts());
             console.log("annualChildcareCosts(): " + annualChildcareCosts());

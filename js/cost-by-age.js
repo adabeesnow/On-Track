@@ -92,7 +92,7 @@ let numCars = function () {
 };
 
 let overallCost = function() {  // -1 == 'Standard'
-    return    (number_of_bedrooms == -1 ? housingCost() :
+    return    (number_of_bedrooms == -1 ? housingCostAutomatic() :
                 (number_of_bedrooms == 1 ? annualOneBedAverage() :
                         (number_of_bedrooms == 2 ? annualTwoBedAverage() :
                                 (number_of_bedrooms == 3 ? annualThreeBedAverage() :
@@ -119,7 +119,7 @@ let overallCost = function() {  // -1 == 'Standard'
         foodCostAnnualTotal()
 };
 
-let housingCost = function () {
+let housingCostAutomatic = function () {
     let total = 0;
     let beds = 0;
     let num_kids = numChildren();
@@ -159,7 +159,7 @@ let housingCost = function () {
             housing_4_bed_84408;
     }
 
-    return total / 5;
+    return total / 5 * 12;
 };
 
 let foodCostAnnualTotal = function () {

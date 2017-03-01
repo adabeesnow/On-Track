@@ -222,7 +222,6 @@ let ehcUtahTaxCredit = function () {
     return (ehcPhaseOutX()>ehcCreditBeforePhaseOut()?0:ehcCreditBeforePhaseOut()-ehcPhaseOutX());
 };
 
-// TODO: Make ehcCalcGross function change the actual variables, not local ones.
 /**
  * Performs a goalSeek function 6x for accuracy, returns the new ehc_gross_income value.
  * Changing cell:   gross
@@ -240,7 +239,7 @@ let ehcCalcGross = function() {
     console.log('INIT net: ' + net(gross, tax));
 
 
-    for (let i = 0; i < 6; i++) {
+    // for (let i = 0; i < 10; i++) {
         gross = goalSeek({
             Func: net,                      // The function which should return the value of the goal cell.
             aFuncParams: [gross, tax],      // The params to be passed to the function above.
@@ -251,7 +250,7 @@ let ehcCalcGross = function() {
             Tol: 0.01,                      // The tolerance of the final result.
             maxIter: 1000                   // The maximum number of iterations for the goalSeek function to take.
         });
-    }
+    //}
 
     console.log('CALC gross: ' + gross);
     console.log('CALC tax: ' + tax);
