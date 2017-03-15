@@ -60,7 +60,7 @@ $(document).ready(function () {
             console.log("single no kids: " + credit_amount_single_0_children_list);
             console.log("Successfully retrieved EITC entries.");
 
-            for (let i = 0; i < 1000; i++) {
+            for (let i = 0; i < 50; i++) {
                 ehc_gross_income = ehcCalcGross();
             }
 

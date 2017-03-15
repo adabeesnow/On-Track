@@ -117,13 +117,13 @@ let ehcChildTaxCredit = function () {   // Documentation lists this as being use
 
 let ehcAdjustedChildTaxCredit = function () {
     return Math.max(
-        ehcChildTaxCredit(),    // TODO: this was ehcAdjustedChildTaxCredit (same function)?
+        ehcChildTaxCredit(),    // this was ehcAdjustedChildTaxCredit (same function)?
         ehcFederalTaxesLessChildCareTaxCredit()
     );
 };
 
 
-
+// icarus test
 
 
 let ehcEITC = function () {
@@ -237,6 +237,7 @@ let ehcCalcGross = function() {
     console.log('INIT gross: ' + gross);
     console.log('INIT tax: ' + tax);
     console.log('INIT net: ' + net(gross, tax));
+    console.log('INIT expense: ' + expense);
 
 
     // for (let i = 0; i < 10; i++) {
@@ -255,6 +256,7 @@ let ehcCalcGross = function() {
     console.log('CALC gross: ' + gross);
     console.log('CALC tax: ' + tax);
     console.log('CALC net: ' + net(gross, tax));
+    console.log('CALC expense: ' + expense);
 
     return gross;
 };

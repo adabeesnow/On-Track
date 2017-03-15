@@ -211,16 +211,16 @@ let mhcNetYearlyIncome = function(){
 // Taxes!O6
 let mhcEITC = function () {
     let credit_amount_list = [];
-    if (numberOfChildren() == 1) {
+    if (mhcNumberOfChildren() == 1) {
         credit_amount_list = credit_amount_single_1_children_list;
     } else
-    if (numberOfChildren() == 2) {
+    if (mhcNumberOfChildren() == 2) {
         credit_amount_list = credit_amount_single_2_children_list;
     } else
-    if (numberOfChildren() == 0) {
+    if (mhcNumberOfChildren() == 0) {
         credit_amount_list = credit_amount_single_0_children_list;
     } else
-    if (numberOfChildren() >= 3) {
+    if (mhcNumberOfChildren() >= 3) {
         credit_amount_list = credit_amount_single_3_children_list;
     }
     else {
@@ -232,7 +232,7 @@ let mhcEITC = function () {
         if (i >= income_at_least_list.length) {
             return false;
         }
-        if (gross_income > income_at_least_list[i]) {
+        if (mhc_gross_income > income_at_least_list[i]) {
             break;
         }
         i++;
@@ -250,11 +250,10 @@ let mhcEITC = function () {
 let mhcCalcGross = function() {
     let gross = mhc_gross_income;
     let expense = mhcTotalExpensesPlusSavings();
-    // let net = ehcNetYearlyIncome();
     let net = function(gross, tax) { return gross-tax; };
     let tax = mhcTotalTax();
 
-    for (let i = 0; i < 6; i++) {
+    // for (let i = 0; i < 6; i++) {
         gross = goalSeek({
             Func: net,                      // The function which should return the value of the goal cell.
             aFuncParams: [gross, tax],    // The params to be passed to the function above.
@@ -265,11 +264,12 @@ let mhcCalcGross = function() {
             Tol: 0.01,                      // The tolerance of the final result.
             maxIter: 1000                   // The maximum number of iterations for the goalSeek function to take.
         });
-    }
+    // }
 
     console.log('gross: ' + gross);
-    console.log('tax: ' + tax());
-    console.log('net: ' + net(gross, tax()));
+    console.log('tax: ' + tax);
+    console.log('net: ' + net(gross, tax));
+    console.log('expense: ' + expense);
 
     return gross;
 };
