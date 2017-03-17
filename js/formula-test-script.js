@@ -4,11 +4,11 @@
 
 //generated-standard formulas
 $(document).ready(function () {
-    number_of_adults = 2;
-    number_of_infants = 1;
-    number_of_preschoolers = 1;
-    number_of_schoolagers = 1;
-    number_of_teenagers = 1;
+    number_of_adults = 1;
+    number_of_infants = 0;
+    number_of_preschoolers = 0;
+    number_of_schoolagers = 0;
+    number_of_teenagers = 0;
 
     let parsedJSON;
     $.ajax({
@@ -61,8 +61,11 @@ $(document).ready(function () {
             console.log("Successfully retrieved EITC entries.");
 
             for (let i = 0; i < 50; i++) {
-                ehc_gross_income = ehcCalcGross();
+                // ehc_gross_income =
+                ehcCalcGross();
             }
+
+
 
             console.log("annualHousingCosts(): " + annualHousingCosts());
             console.log("annualChildcareCosts(): " + annualChildcareCosts());
@@ -81,6 +84,9 @@ $(document).ready(function () {
             console.log("annualTotalExpenses(): " + annualTotalExpenses());
             console.log("grossHourlyIncome(): " + grossHourlyIncome());
             console.log("netHourlyIncome(): " + netHourlyIncome());
+
+            console.log("OVERALL COST: " + overallCost());
+
 
         }
     });

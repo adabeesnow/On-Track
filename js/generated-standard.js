@@ -14,7 +14,7 @@ let savingsYearly = function() {
 };
 
 let netTaxesYearly = function() {
-    return (use_marketplace_health_insurance_bool===false?ehcTotalTax():mhcTotalTax());
+    return (use_marketplace_health_insurance_bool==false?ehcTotalTax():mhcTotalTax());
 };
 
 let annualFoodCosts = function() {

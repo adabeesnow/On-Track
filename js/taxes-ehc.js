@@ -234,29 +234,20 @@ let ehcCalcGross = function() {
     let tax = ehcTotalTax();
     let net = function(gross, tax) { return gross-tax; };
 
-    console.log('INIT gross: ' + gross);
-    console.log('INIT tax: ' + tax);
-    console.log('INIT net: ' + net(gross, tax));
-    console.log('INIT expense: ' + expense);
-
-
-    // for (let i = 0; i < 10; i++) {
-        gross = goalSeek({
-            Func: net,                      // The function which should return the value of the goal cell.
-            aFuncParams: [gross, tax],      // The params to be passed to the function above.
-            oFuncArgTarget: {
-                Position: 0                 // The position in the aFuncParams array of the value which will be changed.
-            },
-            Goal: expense,                  // The value which the function above should match.
-            Tol: 0.01,                      // The tolerance of the final result.
-            maxIter: 1000                   // The maximum number of iterations for the goalSeek function to take.
-        });
-    //}
+    goalSeek({
+        Func: net,                      // The function which should return the value of the goal cell.
+        aFuncParams: [gross, tax],      // The params to be passed to the function above.
+        oFuncArgTarget: {
+            Position: 0                 // The position in the aFuncParams array of the value which will be changed.
+        },
+        Goal: expense,                  // The value which the function above should match.
+        Tol: 0.01,                      // The tolerance of the final result.
+        maxIter: 1000                   // The maximum number of iterations for the goalSeek function to take.
+    });
 
     console.log('CALC gross: ' + gross);
     console.log('CALC tax: ' + tax);
     console.log('CALC net: ' + net(gross, tax));
     console.log('CALC expense: ' + expense);
 
-    return gross;
 };

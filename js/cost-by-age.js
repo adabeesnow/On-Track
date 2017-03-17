@@ -91,32 +91,45 @@ let numCars = function () {
     else return number_of_cars;
 };
 
-let overallCost = function() {  // -1 == 'Standard'
-    return    (number_of_bedrooms == -1 ? housingCostAutomatic() :
-                (number_of_bedrooms == 1 ? annualOneBedAverage() :
-                        (number_of_bedrooms == 2 ? annualTwoBedAverage() :
-                                (number_of_bedrooms == 3 ? annualThreeBedAverage() :
-                                        (number_of_bedrooms == 4 ? annualFourBedAverage() :
-                                                0
-                                        )
-                                )
-                        )
-                )
-        ) +
-        (estimated_babysitting_cost > 0 ? estimated_babysitting_cost :
-                (use_family_care_bool == true ? familyChildCareCost() :
-                        childCareAnnualTotal()
-                )
-        ) +
-        carInsurance() +
-        carOwnership() +
-        (use_marketplace_health_insurance_bool == false ? healthCareEmployerCombinedTotal() : totalMarketplaceHealthCareCost()) +
-        entertainmentCost() +
-        miscCost() +
-        excessiveChildrenCost() +
-        excessiveAdultsCost() +
-        publicTransitCost() +
-        foodCostAnnualTotal()
+// let overallCost = function() {  // -1 == 'Standard'
+//     return    (number_of_bedrooms == -1 ? housingCostAutomatic() :
+//                 (number_of_bedrooms == 1 ? annualOneBedAverage() :
+//                         (number_of_bedrooms == 2 ? annualTwoBedAverage() :
+//                                 (number_of_bedrooms == 3 ? annualThreeBedAverage() :
+//                                         (number_of_bedrooms == 4 ? annualFourBedAverage() :
+//                                                 0
+//                                         )
+//                                 )
+//                         )
+//                 )
+//         ) +
+//         (estimated_babysitting_cost > 0 ? estimated_babysitting_cost :
+//                 (use_family_care_bool == true ? familyChildCareCost() :
+//                         childCareAnnualTotal()
+//                 )
+//         ) +
+//         carInsurance() +
+//         carOwnership() +
+//         (use_marketplace_health_insurance_bool == false ? healthCareEmployerCombinedTotal() : totalMarketplaceHealthCareCost()) +
+//         entertainmentCost() +
+//         miscCost() +
+//         excessiveChildrenCost() +
+//         excessiveAdultsCost() +
+//         publicTransitCost() +
+//         foodCostAnnualTotal()
+// };
+
+let overallCost = function() {
+  return annualHousingCosts() +
+      annualChildcareCosts() +
+          annualFoodCosts() +
+          annualCarInsurance() +
+          annualCarOwnership() +
+          annualPublicTransportation() +
+          annualHealthInsurance() +
+          annualOutOfPocketCosts() +
+          annualEntertainmentCosts() +
+          annualMiscellaneousCosts()
 };
 
 let housingCostAutomatic = function () {
@@ -232,10 +245,10 @@ let healthCareEmployerCombinedTotal = function () {
 };
 
 let miscCost = function() {
-    return  (familySize() == 1 ? miscOne :
-            (familySize() == 2 ? miscTwo :
-                    (familySize() == 3 ? miscThree :
-                            (familySize() == 4 ? miscFour:
+    return  (familySize() == 1 ? miscOne() :
+            (familySize() == 2 ? miscTwo() :
+                    (familySize() == 3 ? miscThree() :
+                            (familySize() == 4 ? miscFour():
                                     (familySize() == 5 ? miscFiveOrMore():
                                             miscFiveOrMore70kPlus()
                                     )
