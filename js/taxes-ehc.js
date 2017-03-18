@@ -115,11 +115,14 @@ let ehcChildTaxCredit = function () {   // Documentation lists this as being use
     return ehcNumberOfChildren() * 1000;
 };
 
+// let ehcAdjustedChildTaxCredit = function () {
+//     return Math.max(
+//         ehcChildTaxCredit(),    // this was ehcAdjustedChildTaxCredit (same function)?
+//         ehcFederalTaxesLessChildCareTaxCredit()
+//     );
+// };
 let ehcAdjustedChildTaxCredit = function () {
-    return Math.max(
-        ehcChildTaxCredit(),    // this was ehcAdjustedChildTaxCredit (same function)?
-        ehcFederalTaxesLessChildCareTaxCredit()
-    );
+    return ((ehc_gross_income<75000?ehcChildTaxCredit():(((ehc_gross_income-75000)*0.05))));
 };
 
 
@@ -181,21 +184,24 @@ let ehcAdditionalChildTaxCredit = function () {
     -ehcAdjustedChildTaxCreditUsed())))));
 };
 
+// let ehcChildCareTaxCredit = function () {
+//     let base_level = 43000;
+//
+//     if (ehc_gross_income > 75000) {
+//         return 0
+//     } else {
+//         let difference_points = base_level - ehc_gross_income;
+//         if (difference_points < 0) {
+//             return .2;
+//         }
+//         else {
+//             difference_points = Math.floor(difference_points / 2000);
+//             return difference_points * .01 + .2;
+//         }
+//     }
+// };
 let ehcChildCareTaxCredit = function () {
-    let base_level = 43000;
-
-    if (ehc_gross_income > 75000) {
-        return 0
-    } else {
-        let difference_points = base_level - ehc_gross_income;
-        if (difference_points < 0) {
-            return .2;
-        }
-        else {
-            difference_points = Math.floor(difference_points / 2000);
-            return difference_points * .01 + .2;
-        }
-    }
+    return (ehc_gross_income>75000?0:(ehc_gross_income>43000?ehcQualifyingChildCareExpenses()*0.2:(ehc_gross_income>41000?ehcQualifyingChildCareExpenses()*0.21:(ehc_gross_income>39000?ehcQualifyingChildCareExpenses()*0.22:(ehc_gross_income>37000?ehcQualifyingChildCareExpenses()*0.23:(ehc_gross_income>35000?ehcQualifyingChildCareExpenses()*0.24:(ehc_gross_income>33000?ehcQualifyingChildCareExpenses()*0.25:(ehc_gross_income>31000?ehcQualifyingChildCareExpenses()*0.26:(ehc_gross_income>29000?ehcQualifyingChildCareExpenses()*0.27:(ehc_gross_income>27000?ehcQualifyingChildCareExpenses()*0.28:(ehc_gross_income>25000?ehcQualifyingChildCareExpenses()*0.29:(ehc_gross_income>23000?ehcQualifyingChildCareExpenses()*0.3:(ehc_gross_income>21000?ehcQualifyingChildCareExpenses()*0.31:(ehc_gross_income>19000?ehcQualifyingChildCareExpenses()*0.32:(ehc_gross_income>17000?ehcQualifyingChildCareExpenses()*0.33:(ehc_gross_income>17000?ehcQualifyingChildCareExpenses()*0.34:(ehc_gross_income<15000?ehcQualifyingChildCareExpenses()*0.35:0)))))))))))))))));
 };
 
 let ehcSumOfNonRefundableTaxCredits = function () {
@@ -215,7 +221,7 @@ let ehcFedTaxOwedLessNonRefundableTax = function () {
 };
 
 let ehcFedDeductionPlusStateExemption = function () {   // Not used in original spreadsheet.
-    return (ehcStateExemptions+ehcStandardDeduction()) * 0.06;
+    return (ehcStateExemptions()+ehcStandardDeduction()) * 0.06;
 };
 
 let ehcUtahTaxCredit = function () {
@@ -234,20 +240,23 @@ let ehcCalcGross = function() {
     let tax = ehcTotalTax();
     let net = function(gross, tax) { return gross-tax; };
 
-    goalSeek({
-        Func: net,                      // The function which should return the value of the goal cell.
-        aFuncParams: [gross, tax],      // The params to be passed to the function above.
-        oFuncArgTarget: {
-            Position: 0                 // The position in the aFuncParams array of the value which will be changed.
-        },
-        Goal: expense,                  // The value which the function above should match.
-        Tol: 0.01,                      // The tolerance of the final result.
-        maxIter: 1000                   // The maximum number of iterations for the goalSeek function to take.
-    });
+    for (let i = 0; i < 50; i++) {
+        gross = goalSeek({
+            Func: net,                      // The function which should return the value of the goal cell.
+            aFuncParams: [gross, tax],      // The params to be passed to the function above.
+            oFuncArgTarget: {
+                Position: 0                 // The position in the aFuncParams array of the value which will be changed.
+            },
+            Goal: expense,                  // The value which the function above should match.
+            Tol: 0.01,                      // The tolerance of the final result.
+            maxIter: 1000                   // The maximum number of iterations for the goalSeek function to take.
+        });
+    }
 
     console.log('CALC gross: ' + gross);
     console.log('CALC tax: ' + tax);
     console.log('CALC net: ' + net(gross, tax));
     console.log('CALC expense: ' + expense);
 
+    return gross;
 };
