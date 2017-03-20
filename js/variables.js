@@ -114,8 +114,7 @@ let qualifying_child_care_expense_one = 3000;
 let qualifying_child_care_expense_2ormore = 6000;
 let utah_taxes_owed_less_than_zero = 0;
 let household_income_as_percentage_of_federal_poverty_line_list = []; // Only for MHC calculations - TODO: scraper
-let applicable_figure_list = []; // Only for MHC calculations - TODO: scraper
-let family_size_list = []; // Only for MHC calculations - TODO: scraper
+let applicable_figure_list = []; // Only for MHC calculations - uses scraper
 
 // Out of Pocket marketplace costs
 let marketplace_oop_infant = 46.74;

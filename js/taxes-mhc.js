@@ -133,11 +133,11 @@ let mhcChildCareTaxCredit = function () {
 };
 
 let mhcFedTaxLessChildCareTaxCredit = function () {
-    return mhcFedTaxOwedBeforeCredits() - mhcChildCareTaxCredit()
+    return mhcFedTaxOwedBeforeCredits() - mhcChildCareTaxCredit();
 };
 
 let mhcAdjustedChildTaxCreditUsed = function () {
-    return Math.max(
+    return Math.min(
         mhcAdjustedChildTaxCredit(),
         mhcFedTaxLessChildCareTaxCredit()
     );
@@ -154,39 +154,23 @@ let mhcAdditionalChildTaxCredit = function () {
                     (((mhc_gross_income - 3000) <= 0 ? 0 : (mhc_gross_income - 3000)) * 0.15)) : ((mhcNumberOfChildren() * 1000) - mhcAdjustedChildTaxCreditUsed()))))
 };
 
-let mhcStandardDeduction = function () {
-    return mhcStandardDeduction();
-};
-
 let mhcStandardDeduction = function() {
     return (number_of_adults===1?(mhcFamilySize()>1?9250:6300):12600);
-};
-
-let mhcFederalExemptions = function () {
-    return mhcFederalExemptions();
 };
 
 let mhcFederalExemptions = function() {
     return mhcFamilySize() * 4000;
 };
 
-let mhcStateExemptions = function () {
-    return mhcStateExemptions();
-};
-
 let mhcStateExemptions = function() {
     return mhcFamilySize() * 3000;
 };
 
-let mhcFederalGrossTaxable = function () {
+let mhcGrossTaxableFederal = function () {
     return Math.max(
         mhc_gross_income - mhcStandardDeduction() - mhcFederalExemptions(),
         0
     )
-};
-
-let mhcUtahStateCreditValueHolder = function () {
-    return mhcUtahStateCreditValueHolder();
 };
 
 let mhcUtahStateCreditValueHolder = function() {
@@ -202,10 +186,6 @@ let mhcGrossTaxFedMinusUtahStateCredValueHolder = function () {
         mhc_gross_income - mhcUtahStateCreditValueHolder(),
         0
     );
-};
-
-let mhcCreditBeforePhaseOut = function () {
-    return mhcCreditBeforePhaseOut();
 };
 
 let mhcCreditBeforePhaseOut = function () {
