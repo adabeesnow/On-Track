@@ -2,8 +2,16 @@
  * Created by adsal on 2/22/2017.
  */
 
-let mhcQualifyingChildCareExpenses = function () {
-    return ehcQualifyingChildCareExpenses(); // uses ehcFunction
+// let mhcQualifyingChildCareExpenses = function () {
+//     return ehcQualifyingChildCareExpenses(); // uses ehcFunction
+// };
+
+let mhcQualifyingChildCareExpenses = function(){
+    let num_kids = number_of_infants + number_of_preschoolers + number_of_schoolagers;
+    return (
+        (num_kids)===0?qualifying_child_care_expense_zero:(
+                (num_kids)==1?qualifying_child_care_expense_one:(
+                        (num_kids)>1?qualifying_child_care_expense_2ormore:"False")));
 };
 
 let mhcBenchmarkSilverPlan = function () {
@@ -79,24 +87,49 @@ let mhcAdjustedChildTaxCredit = function () {
 };
 
 let mhcFedTaxOwedBeforeCredits = function () {
-    return ehcFederalTaxesOwedBeforeCredits();
+    return mhcFederalTaxesOwedBeforeCredits();
 };
 
-let mhcChildCareTaxCredit = function () {
-    let base_level = 43000;
+let mhcFederalTaxesOwedBeforeCredits = function () {
+    return (number_of_adults===1?(mhcFamilySize()>1?((mhcGrossTaxableFederal()-13150)<0?(mhcGrossTaxableFederal()*0.1):
+                ((mhcGrossTaxableFederal()-50200)<0?(mhcGrossTaxableFederal()-13150)*0.15+1315:
+                    ((mhcGrossTaxableFederal()-129600)<0?(mhcGrossTaxableFederal()-50200)*0.25+1315+5557.35:
+                        ((mhcGrossTaxableFederal()-209850)<0?(mhcGrossTaxableFederal()-129600)*0.28+1315+5557.35+19849.75:
+                            ((mhcGrossTaxableFederal()-411500)<0?(mhcGrossTaxableFederal()-209850)*0.33+1315+5557.35+19849.75+22469.72:
+                                (mhcGrossTaxableFederal()-411500)*0.396+1315+5557.35+19849.75+22469.72+66544.17))))):
+            ((mhcGrossTaxableFederal()-9225)<0?(mhcGrossTaxableFederal()*0.1):
+                ((mhcGrossTaxableFederal()-37450)<0?(mhcGrossTaxableFederal()-9225)*0.15+922.5:
+                    ((mhcGrossTaxableFederal()-90750)<0?(mhcGrossTaxableFederal()-37450)*0.25+922.5+4233.75:
+                        ((mhcGrossTaxableFederal()-189300)<0?(mhcGrossTaxableFederal()-90751)*0.28+922.5+4233.75+13324.75:
+                            ((mhcGrossTaxableFederal()-411500)<0?(mhcGrossTaxableFederal()-189301)*0.33+922.5+4233.75+13324.75+27593:
+                                (mhcGrossTaxableFederal()-411500)*0.396+922.5+4233.75+13324.75+27593+73325.67)))))):
+        ((mhcGrossTaxableFederal()-18450)<0?(mhcGrossTaxableFederal()*0.1):
+            ((mhcGrossTaxableFederal()-74900)<0?(mhcGrossTaxableFederal()-18450)*0.15+1845:
+                ((mhcGrossTaxableFederal()-181500)<0?(mhcGrossTaxableFederal()-74900)*0.25+1845+8467.5:
+                    ((mhcGrossTaxableFederal()-378600)<0?(mhcGrossTaxableFederal()-181500)*0.28+1845+8467.5+26650:
+                        ((mhcGrossTaxableFederal()-823000)<0?(mhcGrossTaxableFederal()-378600)*0.33+1845+8467.5+26650+55188:
+                            (mhcGrossTaxableFederal()-823000)*0.396+1845+8467.5+26650+55188+146652))))));
+};
 
-    if (mhc_gross_income > 75000) {
-        return 0
-    } else {
-        let difference_points = base_level - mhc_gross_income;
-        if (difference_points < 0) {
-            return .2;
-        }
-        else {
-            difference_points = Math.floor(difference_points / 2000);
-            return difference_points * .01 + .2;
-        }
-    }
+// let mhcChildCareTaxCredit = function () {
+//     let base_level = 43000;
+//
+//     if (mhc_gross_income > 75000) {
+//         return 0
+//     } else {
+//         let difference_points = base_level - mhc_gross_income;
+//         if (difference_points < 0) {
+//             return .2;
+//         }
+//         else {
+//             difference_points = Math.floor(difference_points / 2000);
+//             return difference_points * .01 + .2;
+//         }
+//     }
+// };
+
+let mhcChildCareTaxCredit = function () {
+    return (mhc_gross_income>75000?0:(mhc_gross_income>43000?mhcQualifyingChildCareExpenses()*0.2:(mhc_gross_income>41000?mhcQualifyingChildCareExpenses()*0.21:(mhc_gross_income>39000?mhcQualifyingChildCareExpenses()*0.22:(mhc_gross_income>37000?mhcQualifyingChildCareExpenses()*0.23:(mhc_gross_income>35000?mhcQualifyingChildCareExpenses()*0.24:(mhc_gross_income>33000?mhcQualifyingChildCareExpenses()*0.25:(mhc_gross_income>31000?mhcQualifyingChildCareExpenses()*0.26:(mhc_gross_income>29000?mhcQualifyingChildCareExpenses()*0.27:(mhc_gross_income>27000?mhcQualifyingChildCareExpenses()*0.28:(mhc_gross_income>25000?mhcQualifyingChildCareExpenses()*0.29:(mhc_gross_income>23000?mhcQualifyingChildCareExpenses()*0.3:(mhc_gross_income>21000?mhcQualifyingChildCareExpenses()*0.31:(mhc_gross_income>19000?mhcQualifyingChildCareExpenses()*0.32:(mhc_gross_income>17000?mhcQualifyingChildCareExpenses()*0.33:(mhc_gross_income>17000?mhcQualifyingChildCareExpenses()*0.34:(mhc_gross_income<15000?mhcQualifyingChildCareExpenses()*0.35:0)))))))))))))))));
 };
 
 let mhcFedTaxLessChildCareTaxCredit = function () {
@@ -122,13 +155,27 @@ let mhcAdditionalChildTaxCredit = function () {
 };
 
 let mhcStandardDeduction = function () {
-    return ehcStandardDeduction();
+    return mhcStandardDeduction();
 };
+
+let mhcStandardDeduction = function() {
+    return (number_of_adults===1?(mhcFamilySize()>1?9250:6300):12600);
+};
+
 let mhcFederalExemptions = function () {
-    return ehcFederalExemptions();
+    return mhcFederalExemptions();
 };
+
+let mhcFederalExemptions = function() {
+    return mhcFamilySize() * 4000;
+};
+
 let mhcStateExemptions = function () {
-    return ehcStateExemptions();
+    return mhcStateExemptions();
+};
+
+let mhcStateExemptions = function() {
+    return mhcFamilySize() * 3000;
 };
 
 let mhcFederalGrossTaxable = function () {
@@ -137,20 +184,32 @@ let mhcFederalGrossTaxable = function () {
         0
     )
 };
+
 let mhcUtahStateCreditValueHolder = function () {
-    return ehcUtahStateCreditValueHolder();
+    return mhcUtahStateCreditValueHolder();
 };
+
+let mhcUtahStateCreditValueHolder = function() {
+    return (number_of_adults===1?(mhcFamilySize()>=2?20707:13805):27610);
+};
+
 let mhcStateTaxBeforeCredits = function () {
     return mhc_gross_income * .05;
 };
+
 let mhcGrossTaxFedMinusUtahStateCredValueHolder = function () {
     return Math.max(
         mhc_gross_income - mhcUtahStateCreditValueHolder(),
         0
     );
 };
+
 let mhcCreditBeforePhaseOut = function () {
-    return ehcCreditBeforePhaseOut();
+    return mhcCreditBeforePhaseOut();
+};
+
+let mhcCreditBeforePhaseOut = function () {
+    return (mhcStandardDeduction()+mhcStateExemptions())*0.06;
 };
 
 // TODO: make sure all the functions are there that are in the spreadsheet

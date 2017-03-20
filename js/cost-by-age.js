@@ -328,6 +328,6 @@ let totalMarketplaceHealthCareCost = function () {
     return marketplaceHealthCareAdult() + marketplaceHealthCareChild() + healthCareMarketplaceOOPTotal();
 };
 
-// let numChildrenSchoolageAndUnder = function () {
-//     return number_of_infants + number_of_preschoolers + number_of_schoolagers;
-// };
+let numChildrenSchoolageAndUnder = function () {
+    return number_of_infants + number_of_preschoolers + number_of_schoolagers;
+};

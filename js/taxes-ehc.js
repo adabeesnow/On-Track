@@ -61,7 +61,7 @@ let ehcStateExemptions = function() {
     return ehcFamilySize() * 3000;
 };
 
-let ehcGrossTaxablefederal = function() {
+let ehcGrossTaxableFederal = function() {
     return ((ehc_gross_income-ehcFederalExemptions()-ehcStandardDeduction()<0)?0:
                 ehc_gross_income-ehcFederalExemptions()-ehcStandardDeduction());
 };
@@ -91,24 +91,24 @@ let ehcNumberOfChildren = function () {
 };
 
 let ehcFederalTaxesOwedBeforeCredits = function () {
-    return (number_of_adults===1?(ehcFamilySize()>1?((ehcGrossTaxablefederal()-13150)<0?(ehcGrossTaxablefederal()*0.1):
-        ((ehcGrossTaxablefederal()-50200)<0?(ehcGrossTaxablefederal()-13150)*0.15+1315:
-            ((ehcGrossTaxablefederal()-129600)<0?(ehcGrossTaxablefederal()-50200)*0.25+1315+5557.35:
-                ((ehcGrossTaxablefederal()-209850)<0?(ehcGrossTaxablefederal()-129600)*0.28+1315+5557.35+19849.75:
-                    ((ehcGrossTaxablefederal()-411500)<0?(ehcGrossTaxablefederal()-209850)*0.33+1315+5557.35+19849.75+22469.72:
-                    (ehcGrossTaxablefederal()-411500)*0.396+1315+5557.35+19849.75+22469.72+66544.17))))):
-        ((ehcGrossTaxablefederal()-9225)<0?(ehcGrossTaxablefederal()*0.1):
-            ((ehcGrossTaxablefederal()-37450)<0?(ehcGrossTaxablefederal()-9225)*0.15+922.5:
-                ((ehcGrossTaxablefederal()-90750)<0?(ehcGrossTaxablefederal()-37450)*0.25+922.5+4233.75:
-                    ((ehcGrossTaxablefederal()-189300)<0?(ehcGrossTaxablefederal()-90751)*0.28+922.5+4233.75+13324.75:
-                        ((ehcGrossTaxablefederal()-411500)<0?(ehcGrossTaxablefederal()-189301)*0.33+922.5+4233.75+13324.75+27593:
-                        (ehcGrossTaxablefederal()-411500)*0.396+922.5+4233.75+13324.75+27593+73325.67)))))):
-        ((ehcGrossTaxablefederal()-18450)<0?(ehcGrossTaxablefederal()*0.1):
-            ((ehcGrossTaxablefederal()-74900)<0?(ehcGrossTaxablefederal()-18450)*0.15+1845:
-                ((ehcGrossTaxablefederal()-181500)<0?(ehcGrossTaxablefederal()-74900)*0.25+1845+8467.5:
-                    ((ehcGrossTaxablefederal()-378600)<0?(ehcGrossTaxablefederal()-181500)*0.28+1845+8467.5+26650:
-                        ((ehcGrossTaxablefederal()-823000)<0?(ehcGrossTaxablefederal()-378600)*0.33+1845+8467.5+26650+55188:
-                        (ehcGrossTaxablefederal()-823000)*0.396+1845+8467.5+26650+55188+146652))))));
+    return (number_of_adults===1?(ehcFamilySize()>1?((ehcGrossTaxableFederal()-13150)<0?(ehcGrossTaxableFederal()*0.1):
+        ((ehcGrossTaxableFederal()-50200)<0?(ehcGrossTaxableFederal()-13150)*0.15+1315:
+            ((ehcGrossTaxableFederal()-129600)<0?(ehcGrossTaxableFederal()-50200)*0.25+1315+5557.35:
+                ((ehcGrossTaxableFederal()-209850)<0?(ehcGrossTaxableFederal()-129600)*0.28+1315+5557.35+19849.75:
+                    ((ehcGrossTaxableFederal()-411500)<0?(ehcGrossTaxableFederal()-209850)*0.33+1315+5557.35+19849.75+22469.72:
+                    (ehcGrossTaxableFederal()-411500)*0.396+1315+5557.35+19849.75+22469.72+66544.17))))):
+        ((ehcGrossTaxableFederal()-9225)<0?(ehcGrossTaxableFederal()*0.1):
+            ((ehcGrossTaxableFederal()-37450)<0?(ehcGrossTaxableFederal()-9225)*0.15+922.5:
+                ((ehcGrossTaxableFederal()-90750)<0?(ehcGrossTaxableFederal()-37450)*0.25+922.5+4233.75:
+                    ((ehcGrossTaxableFederal()-189300)<0?(ehcGrossTaxableFederal()-90751)*0.28+922.5+4233.75+13324.75:
+                        ((ehcGrossTaxableFederal()-411500)<0?(ehcGrossTaxableFederal()-189301)*0.33+922.5+4233.75+13324.75+27593:
+                        (ehcGrossTaxableFederal()-411500)*0.396+922.5+4233.75+13324.75+27593+73325.67)))))):
+        ((ehcGrossTaxableFederal()-18450)<0?(ehcGrossTaxableFederal()*0.1):
+            ((ehcGrossTaxableFederal()-74900)<0?(ehcGrossTaxableFederal()-18450)*0.15+1845:
+                ((ehcGrossTaxableFederal()-181500)<0?(ehcGrossTaxableFederal()-74900)*0.25+1845+8467.5:
+                    ((ehcGrossTaxableFederal()-378600)<0?(ehcGrossTaxableFederal()-181500)*0.28+1845+8467.5+26650:
+                        ((ehcGrossTaxableFederal()-823000)<0?(ehcGrossTaxableFederal()-378600)*0.33+1845+8467.5+26650+55188:
+                        (ehcGrossTaxableFederal()-823000)*0.396+1845+8467.5+26650+55188+146652))))));
 };
 
 let ehcChildTaxCredit = function () {   // Documentation lists this as being used in ehcAdjustedChildTaxCredit (below)
