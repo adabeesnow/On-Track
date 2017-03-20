@@ -10,7 +10,7 @@ $(document).ready(function () {
     number_of_schoolagers = 1;
     number_of_teenagers = 1;
     use_marketplace_health_insurance_bool = true;
-
+//
     let parsedJSON;
     $.ajax({
         url: 'http://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/',
@@ -62,8 +62,11 @@ $(document).ready(function () {
             console.log("Successfully retrieved EITC entries.");
 
             for (let i = 0; i < 50; i++) {
+                // ehc_gross_income =
                 mhc_gross_income = mhcCalcGross();
             }
+
+
 
             console.log("annualHousingCosts(): " + annualHousingCosts());
             console.log("annualChildcareCosts(): " + annualChildcareCosts());
@@ -82,6 +85,54 @@ $(document).ready(function () {
             console.log("annualTotalExpenses(): " + annualTotalExpenses());
             console.log("grossHourlyIncome(): " + grossHourlyIncome());
             console.log("netHourlyIncome(): " + netHourlyIncome());
+
+            console.log("OVERALL COST: " + overallCost());
+
+            console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~ MHC TAX STUFF ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+
+            console.log('mhcQualifyingChildCareExpenses: ' + mhcQualifyingChildCareExpenses());
+            console.log('mhcBenchApplicableFigureXGrossIncome: ' + mhcBenchApplicableFigureXGrossIncome());
+            console.log('mhcMarketPlacePlanChosen: ' + mhcMarketPlacePlanChosen());
+            console.log('mhcPremiumTaxCredit: ' + mhcPremiumTaxCredit());
+            console.log('mhcEligibleExpenses: ' + mhcEligibleExpenses());
+            console.log('mhcUtahsHealthBenefitPlanCredit: ' + mhcUtahsHealthBenefitPlanCredit());
+            console.log('mhcSumOfNonRefundableTaxCredits: ' + mhcSumOfNonRefundableTaxCredits());
+            console.log('mhcSumOfRefundableTaxCredits: ' + mhcSumOfRefundableTaxCredits());
+            console.log('mhcFedTaxOwedLessNonRefundTaxCredits: ' + mhcFedTaxOwedLessNonRefundTaxCredits());
+            console.log('mhcFedDeductionPlusStateExemptionX6Per: ' + mhcFedDeductionPlusStateExemptionX6Per());
+            console.log('mhcUtahTaxCredit: ' + mhcUtahTaxCredit());
+            console.log('mhcFederalPayrollTax: ' + mhcFederalPayrollTax());
+            console.log('mhcFederalTaxOwed: ' + mhcFederalTaxOwed());
+            console.log('mhcUtahTaxesOwed: ' + mhcUtahTaxesOwed());
+            console.log('mhcTotalExpenses: ' + mhcTotalExpenses());
+            console.log('mhcSavings1PercentGross: ' + mhcSavings1PercentGross());
+            console.log('mhcTotalExpensesPlusSavings: ' + mhcTotalExpensesPlusSavings());
+            console.log('mhcTotalTax: ' + mhcTotalTax());
+            console.log('mhcNetYearlyIncome: ' + mhcNetYearlyIncome());
+            console.log('mhcFamilySize: ' + mhcFamilySize());
+            console.log('mhcStandardDeduction: ' + mhcStandardDeduction());
+            console.log('mhcFederalExemptions: ' + mhcFederalExemptions());
+            console.log('mhcStateExemptions: ' + mhcStateExemptions());
+            console.log('mhcFederalGrossTaxable: ' + mhcFederalGrossTaxable());
+            console.log('mhcUtahStateCreditValueHolder: ' + mhcUtahStateCreditValueHolder());
+            console.log('mhcStateTaxBeforeCredits: ' + mhcStateTaxBeforeCredits());
+            console.log('mhcGrossTaxFedMinusUtahStateCredValueHolder: ' + mhcGrossTaxFedMinusUtahStateCredValueHolder());
+            console.log('mhcCreditBeforePhaseOut: ' + mhcCreditBeforePhaseOut());
+            console.log('mhcPhaseOutX13: ' + mhcPhaseOutX13());
+            console.log('mhcNumberOfChildren: ' + mhcNumberOfChildren());
+            console.log('mhcFedTaxOwedBeforeCredits: ' + mhcFedTaxOwedBeforeCredits());
+            console.log('mhcEITC: ' + mhcEITC());
+            console.log('mhcChildTaxCredit: ' + mhcChildTaxCredit());
+            console.log('mhcAdjustedChildTaxCredit: ' + mhcAdjustedChildTaxCredit());
+            console.log('mhcFedTaxLessChildCareTaxCredit: ' + mhcFedTaxLessChildCareTaxCredit());
+            console.log('mhcAdjustedChildTaxCreditUsed: ' + mhcAdjustedChildTaxCreditUsed());
+            console.log('mhcAdditionalChildTaxCredit: ' + mhcAdditionalChildTaxCredit());
+            console.log('mhcChildCareTaxCredit: ' + mhcChildCareTaxCredit());
+            console.log('mhcFederalPovertyLine: ' + mhcFederalPovertyLine());
+            console.log('mhcGrossIncomeOverFederalPovertyLine: ' + mhcGrossIncomeOverFederalPovertyLine());
+            console.log('mhcValueFromApplicableFigureTable: ' + mhcValueFromApplicableFigureTable());
+            console.log('mhcApplicableFigureXGrossIncome: ' + mhcApplicableFigureXGrossIncome());
+            console.log('mhcBenchmarkSilverPlan: ' + mhcBenchmarkSilverPlan());
 
         }
     });
