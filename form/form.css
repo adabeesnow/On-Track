@@ -294,9 +294,10 @@ img.page-title-img{
     float: right;
     border: #FFFFFF;
     text-align: center;
+    width: 100%;
 }
 .user-input input{
-    width: 80px;
+    /*width: 80px;*/
     margin-bottom: 10px;
 }
 
@@ -305,11 +306,18 @@ img.page-title-img{
     font-size:14px;
 }
 
+.form-description{
+    padding: 20px;
+    font-size: 14px;
+}
+
 .form-label{
     float:left;
+    max-width: 75%;
 }
 .form-input{
     float:right;
+    width:25%;
 }
 
 
@@ -336,4 +344,24 @@ img.page-title-img{
     background: white;
     border: #64BA89 2px solid;
     color: #64BA89;
+}
+
+
+.page-title-img{
+    max-width: 132px;
+    max-height: 132px;
+}
+
+
+
+
+
+
+
+
+
+/*Show the number buttons all the time to make it seem more centered*/
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+    opacity: 1;
 }
