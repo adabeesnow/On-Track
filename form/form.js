@@ -68,5 +68,5 @@ function store_input_data() {
     localStorage.number_of_cars = $("#cars").val();
     localStorage.number_of_public_transport_passes_adult = $("#adult-passes").val();
     localStorage.number_of_public_transport_passes_child = $("#child-passes").val();
-    window.location.href = 'result.html';
+    window.location.href = 'results.html';
 }
