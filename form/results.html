@@ -143,9 +143,6 @@
             $('#miscellaneous-cost').text('$' + (var_annualMiscellaneousCosts / 12).toFixed(0));
 
             let var_savingsYearly = savingsYearly();
-
-
-
             let var_netTaxesYearly = netTaxesYearly();
 
             let var_annualGrossIncome = annualGrossIncome();
@@ -155,12 +152,15 @@
             $('#net-income-annual').text('$' + var_annualNetIncome.toFixed(0).toLocaleString());
 
             let var_annualTotalExpenses = annualTotalExpenses();
+            $("#total-monthly-expenses").text('$' + (var_annualTotalExpenses / 12).toLocaleString());
+
             let var_grossHourlyIncome = grossHourlyIncome();
             $('#gross-income-hourly').text('$' + var_grossHourlyIncome.toFixed(2));
 
             let var_netHourlyIncome = netHourlyIncome();
             $('#net-income-hourly').text('$' + var_netHourlyIncome.toFixed(2));
         }
+
     </script>
 </head>
 <body>
