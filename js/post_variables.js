@@ -6,6 +6,7 @@ function post_to_database(name, value, category) {
             'entryValue': value,
             'categoryId': category
         },
+        method: 'POST',
         success: function(response){
             console.log(response);
         }
