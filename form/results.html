@@ -152,7 +152,7 @@
             $('#net-income-annual').text('$' + var_annualNetIncome.toFixed(0).toLocaleString());
 
             let var_annualTotalExpenses = annualTotalExpenses();
-            $("#total-monthly-expenses").text('$' + (var_annualTotalExpenses / 12).toLocaleString());
+            $("#total-monthly-expenses").text('$' + (var_annualTotalExpenses / 12).toFixed(2).toLocaleString());
 
             let var_grossHourlyIncome = grossHourlyIncome();
             $('#gross-income-hourly').text('$' + var_grossHourlyIncome.toFixed(2));
@@ -162,7 +162,7 @@
         }
 
     </script>
-</head>
+1</head>
 <body>
 
 <div class="col-12">
