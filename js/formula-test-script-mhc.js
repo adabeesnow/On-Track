@@ -8,9 +8,10 @@ $(document).ready(function () {
     number_of_infants = 1;
     number_of_preschoolers = 1;
     number_of_schoolagers = 1;
-    number_of_teenagers = 0;
+    number_of_teenagers = 1;
     use_marketplace_health_insurance_bool = true;
-//
+
+
     let parsedJSON;
     $.ajax({
         url: 'http://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/',
