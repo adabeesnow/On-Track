@@ -339,10 +339,10 @@ let mhcCalcGross = function() {
         });
     // }
 
-    console.log('gross: ' + gross);
-    console.log('tax: ' + tax);
-    console.log('net: ' + net(gross, tax));
-    console.log('expense: ' + expense);
+    // console.log('gross: ' + gross);
+    // console.log('tax: ' + tax);
+    // console.log('net: ' + net(gross, tax));
+    // console.log('expense: ' + expense);
 
     return gross;
 };
