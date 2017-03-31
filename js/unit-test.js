@@ -5,16 +5,15 @@
 //generated-standard formulas
 $(document).ready(function () {
 
-    let count = 1;
-
     for(let i = 1; i < 3; i++) {
         for(let j = 0; j < 6; j++) {
             for(let k = 0; k < 6; k++) {
                 for(let t = 0; t < 6; t++) {
                     for(let z = 0; z < 6; z++) {
                         if(j + k + t + z < 6) {
-                            console.log("Combination", count, ": ", i, j, k, t, z);
-                            count++;
+
+                            console.log("Combination: ", i, j, k, t, z);
+
                             number_of_adults = i;
                             number_of_infants = j;
                             number_of_preschoolers = k;
@@ -252,12 +251,41 @@ $(document).ready(function () {
                                         mhc_gross_income = mhcCalcGross();
                                     }
 
+                                    // let markup =
+                                    //     "<tr>" +
+                                    //     "<td>" + number_of_adults       + "</td>" + // Adults
+                                    //     "<td>" + number_of_infants      + "</td>" + // Infants
+                                    //     "<td>" + number_of_preschoolers + "</td>" + // Preschoolers
+                                    //     "<td>" + number_of_schoolagers  + "</td>" + // Schoolagers
+                                    //     "<td>" + number_of_teenagers    + "</td>" + // Teenagers
+                                    //     "<td>" + use_family_care_bool   + "</td>" + // Family Care
+                                    //     "<td>" + use_marketplace_health_insurance_bool  + "</td>" + // Marketplace Health Care
+                                    //     "<td>" + annualGrossIncome()    + "</td>" + // Gross Annual Income
+                                    //     "<td>" + netTaxesYearly()       + "</td>" + // Net Taxes
+                                    //     "<td>" + annualNetIncome()      + "</td>" + // Net Annual Income
+                                    //     "<td>" + mhcTotalExpensesPlusSavings()  + "</td>" + // Total Expenses + Savings
+                                    //     "<td>" + annualTotalExpenses()  + "</td>" + // Total Expenses
+                                    //     "<td>" + annualHousingCosts()   + "</td>" + // Housing
+                                    //     "<td>" + annualChildcareCosts() + "</td>" + // Childcare
+                                    //     "<td>" + annualFoodCosts()      + "</td>" + // Food
+                                    //     "<td>" + annualCarInsurance()   + "</td>" + // Car Insurance
+                                    //     "<td>" + annualCarOwnership()   + "</td>" + // Car Ownership
+                                    //     "<td>" + annualPublicTransportation()   + "</td>" + // Public Transport
+                                    //     "<td>" + annualHealthInsurance()        + "</td>" + // Health
+                                    //     "<td>" + annualOutOfPocketCosts()       + "</td>" + // Out of Pocket
+                                    //     "<td>" + annualEntertainmentCosts()     + "</td>" + // Entertainment
+                                    //     "<td>" + annualMiscellaneousCosts()     + "</td>" + // Miscellaneous
+                                    //     "<td>" + savingsYearly()                + "</td>" + // Savings
+                                    //     "</tr>";
+                                    //
+                                    // $("table tbody").append(markup);
+
                                     // console.log("========================================================================");
-                                    // console.log("number_of_adults: ", number_of_adults);
-                                    // console.log("number_of_infants: ", number_of_infants);
-                                    // console.log("number_of_preschoolers: ", number_of_preschoolers);
-                                    // console.log("number_of_schoolagers: ", number_of_schoolagers);
-                                    // console.log("number_of_teenagers: ", number_of_teenagers);
+                                    console.log("number_of_adults:          ", number_of_adults);
+                                    console.log("number_of_infants:         ", number_of_infants);
+                                    console.log("number_of_preschoolers:    ", number_of_preschoolers);
+                                    console.log("number_of_schoolagers:     ", number_of_schoolagers);
+                                    console.log("number_of_teenagers:       ", number_of_teenagers);
 
                                     //
                                     //
