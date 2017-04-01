@@ -232,6 +232,101 @@ $(document).ready(function () {
     credit_amount_married_filing_jointly_2_children_list = credit_amount_married_filing_jointly_2_children_list.slice(1, credit_amount_married_filing_jointly_2_children_list.length);
     credit_amount_married_filing_jointly_3_children_list = credit_amount_married_filing_jointly_3_children_list.slice(1, credit_amount_married_filing_jointly_3_children_list.length);
 
+
+    use_marketplace_health_insurance_bool = $('input[name=radio-healthcare]:checked').val();
+    childcare_needed_bool = $('input[name=radio-childcare]:checked').val();
+    use_family_care_bool = $('input[name=radio-family-care]:checked').val();
+    number_of_public_transport_passes_adult = $('input[name=radio-public-transport-adult]:checked').val();
+    number_of_public_transport_passes_child = $('input[name=radio-public-transport-child]:checked').val();
+
+
+    $('input[type=radio]').change(function(){
+        use_marketplace_health_insurance_bool = $('input[name=radio-healthcare]:checked').val();
+        childcare_needed_bool = $('input[name=radio-childcare]:checked').val();
+        use_family_care_bool = $('input[name=radio-family-care]:checked').val();
+        number_of_public_transport_passes_adult = $('input[name=radio-public-transport-adult]:checked').val();
+        number_of_public_transport_passes_child = $('input[name=radio-public-transport-child]:checked').val();
+
+        $('#unit tbody').empty();
+
+        console.log(
+            'Healthcare: ' + use_marketplace_health_insurance_bool + '\n' +
+            'Childcare Needed: ' + childcare_needed_bool + '\n' +
+            'Use Family Care: ' + use_family_care_bool + '\n' +
+            'Adult Bus Passes: ' + number_of_public_transport_passes_adult + '\n' +
+            'Child Bus Passes: ' + number_of_public_transport_passes_child
+        );
+
+
+        for(let i = 1; i < 3; i++) {
+            for(let j = 0; j < 6; j++) {
+                for(let k = 0; k < 6; k++) {
+                    for(let t = 0; t < 6; t++) {
+                        for(let z = 0; z < 6; z++) {
+                            if(j + k + t + z < 6) {
+
+                                console.log("Combination: ", i, j, k, t, z);
+
+                                number_of_adults = i;
+                                number_of_infants = j;
+                                number_of_preschoolers = k;
+                                number_of_schoolagers = t;
+                                number_of_teenagers = z;
+
+
+                                let goal_seek_loop_count = 50; // The number of times to run goalSeek function.
+                                for (let i = 0; i < goal_seek_loop_count; i++) {
+                                    mhc_gross_income = mhcCalcGross();
+                                }
+
+                                let markup =
+                                    "<tr>" +
+                                    "<td>" + number_of_adults       + "</td>" + // Adults
+                                    "<td>" + number_of_infants      + "</td>" + // Infants
+                                    "<td>" + number_of_preschoolers + "</td>" + // Preschoolers
+                                    "<td>" + number_of_schoolagers  + "</td>" + // Schoolagers
+                                    "<td>" + number_of_teenagers    + "</td>" + // Teenagers
+                                    "<td>" + use_family_care_bool   + "</td>" + // Family Care
+                                    "<td>" + use_marketplace_health_insurance_bool  + "</td>" + // Marketplace Health Care
+                                    "<td>" + mhc_gross_income.toFixed(2)    + "</td>" + // Gross Annual Income
+                                    "<td>" + mhcTotalTax().toFixed(2)       + "</td>"; // Net Taxes
+
+                                if (Math.abs(mhcNetYearlyIncome() - mhcTotalExpensesPlusSavings()) > 0.01) {
+                                    markup +=
+                                        "<td class='danger'>" + mhcNetYearlyIncome().toFixed(2)      + "</td>" + // Net Annual Income
+                                        "<td class='danger'>" + mhcTotalExpensesPlusSavings().toFixed(2)  + "</td>"; // Total Expenses + Savings
+                                } else {
+                                    markup +=
+                                        "<td class='success'>" + mhcNetYearlyIncome().toFixed(2)      + "</td>" + // Net Annual Income
+                                        "<td class='success'>" + mhcTotalExpensesPlusSavings().toFixed(2)  + "</td>"; // Total Expenses + Savings
+                                }
+
+                                markup +=
+                                    "<td>" + annualTotalExpenses().toFixed(2)  + "</td>" + // Total Expenses
+                                    "<td>" + annualHousingCosts().toFixed(2)   + "</td>" + // Housing
+                                    "<td>" + annualChildcareCosts().toFixed(2) + "</td>" + // Childcare
+                                    "<td>" + annualFoodCosts().toFixed(2)      + "</td>" + // Food
+                                    "<td>" + annualCarInsurance().toFixed(2)   + "</td>" + // Car Insurance
+                                    "<td>" + annualCarOwnership().toFixed(2)   + "</td>" + // Car Ownership
+                                    "<td>" + annualPublicTransportation().toFixed(2)   + "</td>" + // Public Transport
+                                    "<td>" + annualHealthInsurance().toFixed(2)        + "</td>" + // Health
+                                    "<td>" + annualOutOfPocketCosts().toFixed(2)       + "</td>" + // Out of Pocket
+                                    "<td>" + annualEntertainmentCosts().toFixed(2)     + "</td>" + // Entertainment
+                                    "<td>" + annualMiscellaneousCosts().toFixed(2)     + "</td>" + // Miscellaneous
+                                    "<td>" + savingsYearly().toFixed(2)                + "</td>" + // Savings
+                                    "</tr>";
+
+                                $("table tbody").append(markup);
+
+                            } //end if (combination filter)
+
+                        } // end inner for (number of teenagers)
+                    } // end for (number of schoolagers)
+                } // end for (number of preschoolers)
+            } // end for (number of infants)
+        } // end outer for (number of adults)
+    }); // end change event
+
     for(let i = 1; i < 3; i++) {
         for(let j = 0; j < 6; j++) {
             for(let k = 0; k < 6; k++) {
@@ -247,11 +342,6 @@ $(document).ready(function () {
                             number_of_schoolagers = t;
                             number_of_teenagers = z;
 
-                            childcare_needed_bool = true;
-                            use_family_care_bool = false;
-                            use_marketplace_health_insurance_bool = false;
-                            number_of_public_transport_passes_adult = 0;
-                            number_of_public_transport_passes_child = 0;
 
                             let goal_seek_loop_count = 50; // The number of times to run goalSeek function.
                             for (let i = 0; i < goal_seek_loop_count; i++) {
@@ -274,7 +364,7 @@ $(document).ready(function () {
                                 markup +=
                                     "<td class='danger'>" + mhcNetYearlyIncome().toFixed(2)      + "</td>" + // Net Annual Income
                                     "<td class='danger'>" + mhcTotalExpensesPlusSavings().toFixed(2)  + "</td>"; // Total Expenses + Savings
-                                } else {
+                            } else {
                                 markup +=
                                     "<td class='success'>" + mhcNetYearlyIncome().toFixed(2)      + "</td>" + // Net Annual Income
                                     "<td class='success'>" + mhcTotalExpensesPlusSavings().toFixed(2)  + "</td>"; // Total Expenses + Savings
@@ -297,13 +387,13 @@ $(document).ready(function () {
 
                             $("table tbody").append(markup);
 
-                        }
+                        } //end if (combination filter)
 
-                    }
-                }
-            }
-        }
-    }
+                    } // end inner for (number of teenagers)
+                } // end for (number of schoolagers)
+            } // end for (number of preschoolers)
+        } // end for (number of infants)
+    } // end outer for (number of adults)
 ////
 });
 
