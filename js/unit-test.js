@@ -5,8 +5,6 @@
 //generated-standard formulas
 $(document).ready(function () {
 
-
-
     use_marketplace_health_insurance_bool = true;
 
     let parsedJSON;
@@ -49,16 +47,8 @@ $(document).ready(function () {
                 //     applicable_figure_list.push(parsedJSON[i].entryValue);
                 // }
             }
-
-            credit_amount_single_0_children_list = credit_amount_single_0_children_list.slice(1, credit_amount_single_0_children_list.length);
-            credit_amount_single_1_children_list = credit_amount_single_1_children_list.slice(1, credit_amount_single_1_children_list.length);
-            credit_amount_single_2_children_list = credit_amount_single_2_children_list.slice(1, credit_amount_single_2_children_list.length);
-            credit_amount_single_3_children_list = credit_amount_single_3_children_list.slice(1, credit_amount_single_3_children_list.length);
-            credit_amount_married_filing_jointly_0_children_list = credit_amount_married_filing_jointly_0_children_list.slice(1, credit_amount_married_filing_jointly_0_children_list.length);
-            credit_amount_married_filing_jointly_1_children_list = credit_amount_married_filing_jointly_1_children_list.slice(1, credit_amount_married_filing_jointly_1_children_list.length);
-            credit_amount_married_filing_jointly_2_children_list = credit_amount_married_filing_jointly_2_children_list.slice(1, credit_amount_married_filing_jointly_2_children_list.length);
-            credit_amount_married_filing_jointly_3_children_list = credit_amount_married_filing_jointly_3_children_list.slice(1, credit_amount_married_filing_jointly_3_children_list.length);
-
+        }
+    });
 
             applicable_figure_list = [
                 0.0201,
@@ -232,9 +222,15 @@ $(document).ready(function () {
                 0.0956
 
             ];
-        }
-    });
 
+    credit_amount_single_0_children_list = credit_amount_single_0_children_list.slice(1, credit_amount_single_0_children_list.length);
+    credit_amount_single_1_children_list = credit_amount_single_1_children_list.slice(1, credit_amount_single_1_children_list.length);
+    credit_amount_single_2_children_list = credit_amount_single_2_children_list.slice(1, credit_amount_single_2_children_list.length);
+    credit_amount_single_3_children_list = credit_amount_single_3_children_list.slice(1, credit_amount_single_3_children_list.length);
+    credit_amount_married_filing_jointly_0_children_list = credit_amount_married_filing_jointly_0_children_list.slice(1, credit_amount_married_filing_jointly_0_children_list.length);
+    credit_amount_married_filing_jointly_1_children_list = credit_amount_married_filing_jointly_1_children_list.slice(1, credit_amount_married_filing_jointly_1_children_list.length);
+    credit_amount_married_filing_jointly_2_children_list = credit_amount_married_filing_jointly_2_children_list.slice(1, credit_amount_married_filing_jointly_2_children_list.length);
+    credit_amount_married_filing_jointly_3_children_list = credit_amount_married_filing_jointly_3_children_list.slice(1, credit_amount_married_filing_jointly_3_children_list.length);
 
     for(let i = 1; i < 3; i++) {
         for(let j = 0; j < 6; j++) {
@@ -251,100 +247,57 @@ $(document).ready(function () {
                             number_of_schoolagers = t;
                             number_of_teenagers = z;
 
+                            childcare_needed_bool = true;
+                            use_family_care_bool = false;
+                            use_marketplace_health_insurance_bool = false;
+                            number_of_public_transport_passes_adult = 0;
+                            number_of_public_transport_passes_child = 0;
 
+                            let goal_seek_loop_count = 50; // The number of times to run goalSeek function.
+                            for (let i = 0; i < goal_seek_loop_count; i++) {
+                                mhc_gross_income = mhcCalcGross();
+                            }
 
-                                    // console.log(applicable_figure_list);
+                            let markup =
+                                "<tr>" +
+                                "<td>" + number_of_adults       + "</td>" + // Adults
+                                "<td>" + number_of_infants      + "</td>" + // Infants
+                                "<td>" + number_of_preschoolers + "</td>" + // Preschoolers
+                                "<td>" + number_of_schoolagers  + "</td>" + // Schoolagers
+                                "<td>" + number_of_teenagers    + "</td>" + // Teenagers
+                                "<td>" + use_family_care_bool   + "</td>" + // Family Care
+                                "<td>" + use_marketplace_health_insurance_bool  + "</td>" + // Marketplace Health Care
+                                "<td>" + mhc_gross_income.toFixed(2)    + "</td>" + // Gross Annual Income
+                                "<td>" + mhcTotalTax().toFixed(2)       + "</td>"; // Net Taxes
 
+                            if (Math.abs(mhcNetYearlyIncome() - mhcTotalExpensesPlusSavings()) > 0.01) {
+                                markup +=
+                                    "<td class='danger'>" + mhcNetYearlyIncome().toFixed(2)      + "</td>" + // Net Annual Income
+                                    "<td class='danger'>" + mhcTotalExpensesPlusSavings().toFixed(2)  + "</td>"; // Total Expenses + Savings
+                                } else {
+                                markup +=
+                                    "<td class='success'>" + mhcNetYearlyIncome().toFixed(2)      + "</td>" + // Net Annual Income
+                                    "<td class='success'>" + mhcTotalExpensesPlusSavings().toFixed(2)  + "</td>"; // Total Expenses + Savings
+                            }
 
-                                    for (let i = 0; i < 50; i++) {
-                                        mhc_gross_income = mhcCalcGross();
-                                    }
+                            markup +=
+                                "<td>" + annualTotalExpenses().toFixed(2)  + "</td>" + // Total Expenses
+                                "<td>" + annualHousingCosts().toFixed(2)   + "</td>" + // Housing
+                                "<td>" + annualChildcareCosts().toFixed(2) + "</td>" + // Childcare
+                                "<td>" + annualFoodCosts().toFixed(2)      + "</td>" + // Food
+                                "<td>" + annualCarInsurance().toFixed(2)   + "</td>" + // Car Insurance
+                                "<td>" + annualCarOwnership().toFixed(2)   + "</td>" + // Car Ownership
+                                "<td>" + annualPublicTransportation().toFixed(2)   + "</td>" + // Public Transport
+                                "<td>" + annualHealthInsurance().toFixed(2)        + "</td>" + // Health
+                                "<td>" + annualOutOfPocketCosts().toFixed(2)       + "</td>" + // Out of Pocket
+                                "<td>" + annualEntertainmentCosts().toFixed(2)     + "</td>" + // Entertainment
+                                "<td>" + annualMiscellaneousCosts().toFixed(2)     + "</td>" + // Miscellaneous
+                                "<td>" + savingsYearly().toFixed(2)                + "</td>" + // Savings
+                                "</tr>";
 
-                                    let markup =
-                                        "<tr>" +
-                                        "<td>" + number_of_adults       + "</td>" + // Adults
-                                        "<td>" + number_of_infants      + "</td>" + // Infants
-                                        "<td>" + number_of_preschoolers + "</td>" + // Preschoolers
-                                        "<td>" + number_of_schoolagers  + "</td>" + // Schoolagers
-                                        "<td>" + number_of_teenagers    + "</td>" + // Teenagers
-                                        "<td>" + use_family_care_bool   + "</td>" + // Family Care
-                                        "<td>" + use_marketplace_health_insurance_bool  + "</td>" + // Marketplace Health Care
-                                        "<td>" + mhc_gross_income    + "</td>" + // Gross Annual Income
-                                        "<td>" + mhcTotalTax()       + "</td>" + // Net Taxes
-                                        "<td>" + mhcNetYearlyIncome()      + "</td>" + // Net Annual Income
-                                        "<td>" + mhcTotalExpensesPlusSavings()  + "</td>" + // Total Expenses + Savings
-                                        "<td>" + annualTotalExpenses()  + "</td>" + // Total Expenses
-                                        "<td>" + annualHousingCosts()   + "</td>" + // Housing
-                                        "<td>" + annualChildcareCosts() + "</td>" + // Childcare
-                                        "<td>" + annualFoodCosts()      + "</td>" + // Food
-                                        "<td>" + annualCarInsurance()   + "</td>" + // Car Insurance
-                                        "<td>" + annualCarOwnership()   + "</td>" + // Car Ownership
-                                        "<td>" + annualPublicTransportation()   + "</td>" + // Public Transport
-                                        "<td>" + annualHealthInsurance()        + "</td>" + // Health
-                                        "<td>" + annualOutOfPocketCosts()       + "</td>" + // Out of Pocket
-                                        "<td>" + annualEntertainmentCosts()     + "</td>" + // Entertainment
-                                        "<td>" + annualMiscellaneousCosts()     + "</td>" + // Miscellaneous
-                                        "<td>" + savingsYearly()                + "</td>" + // Savings
-                                        "</tr>";
+                            $("table tbody").append(markup);
 
-                                    $("table tbody").append(markup);
-
-                                    // console.log("========================================================================");
-                                    console.log("number_of_adults:          ", number_of_adults);
-                                    console.log("number_of_infants:         ", number_of_infants);
-                                    console.log("number_of_preschoolers:    ", number_of_preschoolers);
-                                    console.log("number_of_schoolagers:     ", number_of_schoolagers);
-                                    console.log("number_of_teenagers:       ", number_of_teenagers);
-
-                                    // console.log("OVERALL COST: " + overallCost());
-
-                                    // console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~ MHC TAX STUFF ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
-                                    //
-                                    console.log('mhcQualifyingChildCareExpenses: ' + mhcQualifyingChildCareExpenses());
-                                    console.log('mhcFamilySize: ' + mhcFamilySize());
-                                    console.log('mhcStandardDeduction: ' + mhcStandardDeduction());
-                                    console.log('mhcFederalExemptions: ' + mhcFederalExemptions());
-                                    console.log('mhcStateExemptions: ' + mhcStateExemptions());
-                                    console.log('mhc_gross_income: ' + mhc_gross_income);
-                                    console.log('mhcGrossTaxableFederal: ' + mhcGrossTaxableFederal());
-                                    console.log('mhcUtahStateCreditValueHolder: ' + mhcUtahStateCreditValueHolder());
-                                    console.log('mhcStateTaxBeforeCredits: ' + mhcStateTaxBeforeCredits());
-                                    console.log('mhcGrossTaxFedMinusUtahStateCredValueHolder: ' + mhcGrossTaxFedMinusUtahStateCredValueHolder());
-                                    console.log('mhcCreditBeforePhaseOut: ' + mhcCreditBeforePhaseOut());
-                                    console.log('mhcPhaseOutX13: ' + mhcPhaseOutX13());
-                                    console.log('mhcNumberOfChildren: ' + mhcNumberOfChildren());
-                                    console.log('mhcFedTaxOwedBeforeCredits: ' + mhcFedTaxOwedBeforeCredits());
-                                    console.log('mhcEITC: ' + mhcEITC());
-                                    console.log('mhcChildTaxCredit: ' + mhcChildTaxCredit());
-                                    console.log('mhcAdjustedChildTaxCredit: ' + mhcAdjustedChildTaxCredit());
-                                    console.log('mhcFedTaxLessChildCareTaxCredit: ' + mhcFedTaxLessChildCareTaxCredit());
-                                    console.log('mhcAdjustedChildTaxCreditUsed: ' + mhcAdjustedChildTaxCreditUsed());
-                                    console.log('mhcAdditionalChildTaxCredit: ' + mhcAdditionalChildTaxCredit());
-                                    console.log('mhcChildCareTaxCredit: ' + mhcChildCareTaxCredit());
-                                    console.log('mhcFederalPovertyLine: ' + mhcFederalPovertyLine());
-                                    console.log('mhcGrossIncomeOverFederalPovertyLine: ' + mhcGrossIncomeOverFederalPovertyLine());
-                                    console.log('mhcValueFromApplicableFigureTable: ' + mhcValueFromApplicableFigureTable());
-                                    console.log('mhcApplicableFigureXGrossIncome: ' + mhcApplicableFigureXGrossIncome());
-                                    console.log('mhcBenchmarkSilverPlan: ' + mhcBenchmarkSilverPlan());
-                                    console.log('mhcBenchApplicableFigureXGrossIncome: ' + mhcBenchApplicableFigureXGrossIncome());
-                                    console.log('mhcMarketPlacePlanChosen: ' + mhcMarketPlacePlanChosen());
-                                    console.log('mhcPremiumTaxCredit: ' + mhcPremiumTaxCredit());
-                                    console.log('mhcEligibleExpenses: ' + mhcEligibleExpenses());
-                                    console.log('mhcUtahsHealthBenefitPlanCredit: ' + mhcUtahsHealthBenefitPlanCredit());
-                                    console.log('mhcSumOfNonRefundableTaxCredits: ' + mhcSumOfNonRefundableTaxCredits());
-                                    console.log('mhcSumOfRefundableTaxCredits: ' + mhcSumOfRefundableTaxCredits());
-                                    console.log('mhcFedTaxOwedLessNonRefundTaxCredits: ' + mhcFedTaxOwedLessNonRefundTaxCredits());
-                                    console.log('mhcFedDeductionPlusStateExemptionX6Per: ' + mhcFedDeductionPlusStateExemptionX6Per());
-                                    console.log('mhcUtahTaxCredit: ' + mhcUtahTaxCredit());
-                                    console.log('mhcFederalPayrollTax: ' + mhcFederalPayrollTax());
-                                    console.log('mhcFederalTaxOwed: ' + mhcFederalTaxOwed());
-                                    console.log('mhcUtahTaxesOwed: ' + mhcUtahTaxesOwed());
-                                    console.log('mhcTotalExpenses: ' + mhcTotalExpenses());
-                                    console.log('mhcSavings1PercentGross: ' + mhcSavings1PercentGross());
-                                    console.log('mhcTotalExpensesPlusSavings: ' + mhcTotalExpensesPlusSavings());
-                                    console.log('mhcTotalTax: ' + mhcTotalTax());
-                                    console.log('mhcNetYearlyIncome: ' + mhcNetYearlyIncome());
-                                }
+                        }
 
                     }
                 }

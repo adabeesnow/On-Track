@@ -7,6 +7,13 @@
 
 <script src="jquery/jquery-3.1.1.js"></script>
 <script src="js/alphanum.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+      integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
 
 <script src="js/car-insurance.js"></script>
 <script src="js/childcare-costs.js"></script>
@@ -24,35 +31,39 @@
 
 <script src="js/unit-test.js"></script>
 <style>
-    body {
-        font-size: 10pt;
-    }
-    table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-    }
-    td, th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-    tr:nth-child(even) {
-        background-color: #dddddd;
-    }
+    /*body {*/
+    /*font-size: 10pt;*/
+    /*font-family: arial, sans-serif;*/
+    /*}*/
+    /*table {*/
+    /*border-collapse: collapse;*/
+    /*width: 100%;*/
+    /*}*/
+    /*td, th {*/
+    /*border: 1px solid #dddddd;*/
+    /*text-align: left;*/
+    /*padding: 8px;*/
+    /*}*/
+    /*tr:nth-child(even) {*/
+    /*background-color: #dddddd;*/
+    /*}*/
 
     .composition {
         background-color: mediumslateblue;
     }
+
     .expense {
         background-color: palegoldenrod;
     }
+
     .total-expenses {
         background-color: yellow;
     }
+
     .income {
         background-color: #64BA89;
     }
+
     .tax {
         background-color: cadetblue;
     }
@@ -60,62 +71,139 @@
 </style>
 <body>
 
-<table id="unit">
+<div class="row">
+    <div class="col-xs-1 col-xs-offset-3">
+        <strong>Health Care</strong>
+        <div class="radio">
+            <label>
+                <input type="radio" name="radio-healthcare" id="radio-ehc" value="ehc" checked>
+                Employer
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="radio-healthcare" id="radio-mhc" value="mhc">
+                Marketplace
+            </label>
+        </div>
+    </div>
+
+    <div class="col-xs-1">
+        <strong>Childcare Needed</strong>
+        <div class="radio">
+            <label>
+                <input type="radio" name="radio-childcare" id="radio-childcare-needed" value=true checked>
+                Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="radio-childcare" id="radio-childcare-not-needed" value=false>
+                No
+            </label>
+        </div>
+    </div>
+
+    <div class="col-xs-1">
+        <strong>Use Family Care</strong>
+        <div class="radio">
+            <label>
+                <input type="radio" name="radio-family-care" id="radio-family-care-used" value=true>
+                Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="radio-family-care" id="radio-family-care-not-used" value=false checked>
+                No
+            </label>
+        </div>
+    </div>
+
+    <div class="col-xs-1">
+        <strong>Adult Bus Passes</strong>
+        <div class="radio">
+            <label>
+                <input type="radio" name="radio-public-transport-adult" id="radio-public-transport-adult-none" value=0 checked>
+                None
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="radio-public-transport-adult" id="radio-public-transport-adult-one" value=1>
+                One Adult
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="radio-public-transport-adult" id="radio-public-transport-adult-both" value=2>
+                Both Adults
+            </label>
+        </div>
+    </div>
+
+    <div class="col-xs-2">
+        <strong>Child Bus Passes</strong>
+        <div class="radio">
+            <label>
+                <input type="radio" name="radio-public-transport-child" id="radio-public-transport-child-none" value=0 checked>
+                None
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="radio-public-transport-child" id="radio-public-transport-child-schoolager" value=0>
+                Each Schoolager
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="radio-public-transport-child" id="radio-public-transport-child-teenager" value=0>
+                Each Teenager
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="radio-public-transport-child" id="radio-public-transport-child-teen-and-schoolager" value=0>
+                Each Teen and Schoolager
+            </label>
+        </div>
+
+    </div>
+</div>
+
+<table id="unit" class="table table-striped table-bordered table-hover table-condensed">
     <thead>
-        <tr>
-            <th class="composition">Ad</th>
-            <th class="composition">In</th>
-            <th class="composition">Pr</th>
-            <th class="composition">Sc</th>
-            <th class="composition">Te</th>
-            <th class="composition">FamCare</th>
-            <th class="composition">MHC</th>
-            <th class="income">GrossAnn</th>
-            <th class="tax">NetTax</th>
-            <th class="income">NetAnn</th>
-            <th class="total-expenses">Exp+Sav</th>
-            <th class="total-expenses">TotalExp</th>
-            <th class="expense">Housing</th>
-            <th class="expense">Childcare</th>
-            <th class="expense">Food</th>
-            <th class="expense">CarIns</th>
-            <th class="expense">CarOwn</th>
-            <th class="expense">PubTran</th>
-            <th class="expense">Health</th>
-            <th class="expense">OOP</th>
-            <th class="expense">Entertain</th>
-            <th class="expense">Misc</th>
-            <th class="expense">Savings</th>
-        </tr>
+    <tr>
+        <th class="composition">Ad</th>
+        <th class="composition">In</th>
+        <th class="composition">Pr</th>
+        <th class="composition">Sc</th>
+        <th class="composition">Te</th>
+        <th class="composition">FamCare</th>
+        <th class="composition">MHC</th>
+        <th class="income">GrossAnn</th>
+        <th class="tax">NetTax</th>
+        <th class="income">NetAnn</th>
+        <th class="total-expenses">Exp+Sav</th>
+        <th class="total-expenses">TotalExp</th>
+        <th class="expense">Housing</th>
+        <th class="expense">Childcare</th>
+        <th class="expense">Food</th>
+        <th class="expense">CarIns</th>
+        <th class="expense">CarOwn</th>
+        <th class="expense">PubTran</th>
+        <th class="expense">Health</th>
+        <th class="expense">OOP</th>
+        <th class="expense">Entertain</th>
+        <th class="expense">Misc</th>
+        <th class="expense">Savings</th>
+    </tr>
     </thead>
     <tbody>
 
     </tbody>
-    <!--<tr>-->
-        <!--<td>1</td>  &lt;!&ndash; Ad &ndash;&gt;-->
-        <!--<td>1</td>  &lt;!&ndash; In &ndash;&gt;-->
-        <!--<td>1</td>  &lt;!&ndash; Pr &ndash;&gt;-->
-        <!--<td>2</td>  &lt;!&ndash; Sc &ndash;&gt;-->
-        <!--<td>1</td>  &lt;!&ndash; Te &ndash;&gt;-->
-        <!--<td>false</td>  &lt;!&ndash; MHC &ndash;&gt;-->
-        <!--<td>false</td>  &lt;!&ndash; FamCare &ndash;&gt;-->
-        <!--<td>82022.13</td>  &lt;!&ndash; GrossAnn &ndash;&gt;-->
-        <!--<td>8157.98</td>  &lt;!&ndash; NetTax &ndash;&gt;-->
-        <!--<td>73864.16</td>  &lt;!&ndash; NetAnn &ndash;&gt;-->
-        <!--<td>73864.15</td>  &lt;!&ndash; Exp+Savings &ndash;&gt;-->
-        <!--<td>73043.93</td>  &lt;!&ndash; TotalExp &ndash;&gt;-->
-        <!--<td>15000</td>  &lt;!&ndash; Housing &ndash;&gt;-->
-        <!--<td>24400.77</td>  &lt;!&ndash; Childcare &ndash;&gt;-->
-        <!--<td>13612.32</td>  &lt;!&ndash; Food &ndash;&gt;-->
-        <!--<td>931.28</td>  &lt;!&ndash; CarIns &ndash;&gt;-->
-        <!--<td>6579.28</td>  &lt;!&ndash; CarOwn &ndash;&gt;-->
-        <!--<td>0</td>  &lt;!&ndash; PubTran &ndash;&gt;-->
-        <!--<td>3412</td>  &lt;!&ndash; Health &ndash;&gt;-->
-        <!--<td>557.28</td>  &lt;!&ndash; OOP &ndash;&gt;-->
-        <!--<td>2429</td>  &lt;!&ndash; Entertain &ndash;&gt;-->
-        <!--<td>6122.00</td>  &lt;!&ndash; Misc &ndash;&gt;-->
-        <!--<td>820.22</td>  &lt;!&ndash; Savings &ndash;&gt;-->
-    <!--</tr>-->
+
 </table>
 
 </body>
