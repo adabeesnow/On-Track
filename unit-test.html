@@ -31,43 +31,15 @@
 
 <script src="js/unit-test.js"></script>
 <style>
-    /*body {*/
-    /*font-size: 10pt;*/
-    /*font-family: arial, sans-serif;*/
-    /*}*/
-    /*table {*/
-    /*border-collapse: collapse;*/
-    /*width: 100%;*/
-    /*}*/
-    /*td, th {*/
-    /*border: 1px solid #dddddd;*/
-    /*text-align: left;*/
-    /*padding: 8px;*/
-    /*}*/
-    /*tr:nth-child(even) {*/
-    /*background-color: #dddddd;*/
-    /*}*/
+    .composition    {  background-color: mediumslateblue;  }
 
-    .composition {
-        background-color: mediumslateblue;
-    }
+    .expense        {  background-color: palegoldenrod;  }
 
-    .expense {
-        background-color: palegoldenrod;
-    }
+    .total-expenses {  background-color: yellow;  }
 
-    .total-expenses {
-        background-color: yellow;
-    }
+    .income         {  background-color: #64BA89;  }
 
-    .income {
-        background-color: #64BA89;
-    }
-
-    .tax {
-        background-color: cadetblue;
-    }
-
+    .tax            {  background-color: cadetblue;  }
 </style>
 <body>
 
@@ -146,25 +118,25 @@
         <strong>Child Bus Passes</strong>
         <div class="radio">
             <label>
-                <input type="radio" name="radio-public-transport-child" id="radio-public-transport-child-none" value=0 checked>
+                <input type="radio" name="radio-public-transport-child" id="radio-public-transport-child-none" value="none" checked>
                 None
             </label>
         </div>
         <div class="radio">
             <label>
-                <input type="radio" name="radio-public-transport-child" id="radio-public-transport-child-schoolager" value=0>
+                <input type="radio" name="radio-public-transport-child" id="radio-public-transport-child-schoolager" value="schoolager">
                 Each Schoolager
             </label>
         </div>
         <div class="radio">
             <label>
-                <input type="radio" name="radio-public-transport-child" id="radio-public-transport-child-teenager" value=0>
+                <input type="radio" name="radio-public-transport-child" id="radio-public-transport-child-teenager" value="teenager">
                 Each Teenager
             </label>
         </div>
         <div class="radio">
             <label>
-                <input type="radio" name="radio-public-transport-child" id="radio-public-transport-child-teen-and-schoolager" value=0>
+                <input type="radio" name="radio-public-transport-child" id="radio-public-transport-child-teen-and-schoolager" value="both">
                 Each Teen and Schoolager
             </label>
         </div>

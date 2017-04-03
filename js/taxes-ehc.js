@@ -253,10 +253,10 @@ let ehcCalcGross = function() {
         });
     }
 
-    console.log('CALC gross: ' + gross);
-    console.log('CALC tax: ' + tax);
-    console.log('CALC net: ' + net(gross, tax));
-    console.log('CALC expense: ' + expense);
+    // console.log('CALC gross: ' + gross);
+    // console.log('CALC tax: ' + tax);
+    // console.log('CALC net: ' + net(gross, tax));
+    // console.log('CALC expense: ' + expense);
 
     return gross;
 };

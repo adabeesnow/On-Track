@@ -232,30 +232,154 @@ $(document).ready(function () {
     credit_amount_married_filing_jointly_2_children_list = credit_amount_married_filing_jointly_2_children_list.slice(1, credit_amount_married_filing_jointly_2_children_list.length);
     credit_amount_married_filing_jointly_3_children_list = credit_amount_married_filing_jointly_3_children_list.slice(1, credit_amount_married_filing_jointly_3_children_list.length);
 
+    // ------------------------------------------- vv INITIAL RUN vv ---------------------------------------------------
 
     use_marketplace_health_insurance_bool = $('input[name=radio-healthcare]:checked').val();
     childcare_needed_bool = $('input[name=radio-childcare]:checked').val();
     use_family_care_bool = $('input[name=radio-family-care]:checked').val();
     number_of_public_transport_passes_adult = $('input[name=radio-public-transport-adult]:checked').val();
-    number_of_public_transport_passes_child = $('input[name=radio-public-transport-child]:checked').val();
 
+    for(let i = 1; i < 3; i++) {
+        for(let j = 0; j < 6; j++) {
+            for(let k = 0; k < 6; k++) {
+                for(let t = 0; t < 6; t++) {
+                    for(let z = 0; z < 6; z++) {
+                        if(j + k + t + z < 6) {
+                            // console.log("Combination: ", i, j, k, t, z);
+                            number_of_adults = i;
+                            number_of_infants = j;
+                            number_of_preschoolers = k;
+                            number_of_schoolagers = t;
+                            number_of_teenagers = z;
+                            if ($('input[name=radio-public-transport-child]:checked').val()         === "none") {
+                                number_of_public_transport_passes_child = 0;
+                            } else if ($('input[name=radio-public-transport-child]:checked').val()  === "schoolager") {
+                                number_of_public_transport_passes_child = number_of_schoolagers;
+                            } else if ($('input[name=radio-public-transport-child]:checked').val()  === "teenager") {
+                                number_of_public_transport_passes_child = number_of_teenagers;
+                            } else if ($('input[name=radio-public-transport-child]:checked').val()  === "both") {
+                                number_of_public_transport_passes_child = number_of_schoolagers + number_of_teenagers;
+                            }
 
-    $('input[type=radio]').change(function(){
-        use_marketplace_health_insurance_bool = $('input[name=radio-healthcare]:checked').val();
-        childcare_needed_bool = $('input[name=radio-childcare]:checked').val();
-        use_family_care_bool = $('input[name=radio-family-care]:checked').val();
+                            // MHC
+                            if (use_marketplace_health_insurance_bool === true) {
+                                let goal_seek_loop_count = 50; // The number of times to run goalSeek function.
+                                for (let i = 0; i < goal_seek_loop_count; i++) {
+                                    mhc_gross_income = mhcCalcGross();
+                                }
+
+                                let markup =
+                                    "<tr class='unit-data'>" +
+                                    "<td class='unit-data'>" + number_of_adults + "</td>" + // Adults
+                                    "<td class='unit-data'>" + number_of_infants + "</td>" + // Infants
+                                    "<td class='unit-data'>" + number_of_preschoolers + "</td>" + // Preschoolers
+                                    "<td class='unit-data'>" + number_of_schoolagers + "</td>" + // Schoolagers
+                                    "<td class='unit-data'>" + number_of_teenagers + "</td>" + // Teenagers
+                                    "<td class='unit-data'>" + use_family_care_bool + "</td>" + // Family Care
+                                    "<td class='unit-data'>" + use_marketplace_health_insurance_bool + "</td>" + // Marketplace Health Care
+                                    "<td class='unit-data'>" + mhc_gross_income.toFixed(2) + "</td>" + // Gross Annual Income
+                                    "<td class='unit-data'>" + mhcTotalTax().toFixed(2) + "</td>"; // Net Taxes
+
+                                // If difference between net income and expenses+savings is > $0.01, our table data are marked with the 'danger' class.
+                                if (Math.abs(mhcNetYearlyIncome() - mhcTotalExpensesPlusSavings()) > 0.01) {
+                                    markup +=
+                                        "<td class='unit-data danger'>" + mhcNetYearlyIncome().toFixed(2) + "</td>" +        // Net Annual Income
+                                        "<td class='unit-data danger'>" + mhcTotalExpensesPlusSavings().toFixed(2) + "</td>";    // Total Expenses + Savings
+                                } else {
+                                    markup +=
+                                        "<td class='unit-data success'>" + mhcNetYearlyIncome().toFixed(2) + "</td>" +       // Net Annual Income
+                                        "<td class='unit-data success'>" + mhcTotalExpensesPlusSavings().toFixed(2) + "</td>";   // Total Expenses + Savings
+                                }
+
+                                markup +=
+                                    "<td class='unit-data'>" + annualTotalExpenses().toFixed(2) + "</td>" + // Total Expenses
+                                    "<td class='unit-data'>" + annualHousingCosts().toFixed(2) + "</td>" + // Housing
+                                    "<td class='unit-data'>" + annualChildcareCosts().toFixed(2) + "</td>" + // Childcare
+                                    "<td class='unit-data'>" + annualFoodCosts().toFixed(2) + "</td>" + // Food
+                                    "<td class='unit-data'>" + annualCarInsurance().toFixed(2) + "</td>" + // Car Insurance
+                                    "<td class='unit-data'>" + annualCarOwnership().toFixed(2) + "</td>" + // Car Ownership
+                                    "<td class='unit-data'>" + annualPublicTransportation().toFixed(2) + "</td>" + // Public Transport
+                                    "<td class='unit-data'>" + annualHealthInsurance().toFixed(2) + "</td>" + // Health
+                                    "<td class='unit-data'>" + annualOutOfPocketCosts().toFixed(2) + "</td>" + // Out of Pocket
+                                    "<td class='unit-data'>" + annualEntertainmentCosts().toFixed(2) + "</td>" + // Entertainment
+                                    "<td class='unit-data'>" + annualMiscellaneousCosts().toFixed(2) + "</td>" + // Miscellaneous
+                                    "<td class='unit-data'>" + savingsYearly().toFixed(2) + "</td>" + // Savings
+                                    "</tr>";
+
+                                $("table tbody").append(markup);
+                            }
+                            // EHC
+                            else {
+                                let goal_seek_loop_count = 50; // The number of times to run goalSeek function.
+                                for (let i = 0; i < goal_seek_loop_count; i++) {
+                                    ehc_gross_income = ehcCalcGross();
+                                }
+
+                                let markup =
+                                    "<tr class='unit-data'>" +
+                                    "<td class='unit-data'>" + number_of_adults + "</td>" + // Adults
+                                    "<td class='unit-data'>" + number_of_infants + "</td>" + // Infants
+                                    "<td class='unit-data'>" + number_of_preschoolers + "</td>" + // Preschoolers
+                                    "<td class='unit-data'>" + number_of_schoolagers + "</td>" + // Schoolagers
+                                    "<td class='unit-data'>" + number_of_teenagers + "</td>" + // Teenagers
+                                    "<td class='unit-data'>" + use_family_care_bool + "</td>" + // Family Care
+                                    "<td class='unit-data'>" + use_marketplace_health_insurance_bool + "</td>" + // Marketplace Health Care
+                                    "<td class='unit-data'>" + ehc_gross_income.toFixed(2) + "</td>" + // Gross Annual Income
+                                    "<td class='unit-data'>" + ehcTotalTax().toFixed(2) + "</td>"; // Net Taxes
+
+                                // If difference between net income and expenses+savings is > $0.01, our table data are marked with the 'danger' class.
+                                if (Math.abs(ehcNetYearlyIncome() - ehcTotalExpensesPlusSavings()) > 0.01) {
+                                    markup +=
+                                        "<td class='unit-data danger'>" + ehcNetYearlyIncome().toFixed(2) + "</td>" +        // Net Annual Income
+                                        "<td class='unit-data danger'>" + ehcTotalExpensesPlusSavings().toFixed(2) + "</td>";    // Total Expenses + Savings
+                                } else {
+                                    markup +=
+                                        "<td class='unit-data success'>" + ehcNetYearlyIncome().toFixed(2) + "</td>" +       // Net Annual Income
+                                        "<td class='unit-data success'>" + ehcTotalExpensesPlusSavings().toFixed(2) + "</td>";   // Total Expenses + Savings
+                                }
+
+                                markup +=
+                                    "<td class='unit-data'>" + annualTotalExpenses().toFixed(2) + "</td>" + // Total Expenses
+                                    "<td class='unit-data'>" + annualHousingCosts().toFixed(2) + "</td>" + // Housing
+                                    "<td class='unit-data'>" + annualChildcareCosts().toFixed(2) + "</td>" + // Childcare
+                                    "<td class='unit-data'>" + annualFoodCosts().toFixed(2) + "</td>" + // Food
+                                    "<td class='unit-data'>" + annualCarInsurance().toFixed(2) + "</td>" + // Car Insurance
+                                    "<td class='unit-data'>" + annualCarOwnership().toFixed(2) + "</td>" + // Car Ownership
+                                    "<td class='unit-data'>" + annualPublicTransportation().toFixed(2) + "</td>" + // Public Transport
+                                    "<td class='unit-data'>" + annualHealthInsurance().toFixed(2) + "</td>" + // Health
+                                    "<td class='unit-data'>" + annualOutOfPocketCosts().toFixed(2) + "</td>" + // Out of Pocket
+                                    "<td class='unit-data'>" + annualEntertainmentCosts().toFixed(2) + "</td>" + // Entertainment
+                                    "<td class='unit-data'>" + annualMiscellaneousCosts().toFixed(2) + "</td>" + // Miscellaneous
+                                    "<td class='unit-data'>" + savingsYearly().toFixed(2) + "</td>" + // Savings
+                                    "</tr>";
+
+                                $("table tbody").append(markup);
+                            }
+                        } // end if (combination filter)
+                    } // end inner for (number of teenagers)
+                } // end for (number of schoolagers)
+            } // end for (number of preschoolers)
+        } // end for (number of infants)
+    } // end outer for (number of adults)
+
+    // ------------------------------------------- vv ON-CHANGE vv -----------------------------------------------------
+
+    $('input[type=radio]').change(function() {
+        use_marketplace_health_insurance_bool   = $('input[name=radio-healthcare]:checked').val();
+        childcare_needed_bool                   = $('input[name=radio-childcare]:checked').val();
+        use_family_care_bool                    = $('input[name=radio-family-care]:checked').val();
         number_of_public_transport_passes_adult = $('input[name=radio-public-transport-adult]:checked').val();
-        number_of_public_transport_passes_child = $('input[name=radio-public-transport-child]:checked').val();
 
-        $('#unit tbody').empty();
+        // $('#unit').find('tbody').empty(); // .empty() leaves empty tr/td tags.
+        $('.unit-data').remove(); // Remove existing table data and tags.
 
-        console.log(
-            'Healthcare: ' + use_marketplace_health_insurance_bool + '\n' +
-            'Childcare Needed: ' + childcare_needed_bool + '\n' +
-            'Use Family Care: ' + use_family_care_bool + '\n' +
-            'Adult Bus Passes: ' + number_of_public_transport_passes_adult + '\n' +
-            'Child Bus Passes: ' + number_of_public_transport_passes_child
-        );
+        // console.log(
+        //     'Healthcare:        ' + use_marketplace_health_insurance_bool   + '\n' +
+        //     'Childcare Needed:  ' + childcare_needed_bool                   + '\n' +
+        //     'Use Family Care:   ' + use_family_care_bool                    + '\n' +
+        //     'Adult Bus Passes:  ' + number_of_public_transport_passes_adult + '\n' +
+        //     'Child Bus Passes:  ' + number_of_public_transport_passes_child
+        // );
 
 
         for(let i = 1; i < 3; i++) {
@@ -264,59 +388,116 @@ $(document).ready(function () {
                     for(let t = 0; t < 6; t++) {
                         for(let z = 0; z < 6; z++) {
                             if(j + k + t + z < 6) {
-
-                                console.log("Combination: ", i, j, k, t, z);
-
+                                // console.log("Combination: ", i, j, k, t, z);
                                 number_of_adults = i;
                                 number_of_infants = j;
                                 number_of_preschoolers = k;
                                 number_of_schoolagers = t;
                                 number_of_teenagers = z;
-
-
-                                let goal_seek_loop_count = 50; // The number of times to run goalSeek function.
-                                for (let i = 0; i < goal_seek_loop_count; i++) {
-                                    mhc_gross_income = mhcCalcGross();
+                                if ($('input[name=radio-public-transport-child]:checked').val()         === "none") {
+                                    number_of_public_transport_passes_child = 0;
+                                } else if ($('input[name=radio-public-transport-child]:checked').val()  === "schoolager") {
+                                    number_of_public_transport_passes_child = number_of_schoolagers;
+                                } else if ($('input[name=radio-public-transport-child]:checked').val()  === "teenager") {
+                                    number_of_public_transport_passes_child = number_of_teenagers;
+                                } else if ($('input[name=radio-public-transport-child]:checked').val()  === "both") {
+                                    number_of_public_transport_passes_child = number_of_schoolagers + number_of_teenagers;
                                 }
 
-                                let markup =
-                                    "<tr>" +
-                                    "<td>" + number_of_adults       + "</td>" + // Adults
-                                    "<td>" + number_of_infants      + "</td>" + // Infants
-                                    "<td>" + number_of_preschoolers + "</td>" + // Preschoolers
-                                    "<td>" + number_of_schoolagers  + "</td>" + // Schoolagers
-                                    "<td>" + number_of_teenagers    + "</td>" + // Teenagers
-                                    "<td>" + use_family_care_bool   + "</td>" + // Family Care
-                                    "<td>" + use_marketplace_health_insurance_bool  + "</td>" + // Marketplace Health Care
-                                    "<td>" + mhc_gross_income.toFixed(2)    + "</td>" + // Gross Annual Income
-                                    "<td>" + mhcTotalTax().toFixed(2)       + "</td>"; // Net Taxes
+                                // MHC
+                                if (use_marketplace_health_insurance_bool === true) {
+                                    let goal_seek_loop_count = 50; // The number of times to run goalSeek function.
+                                    for (let i = 0; i < goal_seek_loop_count; i++) {
+                                        mhc_gross_income = mhcCalcGross();
+                                    }
 
-                                if (Math.abs(mhcNetYearlyIncome() - mhcTotalExpensesPlusSavings()) > 0.01) {
+                                    let markup =
+                                        "<tr class='unit-data'>" +
+                                        "<td class='unit-data'>" + number_of_adults + "</td>" + // Adults
+                                        "<td class='unit-data'>" + number_of_infants + "</td>" + // Infants
+                                        "<td class='unit-data'>" + number_of_preschoolers + "</td>" + // Preschoolers
+                                        "<td class='unit-data'>" + number_of_schoolagers + "</td>" + // Schoolagers
+                                        "<td class='unit-data'>" + number_of_teenagers + "</td>" + // Teenagers
+                                        "<td class='unit-data'>" + use_family_care_bool + "</td>" + // Family Care
+                                        "<td class='unit-data'>" + use_marketplace_health_insurance_bool + "</td>" + // Marketplace Health Care
+                                        "<td class='unit-data'>" + mhc_gross_income.toFixed(2) + "</td>" + // Gross Annual Income
+                                        "<td class='unit-data'>" + mhcTotalTax().toFixed(2) + "</td>"; // Net Taxes
+
+                                    // If difference between net income and expenses+savings is > $0.01, our table data are marked with the 'danger' class.
+                                    if (Math.abs(mhcNetYearlyIncome() - mhcTotalExpensesPlusSavings()) > 0.01) {
+                                        markup +=
+                                            "<td class='unit-data danger'>" + mhcNetYearlyIncome().toFixed(2) + "</td>" +        // Net Annual Income
+                                            "<td class='unit-data danger'>" + mhcTotalExpensesPlusSavings().toFixed(2) + "</td>";    // Total Expenses + Savings
+                                    } else {
+                                        markup +=
+                                            "<td class='unit-data success'>" + mhcNetYearlyIncome().toFixed(2) + "</td>" +       // Net Annual Income
+                                            "<td class='unit-data success'>" + mhcTotalExpensesPlusSavings().toFixed(2) + "</td>";   // Total Expenses + Savings
+                                    }
+
                                     markup +=
-                                        "<td class='danger'>" + mhcNetYearlyIncome().toFixed(2)      + "</td>" + // Net Annual Income
-                                        "<td class='danger'>" + mhcTotalExpensesPlusSavings().toFixed(2)  + "</td>"; // Total Expenses + Savings
-                                } else {
-                                    markup +=
-                                        "<td class='success'>" + mhcNetYearlyIncome().toFixed(2)      + "</td>" + // Net Annual Income
-                                        "<td class='success'>" + mhcTotalExpensesPlusSavings().toFixed(2)  + "</td>"; // Total Expenses + Savings
+                                        "<td class='unit-data'>" + annualTotalExpenses().toFixed(2) + "</td>" + // Total Expenses
+                                        "<td class='unit-data'>" + annualHousingCosts().toFixed(2) + "</td>" + // Housing
+                                        "<td class='unit-data'>" + annualChildcareCosts().toFixed(2) + "</td>" + // Childcare
+                                        "<td class='unit-data'>" + annualFoodCosts().toFixed(2) + "</td>" + // Food
+                                        "<td class='unit-data'>" + annualCarInsurance().toFixed(2) + "</td>" + // Car Insurance
+                                        "<td class='unit-data'>" + annualCarOwnership().toFixed(2) + "</td>" + // Car Ownership
+                                        "<td class='unit-data'>" + annualPublicTransportation().toFixed(2) + "</td>" + // Public Transport
+                                        "<td class='unit-data'>" + annualHealthInsurance().toFixed(2) + "</td>" + // Health
+                                        "<td class='unit-data'>" + annualOutOfPocketCosts().toFixed(2) + "</td>" + // Out of Pocket
+                                        "<td class='unit-data'>" + annualEntertainmentCosts().toFixed(2) + "</td>" + // Entertainment
+                                        "<td class='unit-data'>" + annualMiscellaneousCosts().toFixed(2) + "</td>" + // Miscellaneous
+                                        "<td class='unit-data'>" + savingsYearly().toFixed(2) + "</td>" + // Savings
+                                        "</tr>";
+
+                                    $("table tbody").append(markup);
                                 }
+                                // EHC
+                                else {
+                                    let goal_seek_loop_count = 50; // The number of times to run goalSeek function.
+                                    for (let i = 0; i < goal_seek_loop_count; i++) {
+                                        ehc_gross_income = ehcCalcGross();
+                                    }
 
-                                markup +=
-                                    "<td>" + annualTotalExpenses().toFixed(2)  + "</td>" + // Total Expenses
-                                    "<td>" + annualHousingCosts().toFixed(2)   + "</td>" + // Housing
-                                    "<td>" + annualChildcareCosts().toFixed(2) + "</td>" + // Childcare
-                                    "<td>" + annualFoodCosts().toFixed(2)      + "</td>" + // Food
-                                    "<td>" + annualCarInsurance().toFixed(2)   + "</td>" + // Car Insurance
-                                    "<td>" + annualCarOwnership().toFixed(2)   + "</td>" + // Car Ownership
-                                    "<td>" + annualPublicTransportation().toFixed(2)   + "</td>" + // Public Transport
-                                    "<td>" + annualHealthInsurance().toFixed(2)        + "</td>" + // Health
-                                    "<td>" + annualOutOfPocketCosts().toFixed(2)       + "</td>" + // Out of Pocket
-                                    "<td>" + annualEntertainmentCosts().toFixed(2)     + "</td>" + // Entertainment
-                                    "<td>" + annualMiscellaneousCosts().toFixed(2)     + "</td>" + // Miscellaneous
-                                    "<td>" + savingsYearly().toFixed(2)                + "</td>" + // Savings
-                                    "</tr>";
+                                    let markup =
+                                        "<tr class='unit-data'>" +
+                                        "<td class='unit-data'>" + number_of_adults + "</td>" + // Adults
+                                        "<td class='unit-data'>" + number_of_infants + "</td>" + // Infants
+                                        "<td class='unit-data'>" + number_of_preschoolers + "</td>" + // Preschoolers
+                                        "<td class='unit-data'>" + number_of_schoolagers + "</td>" + // Schoolagers
+                                        "<td class='unit-data'>" + number_of_teenagers + "</td>" + // Teenagers
+                                        "<td class='unit-data'>" + use_family_care_bool + "</td>" + // Family Care
+                                        "<td class='unit-data'>" + use_marketplace_health_insurance_bool + "</td>" + // Marketplace Health Care
+                                        "<td class='unit-data'>" + ehc_gross_income.toFixed(2) + "</td>" + // Gross Annual Income
+                                        "<td class='unit-data'>" + ehcTotalTax().toFixed(2) + "</td>"; // Net Taxes
 
-                                $("table tbody").append(markup);
+                                    // If difference between net income and expenses+savings is > $0.01, our table data are marked with the 'danger' class.
+                                    if (Math.abs(ehcNetYearlyIncome() - ehcTotalExpensesPlusSavings()) > 0.01) {
+                                        markup +=
+                                            "<td class='unit-data danger'>" + ehcNetYearlyIncome().toFixed(2) + "</td>" +        // Net Annual Income
+                                            "<td class='unit-data danger'>" + ehcTotalExpensesPlusSavings().toFixed(2) + "</td>";    // Total Expenses + Savings
+                                    } else {
+                                        markup +=
+                                            "<td class='unit-data success'>" + ehcNetYearlyIncome().toFixed(2) + "</td>" +       // Net Annual Income
+                                            "<td class='unit-data success'>" + ehcTotalExpensesPlusSavings().toFixed(2) + "</td>";   // Total Expenses + Savings
+                                    }
+
+                                    markup +=
+                                        "<td class='unit-data'>" + annualTotalExpenses().toFixed(2) + "</td>" + // Total Expenses
+                                        "<td class='unit-data'>" + annualHousingCosts().toFixed(2) + "</td>" + // Housing
+                                        "<td class='unit-data'>" + annualChildcareCosts().toFixed(2) + "</td>" + // Childcare
+                                        "<td class='unit-data'>" + annualFoodCosts().toFixed(2) + "</td>" + // Food
+                                        "<td class='unit-data'>" + annualCarInsurance().toFixed(2) + "</td>" + // Car Insurance
+                                        "<td class='unit-data'>" + annualCarOwnership().toFixed(2) + "</td>" + // Car Ownership
+                                        "<td class='unit-data'>" + annualPublicTransportation().toFixed(2) + "</td>" + // Public Transport
+                                        "<td class='unit-data'>" + annualHealthInsurance().toFixed(2) + "</td>" + // Health
+                                        "<td class='unit-data'>" + annualOutOfPocketCosts().toFixed(2) + "</td>" + // Out of Pocket
+                                        "<td class='unit-data'>" + annualEntertainmentCosts().toFixed(2) + "</td>" + // Entertainment
+                                        "<td class='unit-data'>" + annualMiscellaneousCosts().toFixed(2) + "</td>" + // Miscellaneous
+                                        "<td class='unit-data'>" + savingsYearly().toFixed(2) + "</td>" + // Savings
+                                        "</tr>";
+
+                                    $("table tbody").append(markup);
+                                }
 
                             } //end if (combination filter)
 
@@ -327,74 +508,6 @@ $(document).ready(function () {
         } // end outer for (number of adults)
     }); // end change event
 
-    for(let i = 1; i < 3; i++) {
-        for(let j = 0; j < 6; j++) {
-            for(let k = 0; k < 6; k++) {
-                for(let t = 0; t < 6; t++) {
-                    for(let z = 0; z < 6; z++) {
-                        if(j + k + t + z < 6) {
-
-                            console.log("Combination: ", i, j, k, t, z);
-
-                            number_of_adults = i;
-                            number_of_infants = j;
-                            number_of_preschoolers = k;
-                            number_of_schoolagers = t;
-                            number_of_teenagers = z;
-
-
-                            let goal_seek_loop_count = 50; // The number of times to run goalSeek function.
-                            for (let i = 0; i < goal_seek_loop_count; i++) {
-                                mhc_gross_income = mhcCalcGross();
-                            }
-
-                            let markup =
-                                "<tr>" +
-                                "<td>" + number_of_adults       + "</td>" + // Adults
-                                "<td>" + number_of_infants      + "</td>" + // Infants
-                                "<td>" + number_of_preschoolers + "</td>" + // Preschoolers
-                                "<td>" + number_of_schoolagers  + "</td>" + // Schoolagers
-                                "<td>" + number_of_teenagers    + "</td>" + // Teenagers
-                                "<td>" + use_family_care_bool   + "</td>" + // Family Care
-                                "<td>" + use_marketplace_health_insurance_bool  + "</td>" + // Marketplace Health Care
-                                "<td>" + mhc_gross_income.toFixed(2)    + "</td>" + // Gross Annual Income
-                                "<td>" + mhcTotalTax().toFixed(2)       + "</td>"; // Net Taxes
-
-                            if (Math.abs(mhcNetYearlyIncome() - mhcTotalExpensesPlusSavings()) > 0.01) {
-                                markup +=
-                                    "<td class='danger'>" + mhcNetYearlyIncome().toFixed(2)      + "</td>" + // Net Annual Income
-                                    "<td class='danger'>" + mhcTotalExpensesPlusSavings().toFixed(2)  + "</td>"; // Total Expenses + Savings
-                            } else {
-                                markup +=
-                                    "<td class='success'>" + mhcNetYearlyIncome().toFixed(2)      + "</td>" + // Net Annual Income
-                                    "<td class='success'>" + mhcTotalExpensesPlusSavings().toFixed(2)  + "</td>"; // Total Expenses + Savings
-                            }
-
-                            markup +=
-                                "<td>" + annualTotalExpenses().toFixed(2)  + "</td>" + // Total Expenses
-                                "<td>" + annualHousingCosts().toFixed(2)   + "</td>" + // Housing
-                                "<td>" + annualChildcareCosts().toFixed(2) + "</td>" + // Childcare
-                                "<td>" + annualFoodCosts().toFixed(2)      + "</td>" + // Food
-                                "<td>" + annualCarInsurance().toFixed(2)   + "</td>" + // Car Insurance
-                                "<td>" + annualCarOwnership().toFixed(2)   + "</td>" + // Car Ownership
-                                "<td>" + annualPublicTransportation().toFixed(2)   + "</td>" + // Public Transport
-                                "<td>" + annualHealthInsurance().toFixed(2)        + "</td>" + // Health
-                                "<td>" + annualOutOfPocketCosts().toFixed(2)       + "</td>" + // Out of Pocket
-                                "<td>" + annualEntertainmentCosts().toFixed(2)     + "</td>" + // Entertainment
-                                "<td>" + annualMiscellaneousCosts().toFixed(2)     + "</td>" + // Miscellaneous
-                                "<td>" + savingsYearly().toFixed(2)                + "</td>" + // Savings
-                                "</tr>";
-
-                            $("table tbody").append(markup);
-
-                        } //end if (combination filter)
-
-                    } // end inner for (number of teenagers)
-                } // end for (number of schoolagers)
-            } // end for (number of preschoolers)
-        } // end for (number of infants)
-    } // end outer for (number of adults)
-////
 });
 
 
