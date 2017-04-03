@@ -234,10 +234,26 @@ $(document).ready(function () {
 
     // ------------------------------------------- vv INITIAL RUN vv ---------------------------------------------------
 
-    use_marketplace_health_insurance_bool = $('input[name=radio-healthcare]:checked').val();
-    childcare_needed_bool = $('input[name=radio-childcare]:checked').val();
-    use_family_care_bool = $('input[name=radio-family-care]:checked').val();
-    number_of_public_transport_passes_adult = $('input[name=radio-public-transport-adult]:checked').val();
+    // Set MHC/EHC to checked value.
+    use_marketplace_health_insurance_bool   = $('input[id=radio-mhc]').is(':checked');
+
+    // Set Childcare and Family Care to checked value.
+    if ($('input[name=radio-childcare]:checked').val()         === "childcare-center-care") {
+        // If Center Care used: child_care_needed_bool = true, use_family_care_bool = false
+        childcare_needed_bool = true;
+        use_family_care_bool = false;
+    } else if ($('input[name=radio-childcare]:checked').val()  === "childcare-family-care") {
+        // If Family Care used: child_care_needed_bool = true, use_family_care_bool = true
+        childcare_needed_bool = true;
+        use_family_care_bool = true;
+    } else if ($('input[name=radio-childcare]:checked').val()  === "none") {
+        // If Childcare not required: child_care_needed_bool = false, use_family_care_bool = false
+        childcare_needed_bool = false;
+        use_family_care_bool = false;
+    }
+
+    // Number of adult bus passes is set to 1.
+    number_of_public_transport_passes_adult = 1;
 
     for(let i = 1; i < 3; i++) {
         for(let j = 0; j < 6; j++) {
@@ -251,15 +267,9 @@ $(document).ready(function () {
                             number_of_preschoolers = k;
                             number_of_schoolagers = t;
                             number_of_teenagers = z;
-                            if ($('input[name=radio-public-transport-child]:checked').val()         === "none") {
-                                number_of_public_transport_passes_child = 0;
-                            } else if ($('input[name=radio-public-transport-child]:checked').val()  === "schoolager") {
-                                number_of_public_transport_passes_child = number_of_schoolagers;
-                            } else if ($('input[name=radio-public-transport-child]:checked').val()  === "teenager") {
-                                number_of_public_transport_passes_child = number_of_teenagers;
-                            } else if ($('input[name=radio-public-transport-child]:checked').val()  === "both") {
-                                number_of_public_transport_passes_child = number_of_schoolagers + number_of_teenagers;
-                            }
+
+                            // Number of child bus passes is set equal to number of schoolagers and teenagers.
+                            number_of_public_transport_passes_child = number_of_schoolagers + number_of_teenagers;
 
                             // MHC
                             if (use_marketplace_health_insurance_bool === true) {
@@ -365,50 +375,42 @@ $(document).ready(function () {
     // ------------------------------------------- vv ON-CHANGE vv -----------------------------------------------------
 
     $('input[type=radio]').change(function() {
+
+        // Set MHC/EHC.
         use_marketplace_health_insurance_bool   = $('input[id=radio-mhc]').is(':checked');
-        console.log('use mhc', $('input[id=radio-mhc]').is(':checked'));
-        // console.log('use_marketplace_health_insurance_bool', use_marketplace_health_insurance_bool);
-        childcare_needed_bool                   = $('input[id=radio-childcare-needed]').is(':checked');
-        // console.log('childcare_needed_bool', childcare_needed_bool);
-        use_family_care_bool                    = $('input[id=radio-family-care-used]').is(':checked');
-        // console.log('use_family_care_bool', use_family_care_bool);
-        number_of_public_transport_passes_adult = $('input[name=radio-public-transport-adult]:checked').val();
-        console.log($('input[name=radio-public-transport-adult]:checked').val());
 
-        $('#unit').find('tbody').empty(); // .empty() removes everything in tbody.
+        // Set Childcare and Family Care.
+        if ($('input[name=radio-childcare]:checked').val()         === "childcare-center-care") {
+            // If Center Care used: child_care_needed_bool = true, use_family_care_bool = false
+            childcare_needed_bool = true;
+            use_family_care_bool = false;
+        } else if ($('input[name=radio-childcare]:checked').val()  === "childcare-family-care") {
+            // If Family Care used: child_care_needed_bool = true, use_family_care_bool = true
+            childcare_needed_bool = true;
+            use_family_care_bool = true;
+        } else if ($('input[name=radio-childcare]:checked').val()  === "childcare-none") {
+            // If Childcare not required: child_care_needed_bool = false, use_family_care_bool = false
+            childcare_needed_bool = false;
+            use_family_care_bool = false;
+        }
 
-        // console.log(
-        //     'Healthcare:        ' + use_marketplace_health_insurance_bool   + '\n' +
-        //     'Childcare Needed:  ' + childcare_needed_bool                   + '\n' +
-        //     'Use Family Care:   ' + use_family_care_bool                    + '\n' +
-        //     'Adult Bus Passes:  ' + number_of_public_transport_passes_adult + '\n' +
-        //     'Child Bus Passes:  ' + number_of_public_transport_passes_child
-        // );
+        $('#unit').find('tbody').empty(); // Remove everything in #unit->tbody.
 
-// let count = 1;
-
-        for(let i = 1; i < 3; i++) {
-            for(let j = 0; j < 6; j++) {
-                for(let k = 0; k < 6; k++) {
-                    for(let t = 0; t < 6; t++) {
-                        for(let z = 0; z < 6; z++) {
-                            if(j + k + t + z < 6) {
-                                // console.log(count, "Combination: ", i, j, k, t, z);
-                                // count++;
+        // Calculate values for every accepted family combination.
+        for(let i = 1; i < 3; i++) {    // Adults: Min 1, Max 2
+            for(let j = 0; j < 6; j++) {    // Infants: Min 0, Max 5
+                for(let k = 0; k < 6; k++) {    // Preschoolers: Min 0, Max 5
+                    for(let t = 0; t < 6; t++) {    // Schoolagers: Min 0, Max 5
+                        for(let z = 0; z < 6; z++) {    // Teenagers: Min 0, Max 5
+                            if(j + k + t + z < 6) {     // Families may have up to 5 total children
                                 number_of_adults = i;
                                 number_of_infants = j;
                                 number_of_preschoolers = k;
                                 number_of_schoolagers = t;
                                 number_of_teenagers = z;
-                                if ($('input[name=radio-public-transport-child]:checked').val()         === "none") {
-                                    number_of_public_transport_passes_child = 0;
-                                } else if ($('input[name=radio-public-transport-child]:checked').val()  === "schoolager") {
-                                    number_of_public_transport_passes_child = number_of_schoolagers;
-                                } else if ($('input[name=radio-public-transport-child]:checked').val()  === "teenager") {
-                                    number_of_public_transport_passes_child = number_of_teenagers;
-                                } else if ($('input[name=radio-public-transport-child]:checked').val()  === "both") {
-                                    number_of_public_transport_passes_child = number_of_schoolagers + number_of_teenagers;
-                                }
+
+                                // Number of child bus passes is set equal to number of schoolagers and teenagers.
+                                number_of_public_transport_passes_child = number_of_schoolagers + number_of_teenagers;
 
                                 // MHC
                                 if (use_marketplace_health_insurance_bool === true) {
