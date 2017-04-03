@@ -365,13 +365,17 @@ $(document).ready(function () {
     // ------------------------------------------- vv ON-CHANGE vv -----------------------------------------------------
 
     $('input[type=radio]').change(function() {
-        use_marketplace_health_insurance_bool   = $('input[name=radio-healthcare]:checked').val();
-        childcare_needed_bool                   = $('input[name=radio-childcare]:checked').val();
-        use_family_care_bool                    = $('input[name=radio-family-care]:checked').val();
+        use_marketplace_health_insurance_bool   = $('input[id=radio-mhc]').is(':checked');
+        console.log('use mhc', $('input[id=radio-mhc]').is(':checked'));
+        // console.log('use_marketplace_health_insurance_bool', use_marketplace_health_insurance_bool);
+        childcare_needed_bool                   = $('input[id=radio-childcare-needed]').is(':checked');
+        // console.log('childcare_needed_bool', childcare_needed_bool);
+        use_family_care_bool                    = $('input[id=radio-family-care-used]').is(':checked');
+        // console.log('use_family_care_bool', use_family_care_bool);
         number_of_public_transport_passes_adult = $('input[name=radio-public-transport-adult]:checked').val();
+        console.log($('input[name=radio-public-transport-adult]:checked').val());
 
-        // $('#unit').find('tbody').empty(); // .empty() leaves empty tr/td tags.
-        $('.unit-data').remove(); // Remove existing table data and tags.
+        $('#unit').find('tbody').empty(); // .empty() removes everything in tbody.
 
         // console.log(
         //     'Healthcare:        ' + use_marketplace_health_insurance_bool   + '\n' +
@@ -381,6 +385,7 @@ $(document).ready(function () {
         //     'Child Bus Passes:  ' + number_of_public_transport_passes_child
         // );
 
+// let count = 1;
 
         for(let i = 1; i < 3; i++) {
             for(let j = 0; j < 6; j++) {
@@ -388,7 +393,8 @@ $(document).ready(function () {
                     for(let t = 0; t < 6; t++) {
                         for(let z = 0; z < 6; z++) {
                             if(j + k + t + z < 6) {
-                                // console.log("Combination: ", i, j, k, t, z);
+                                // console.log(count, "Combination: ", i, j, k, t, z);
+                                // count++;
                                 number_of_adults = i;
                                 number_of_infants = j;
                                 number_of_preschoolers = k;

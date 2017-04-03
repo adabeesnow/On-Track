@@ -1,0 +1,37 @@
+1 Adult, 0 Kids
+Healthcare Source - Childcare Needed - Use Family
+test all 1a with 1 bus pass
+Group - EHC
+ 7,104.00  Housing
+ 0         Childcare
+ 3,028.32  Food
+ 465.64    Car Insurance
+ 3,289.64  Car Ownership
+ 1,005.00  Public Transport
+ 1,406.00  Health Insurance
+ 107.62    Out of Pocket Costs
+ 1,139.00  Entertainment
+ 1,614.00  Miscellaneous
+ 234.34    Savings
+ 4,040.42  Taxes
+ 23,433.99 Gross Income
+ 19,393.56 Net Income
+ 19,159.22 Total Expenses
+
+Bryce - MHC
+
+2 Adults, 1 Schoolager
+Adam - EHC - Yes - Yes - test all 2a1k with 1 adult bus pass, 1 child bus pass
+Adam - EHC - Yes - No
+Adam - EHC - No - No
+Adam - MHC - Yes - Yes
+Adam - MHC - Yes - No
+Ashton - MHC - No - No
+
+2 Adults, 1 Infant, 1 Preschooler, 2 Schoolagers, 1 Teenager
+Ashton - EHC - Yes - Yes - test all 2a5k with 1 adult bus pass, 3 child bus passes
+Ashton - EHC - Yes - No
+Ashton - EHC - No - No
+Bryce - MHC - Yes - Yes
+Bryce - MHC - Yes - No
+Bryce - MHC - No - No
