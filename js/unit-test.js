@@ -363,7 +363,7 @@ $(document).ready(function () {
                                     "<td class='unit-data'>" + savingsYearly().toFixed(2) + "</td>" + // Savings
                                     "</tr>";
 
-                                $("table tbody").append(markup);
+                                    $("table tbody").append(markup);
                             }
                         } // end if (combination filter)
                     } // end inner for (number of teenagers)
@@ -515,7 +515,6 @@ $(document).ready(function () {
             } // end for (number of infants)
         } // end outer for (number of adults)
     }); // end change event
-
 });
 
 
