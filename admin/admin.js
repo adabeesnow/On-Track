@@ -118,7 +118,6 @@ $.ajax({
                     else if (category['CategoryId'] in EIC_CATEGORIES) {
                         console.log('EIC Category')
                     }
-                    // console.log('Category', category)
                 }
             }
         });
