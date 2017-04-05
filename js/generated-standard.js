@@ -10,7 +10,11 @@ let netHourlyIncome = function(){
 };
 
 let savingsYearly = function() {
-    return ehcSavings1PercentGross();
+    if (use_marketplace_health_insurance_bool === false) {
+        return ehcSavings1PercentGross();
+    } else {
+        return mhcSavings1PercentGross();
+    }
 };
 
 let netTaxesYearly = function() {

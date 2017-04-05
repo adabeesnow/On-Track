@@ -4,11 +4,11 @@
 
 //generated-standard formulas
 $(document).ready(function () {
-    // number_of_adults = 2;
-    // number_of_infants = 1;
-    // number_of_preschoolers = 1;
-    // number_of_schoolagers = 1;
-    // number_of_teenagers = 1;
+    number_of_adults = 2;
+    number_of_infants = 1;
+    number_of_preschoolers = 1;
+    number_of_schoolagers = 1;
+    number_of_teenagers = 1;
 
     let parsedJSON;
     $.ajax({
@@ -102,7 +102,7 @@ $(document).ready(function () {
             console.log("ehcStandardDeduction: " + ehcStandardDeduction());
             console.log("ehcFederalExemptions: " + ehcFederalExemptions());
             console.log("ehcStateExemptions: " + ehcStateExemptions());
-            console.log("ehcGrossTaxableFederal: " + ehcGrossTaxablefederal());
+            // console.log("ehcGrossTaxableFederal: " + ehcGrossTaxablefederal());
             console.log("ehcUtahStateCreditValueHolder: " + ehcUtahStateCreditValueHolder());
             console.log("ehcStateTaxBeforeCredits: " + ehcStateTaxBeforeCredits());
             console.log("ehcGrossTaxFedUtahStateCreditValueHold: " + ehcGrossTaxFedUtahStateCreditValueHold());
@@ -123,7 +123,7 @@ $(document).ready(function () {
             console.log("ehcFedDeductionPlusStateExemption: " + ehcFedDeductionPlusStateExemption());
             console.log("ehcUtahTaxCredit: " + ehcUtahTaxCredit());//
 
-            update_page();
+            // update_page();
         }
     });
 

@@ -126,11 +126,11 @@ let employer_oop_adult = 107.62;
 
 // Marketplace health insurance costs
 let adult_marketplace_cost = 2536;
-let child_marketplace_cost = 2536;
+let child_marketplace_cost = 1447;
 
 // Taxes Constants
-let benchmark_silver_base = 2932;
-let benchmark_silver_additional = 1673;
+let benchmark_silver_mult_adult = 2932;
+let benchmark_silver_mult_child = 1673;
 let child_tax_credit = 1000;
 
 // Public Transportation Constants
