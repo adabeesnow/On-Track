@@ -12,13 +12,15 @@ class Entry implements \JsonSerializable
     private $entryValue;
     private $entryName;
     private $categoryId;
+    private $displayName;
 
-    public function __construct($entryId, $entryName, $entryValue, $categoryId)
+    public function __construct($entryId, $entryName, $entryValue, $categoryId, $displayName)
     {
         $this->entryId=$entryId;
         $this->entryName=$entryName;
         $this->entryValue=$entryValue;
         $this->categoryId=$categoryId;
+        $this->displayName=$displayName;
     }
 
     public function jsonSerialize()
@@ -28,6 +30,7 @@ class Entry implements \JsonSerializable
             "entryValue"=>$this->entryValue,
             "entryName"=>$this->entryName,
             "categoryId"=>$this->categoryId,
+            "displayName"=>$this->displayName
         );
     }
 

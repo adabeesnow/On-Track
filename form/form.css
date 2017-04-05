@@ -1,3 +1,8 @@
+body{
+    min-height:720px;
+}
+
+
 /*
     Common
 */
@@ -351,9 +356,18 @@ img.page-title-img{
     max-width: 132px;
     max-height: 132px;
 }
+input.alert{
+    padding: 0;
+}
 
 
 
+#error-messages{
+    margin: 20px;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
 
 
 

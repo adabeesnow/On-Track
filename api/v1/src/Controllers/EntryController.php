@@ -25,18 +25,20 @@ class EntryController
         $entryName = strip_tags($data->entryName);
         $entryValue = strip_tags($data->entryValue);
         $categoryId = strip_tags($data->categoryId);
+        $displayName = strip_tags($data->displayName);
 
         $query_create_entry = '
         INSERT INTO Entry
-        (EntryName, EntryValue, CategoryId)
+        (EntryName, EntryValue, CategoryId, DisplayName)
         VALUES 
-        (:entryName, :entryValue, :categoryId)
+        (:entryName, :entryValue, :categoryId, :displayName)
         ';
 
         $statement_create_entry = $dbo->prepare($query_create_entry);
         $statement_create_entry->bindParam(':entryName', $entryName);
         $statement_create_entry->bindParam(':entryValue', $entryValue);
         $statement_create_entry->bindParam(':categoryId', $categoryId);
+        $statement_create_entry->bindParam(':displayName', $displayName);
 
         if (!$statement_create_entry->execute()) {
             http_response_code(StatusCodes::BAD_REQUEST);
@@ -46,7 +48,7 @@ class EntryController
         }
 
         $entryId = $dbo->lastInsertId();
-        $entry = new Entry($entryId, $entryName, $entryValue, $categoryId);
+        $entry = new Entry($entryId, $entryName, $entryValue, $categoryId, $displayName);
 
         return $entry->jsonSerialize();
     }
@@ -56,16 +58,19 @@ class EntryController
         $data = (object)json_decode(file_get_contents('php://input'));
         $dbo = DatabaseConnection::getInstance();
 
+
         $entryName = strip_tags($data->entryName);
         $entryId = strip_tags($data->entryId);
         $entryValue = strip_tags($data->entryValue);
         $categoryId = strip_tags($data->categoryId);
+        $displayName = strip_tags($data->displayName);
 
         $query_update_entry = '
         UPDATE Entry
         SET EntryName = :entryName,
             EntryValue = :entryValue,
-            CategoryId = :categoryId
+            CategoryId = :categoryId,
+            DisplayName = :displayName
         WHERE EntryId = :entryId
         ';
 
@@ -74,6 +79,7 @@ class EntryController
         $statement_update_entry->bindParam(':entryId', $entryId);
         $statement_update_entry->bindParam(':entryValue', $entryValue);
         $statement_update_entry->bindParam(':categoryId', $categoryId);
+        $statement_update_entry->bindParam(':displayName', $displayName);
 
         if (!$statement_update_entry->execute()) {
             http_response_code(StatusCodes::BAD_REQUEST);
@@ -82,7 +88,7 @@ class EntryController
             );
         }
 
-        $entry = new Entry($entryId, $entryName, $entryValue, $categoryId);
+        $entry = new Entry($entryId, $entryName, $entryValue, $categoryId, $displayName);
 
         return $entry->jsonSerialize();
     }
@@ -123,7 +129,7 @@ class EntryController
 
 
         $query_select_entry = '
-        SELECT EntryId, EntryName, EntryValue, CategoryId
+        SELECT EntryId, EntryName, EntryValue, CategoryId, DisplayName
         FROM Entry
         WHERE EntryId = :entryId
         ';
@@ -144,7 +150,8 @@ class EntryController
             $result['EntryId'],
             $result['EntryName'],
             $result['EntryValue'],
-            $result['CategoryId']
+            $result['CategoryId'],
+            $result['DisplayName']
         );
 
 
@@ -158,7 +165,7 @@ class EntryController
 
 
         $query_select_entry = '
-        SELECT EntryId, EntryName, EntryValue, CategoryId
+        SELECT EntryId, EntryName, EntryValue, CategoryId, DisplayName
         FROM Entry
         ';
 
@@ -185,7 +192,8 @@ class EntryController
                 $entry['EntryId'],
                 $entry['EntryName'],
                 $entry['EntryValue'],
-                $entry['CategoryId']
+                $entry['CategoryId'],
+                $entry['DisplayName']
             ));
         }
 
