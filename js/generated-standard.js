@@ -10,7 +10,7 @@ let netHourlyIncome = function(){
 };
 
 let savingsYearly = function() {
-    if (use_marketplace_health_insurance_bool === false) {
+    if (use_marketplace_health_insurance_bool == false) {
         return ehcSavings1PercentGross();
     } else {
         return mhcSavings1PercentGross();
@@ -39,11 +39,11 @@ let annualPublicTransportation = function() {
 };
 
 let annualHealthInsurance = function() {
-    return (use_marketplace_health_insurance_bool===false?healthCareEmployerCost():marketplaceHealthCareCostBeforeOOP());
+    return (use_marketplace_health_insurance_bool==false?healthCareEmployerCost():marketplaceHealthCareCostBeforeOOP());
 };
 
 let annualOutOfPocketCosts = function() {
-    return (use_marketplace_health_insurance_bool===false?healthCareEmployerOOPTotal():healthCareMarketplaceOOPTotal());
+    return (use_marketplace_health_insurance_bool==false?healthCareEmployerOOPTotal():healthCareMarketplaceOOPTotal());
 };
 
 let annualEntertainmentCosts = function() {
@@ -61,7 +61,7 @@ let annualHousingCosts = function() {
 };
 
 let annualChildcareCosts = function() {
-    return (estimated_babysitting_cost>0?estimated_babysitting_cost:(use_family_care_bool===true?familyChildCareCost():childCareAnnualTotal()));
+    return (estimated_babysitting_cost>0?estimated_babysitting_cost:(use_family_care_bool==true?familyChildCareCost():childCareAnnualTotal()));
 };
 
 let annualGrossIncome = function(){
