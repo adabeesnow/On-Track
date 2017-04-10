@@ -29,10 +29,10 @@ let create_collapse_panel = function (panel_id, panel_title, panel_body) {
 
 let entry_form_template = `
 <div class="row">
-    <div class="col-xs-12 col-sm-4">
+    <div class="col-xs-12 col-sm-8">
         <h5 class="entry-name"></h5>
     </div>
-    <div class="col-xs-8 col-xs-offset-4 col-sm-4 col-sm-offset-0">
+    <div class="hidden col-xs-8 col-xs-offset-4 col-sm-4 col-sm-offset-0">
         <input type="hidden" class="entry-title">    
     </div>
     <div class="col-xs-8 col-xs-offset-4 col-sm-4 col-sm-offset-0">
@@ -47,7 +47,7 @@ let create_entry_form = function (entry) {
     let entry_value = entry['entryValue'];
     let category_id = entry['categoryId'];
     let row = $(entry_form_template);
-    row.find('.entry-name').text(entry_name);
+    row.find('.entry-name').text(entry_title);
     let row_title = row.find('.entry-title');
     row_title.addClass(entry_name)
         .addClass("id_" + entry_id)
@@ -145,14 +145,14 @@ let update_display_name = function () {
     };
     console.log(data);
 
-    // $.ajax({
-    //     'url': 'http://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/',
-    //     'method': 'PUT',
-    //     'dataType': 'json',
-    //     'data': JSON.stringify(data),
-    //     'success': function (response) {
-    //         console.log(response)
-    //     }
-    // })
-    console.log(data)
+    $.ajax({
+        'url': 'http://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/',
+        'method': 'PUT',
+        'dataType': 'json',
+        'data': JSON.stringify(data),
+        'success': function (response) {
+            console.log(response)
+        }
+    });
+    // console.log(data)
 };

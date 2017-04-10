@@ -9,9 +9,13 @@ require_once 'src/Http/StatusCodes.php';
 
 require_once 'src/Controllers/CategoryController.php';
 require_once 'src/Controllers/EntryController.php';
+require_once 'src/Controllers/UserController.php';
+require_once 'src/Controllers/TokenController.php';
 
 require_once 'src/Models/Category.php';
 require_once 'src/Models/Entry.php';
+require_once 'src/Models/User.php';
+require_once 'src/Models/Token.php';
 
 require_once 'src/Utilities/DatabaseConnection.php';
 
@@ -75,6 +79,54 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
     $r->addRoute('PUT', $baseURI . '/entry/', $handlePutEntry);
     $r->addRoute('DELETE', $baseURI . '/entry', $handleDeleteEntry);
     $r->addRoute('DELETE', $baseURI . '/entry/', $handleDeleteEntry);
+
+
+//    $handleGetUser = function($args){
+//        return (new \OnTrack\Controllers\UserController())->getUser($args);
+//    };
+    $handlePostUser = function($args){
+        return (new \OnTrack\Controllers\UserController())->postUser($args);
+    };
+    $handlePutUser = function($args){
+        return (new \OnTrack\Controllers\UserController())->patchUser($args);
+    };
+    $handleDeleteUser = function($args){
+        return (new \OnTrack\Controllers\UserController())->deleteUser($args);
+    };
+
+//    $r->addRoute('GET', $baseURI . '/user/{id:\d+}', $handleGetUser);
+//    $r->addRoute('GET', $baseURI . '/user/{id:\d+}/', $handleGetUser);
+    $r->addRoute('POST', $baseURI . '/user', $handlePostUser);
+    $r->addRoute('POST', $baseURI . '/user/', $handlePostUser);
+    $r->addRoute('PUT', $baseURI . '/user', $handlePutUser);
+    $r->addRoute('PUT', $baseURI . '/user/', $handlePutUser);
+    $r->addRoute('DELETE', $baseURI . '/user', $handleDeleteUser);
+    $r->addRoute('DELETE', $baseURI . '/user/', $handleDeleteUser);
+
+
+    $handlePostToken = function ($args) {
+
+        $tokenController = new \OnTrack\Controllers\TokenController();
+        //Is the data via a form?
+        if (!empty($_POST['username'])) {
+            $username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
+            $password = $_POST['password'];
+        } else {
+            //Attempt to parse json input
+            $json = (object) json_decode(file_get_contents('php://input'));
+            if (count((array)$json) >= 2) {
+                $username = filter_var($json->username, FILTER_SANITIZE_STRING);
+                $password = $json->password;
+            } else {
+                http_response_code(\OnTrack\Http\StatusCodes::BAD_REQUEST);
+                exit();
+            }
+        }
+        return $tokenController->buildToken($username, $password);
+    };
+
+    $r->addRoute('POST', $baseURI . '/token/', $handlePostToken);
+    $r->addRoute('POST', $baseURI . '/token', $handlePostToken);
 
 });
 

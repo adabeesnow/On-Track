@@ -11,6 +11,7 @@ namespace OnTrack\Controllers;
 
 use OnTrack\Http\StatusCodes;
 use OnTrack\Models\Category;
+use OnTrack\Models\Token;
 use PDO;
 use OnTrack\Utilities\DatabaseConnection;
 
@@ -19,6 +20,11 @@ class CategoryController
 
     public function postCategory($args)
     {
+        $username = Token::getUsernameFromToken();
+        if($username == null){
+            return array("error"=>"Token not valid.");
+        }
+
         $data = (object)json_decode(file_get_contents('php://input'));
         $dbo = DatabaseConnection::getInstance();
 
@@ -49,6 +55,11 @@ class CategoryController
 
     public function putCategory($args)
     {
+        $username = Token::getUsernameFromToken();
+        if($username == null){
+            return array("error"=>"Token not valid.");
+        }
+
         $data = (object)json_decode(file_get_contents('php://input'));
         $dbo = DatabaseConnection::getInstance();
 
@@ -79,6 +90,11 @@ class CategoryController
 
     public function deleteCategory($args)
     {
+        $username = Token::getUsernameFromToken();
+        if($username == null){
+            return array("error"=>"Token not valid.");
+        }
+
         $data = (object)json_decode(file_get_contents('php://input'));
         $dbo = DatabaseConnection::getInstance();
 

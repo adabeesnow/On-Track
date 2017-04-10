@@ -11,6 +11,7 @@ namespace OnTrack\Controllers;
 
 use Entry;
 use OnTrack\Http\StatusCodes;
+use OnTrack\Models\Token;
 use PDO;
 use OnTrack\Utilities\DatabaseConnection;
 
@@ -19,6 +20,11 @@ class EntryController
 
     public function postEntry($args)
     {
+        $username = Token::getUsernameFromToken();
+        if($username == null){
+            return array("error"=>"Token not valid.");
+        }
+
         $data = (object)json_decode(file_get_contents('php://input'));
         $dbo = DatabaseConnection::getInstance();
 
@@ -55,6 +61,11 @@ class EntryController
 
     public function putEntry($args)
     {
+        $username = Token::getUsernameFromToken();
+        if($username == null){
+            return array("error"=>"Token not valid.");
+        }
+
         $data = (object)json_decode(file_get_contents('php://input'));
         $dbo = DatabaseConnection::getInstance();
 
@@ -95,6 +106,11 @@ class EntryController
 
     public function deleteEntry($args)
     {
+        $username = Token::getUsernameFromToken();
+        if($username == null){
+            return array("error"=>"Token not valid.");
+        }
+
         $data = (object)json_decode(file_get_contents('php://input'));
         $dbo = DatabaseConnection::getInstance();
 
