@@ -31,7 +31,7 @@
     <script src="../js/user-inputs.js"></script>
     <script src="../js/variables.js"></script>
 
-    <script src="../js/formula-test-script.js"></script>
+    <script src="../js/form-calculations.js"></script>
 
     <style>
         .category-image {
@@ -109,6 +109,8 @@
 
     <script>
         update_page = function(){
+            use_marketplace_health_insurance_bool = localStorage.use_marketplace_health_insurance_bool;
+
             get_user_inputs_from_local_storage();
             let var_annualHousingCosts = annualHousingCosts();
             console.log(annualHousingCosts());
@@ -145,22 +147,41 @@
             let var_savingsYearly = savingsYearly();
             let var_netTaxesYearly = netTaxesYearly();
 
-            let var_annualGrossIncome = annualGrossIncome();
+            let var_annualGrossIncome;
+            let var_annualNetIncome;
+
+            for(let i = 0; i < 50; i++){
+                ehc_gross_income = ehcCalcGross();
+                mhc_gross_income = mhcCalcGross();
+            }
+
+            if (use_marketplace_health_insurance_bool == true) {
+                var_annualGrossIncome = mhc_gross_income;
+                var_annualNetIncome = mhcNetYearlyIncome();
+            }else {
+                var_annualGrossIncome = ehc_gross_income;
+                var_annualNetIncome = ehcNetYearlyIncome();
+            }
             $('#gross-income-annual').text('$' + var_annualGrossIncome.toFixed(0).toLocaleString());
 
-            let var_annualNetIncome = annualNetIncome();
+//            let var_annualNetIncome = annualNetIncome();
             $('#net-income-annual').text('$' + var_annualNetIncome.toFixed(0).toLocaleString());
 
             let var_annualTotalExpenses = annualTotalExpenses();
             $("#total-monthly-expenses").text('$' + (var_annualTotalExpenses / 12).toFixed(2).toLocaleString());
 
-            let var_grossHourlyIncome = grossHourlyIncome();
+            let var_grossHourlyIncome = var_annualGrossIncome / 2080;
             $('#gross-income-hourly').text('$' + var_grossHourlyIncome.toFixed(2));
 
-            let var_netHourlyIncome = netHourlyIncome();
+            let var_netHourlyIncome = var_annualNetIncome / 2080;
             $('#net-income-hourly').text('$' + var_netHourlyIncome.toFixed(2));
-        }
 
+
+            console.log('SUP DAWG', var_netHourlyIncome);
+        };
+        $(document).ready(function(){
+            update_page();
+        })
     </script>
 </head>
 <body>

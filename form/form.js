@@ -2,7 +2,6 @@ let wizard;
 
 $(document).ready(function () {
 
-
     let multiphase = $("#wizard");
     wizard = multiphase.steps({
         bodyTag: "fieldset",
@@ -24,8 +23,6 @@ $(document).ready(function () {
             }
             return true;
         }
-
-
     });
 
     let fv = multiphase.validate({
