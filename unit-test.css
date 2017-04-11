@@ -37,7 +37,26 @@
 
 }
 
+.composition {
+    background-color: mediumslateblue;
+    width: 20px;
+}
 
+.expense {
+    background-color: palegoldenrod;
+}
+
+.total-expenses {
+    background-color: yellow;
+}
+
+.income {
+    background-color: #64BA89;
+}
+
+.tax {
+    background-color: cadetblue;
+}
 
 html,
 body {
@@ -72,8 +91,23 @@ body {
     overflow-y: scroll;
 }
 
+.mismatch {
+    background: red;
+}
+
+.match {
+    background: lightgreen;
+}
+
+.unit-datas {
+    width: 20px;
+}
 
 .box .row.footer {
     flex: 0 1 40px;
-    margin-right: .5%;
+    margin-right: .1%;
+}
+
+.compositions {
+    width: 20px;
 }

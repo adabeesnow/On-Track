@@ -2,6 +2,247 @@
  * Created by Adam Salvo on 2/27/2017.
  */
 
+let combinationValues = {
+    "min_ehc": {
+        "Housing": 7104.00,
+        "Childcare": 0,
+        "Food": 3028.32,
+        "Car_Insurance": 465.64,
+        "Car_Ownership": 3289.64,
+        "Public_Transport": 1005.00,
+        "Health_Insurance": 1406.00,
+        "Out_of_Pocket_Costs": 107.62,
+        "Entertainment": 1139.00,
+        "Miscellaneous": 1614.00,
+        "Savings": 234.34,
+        "Taxes": 4040.42,
+        "Gross_Income": 23433.99,
+        "Net_Income": 19393.56,
+        "Total_Expenses": 19159.22
+    },
+    "min_mhc": {
+        "Housing": 7104.00,
+        "Childcare": 0.00,
+        "Food": 3028.32,
+        "Car_Insurance": 465.64,
+        "Car_Ownership": 3289.64,
+        "Public_Transport": 1005.00,
+        "Health_Insurance": 2536.00,
+        "Out_of_Pocket_Costs": 161.43,
+        "Entertainment": 1139.00,
+        "Miscellaneous": 1614.00,
+        "Savings": 251.24,
+        "Taxes": 2035.47,
+        "Gross_Income": 22604.55,
+        "Net_Income": 20594.27,
+        "Total_Expenses": 20343.032
+    },
+    "med_ehc_childcare_family": {
+        "Housing": 9096.00,
+        "Childcare": 4813.85,
+        "Food": 7736.02,
+        "Car_Insurance": 931.28,
+        "Car_Ownership": 6579.28,
+        "Public_Transport": 1758.00,
+        "Health_Insurance": 3412.00,
+        "Out_of_Pocket_Costs": 308.48,
+        "Entertainment": 1650.00,
+        "Miscellaneous": 2541.00,
+        "Savings": 440.64,
+        "Taxes": 4796.96,
+        "Gross_Income": 44063.51,
+        "Net_Income": 39266.55,
+        "Total_Expenses": 38825.92
+    },
+    "med_ehc_childcare_center": {
+        "Housing": 9096.00,
+        "Childcare": 5444.19,
+        "Food": 7736.02,
+        "Car_Insurance": 931.28,
+        "Car_Ownership": 6579.28,
+        "Public_Transport": 1758.00,
+        "Health_Insurance": 3412.00,
+        "Out_of_Pocket_Costs": 308.48,
+        "Entertainment": 1650.00,
+        "Miscellaneous": 2541.00,
+        "Savings": 450.95,
+        "Taxes": 5187.48,
+        "Gross_Income": 45094.68,
+        "Net_Income": 39907.20,
+        "Total_Expenses": 39456.25
+    },
+    "med_ehc_childcare_none": {
+        "Housing": 9096.00,
+        "Childcare": 0.00,
+        "Food": 7736.02,
+        "Car_Insurance": 931.28,
+        "Car_Ownership": 6579.28,
+        "Public_Transport": 1758.00,
+        "Health_Insurance": 3412.00,
+        "Out_of_Pocket_Costs": 308.48,
+        "Entertainment": 1650.00,
+        "Miscellaneous": 2541.00,
+        "Savings": 356.23,
+        "Taxes": 1254.80,
+        "Gross_Income": 35623.10,
+        "Net_Income": 34368.30,
+        "Total_Expenses": 34012.07
+    },
+    "med_mhc_childcare_family": {
+        "Housing": 9096.00,
+        "Childcare": 4813.85,
+        "Food": 7736.02,
+        "Car_Insurance": 931.28,
+        "Car_Ownership": 6579.28,
+        "Public_Transport": 1758.00,
+        "Health_Insurance": 6519.00,
+        "Out_of_Pocket_Costs": 462.72,
+        "Entertainment": 1650.00,
+        "Miscellaneous": 2541.00,
+        "Savings": 488.50,
+        "Taxes": -437.40,
+        "Gross_Income": 42070.46,
+        "Net_Income": 42575.66,
+        "Total_Expenses": 42087.16
+    },
+    "med_mhc_childcare_center": {
+        "Housing": 9096.00,
+        "Childcare": 5444.19,
+        "Food": 7736.02,
+        "Car_Insurance": 931.28,
+        "Car_Ownership": 6579.28,
+        "Public_Transport": 1758.00,
+        "Health_Insurance": 6519.00,
+        "Out_of_Pocket_Costs": 462.72,
+        "Entertainment": 1650.00,
+        "Miscellaneous": 2541.00,
+        "Savings": 497.50,
+        "Taxes": -7.48,
+        "Gross_Income": 43141.43,
+        "Net_Income": 43214.99,
+        "Total_Expenses": 42717.49
+    },
+    "med_mhc_childcare_none": {
+        "Housing": 9096.00,
+        "Childcare": 0.00,
+        "Food": 7736.02,
+        "Car_Insurance": 931.28,
+        "Car_Ownership": 6579.28,
+        "Public_Transport": 1758.00,
+        "Health_Insurance": 6519.00,
+        "Out_of_Pocket_Costs": 462.72,
+        "Entertainment": 1650.00,
+        "Miscellaneous": 2541.00,
+        "Savings": 412.90,
+        "Taxes": -3566.53,
+        "Gross_Income": 34047.25,
+        "Net_Income": 37686.21,
+        "Total_Expenses": 37273.31
+    },
+    "max_ehc_childcare_family": {
+        "Housing": 15000.00,
+        "Childcare": 21271.35,
+        "Food": 13612.32,
+        "Car_Insurance": 931.28,
+        "Car_Ownership": 6579.28,
+        "Public_Transport": 3264.00,
+        "Health_Insurance": 3412.00,
+        "Out_of_Pocket_Costs": 557.28,
+        "Entertainment": 2429.00,
+        "Miscellaneous": 6122.00,
+        "Savings": 822.14,
+        "Taxes": 8213.59,
+        "Gross_Income": 82214.25,
+        "Net_Income": 74000.65,
+        "Total_Expenses": 73178.51
+    },
+    "max_ehc_childcare_center": {
+        "Housing": 15000.00,
+        "Childcare": 24400.77,
+        "Food": 13612.32,
+        "Car_Insurance": 931.28,
+        "Car_Ownership": 6579.28,
+        "Public_Transport": 3264.00,
+        "Health_Insurance": 3412.00,
+        "Out_of_Pocket_Costs": 557.28,
+        "Entertainment": 2429.00,
+        "Miscellaneous": 6122.00,
+        "Savings": 866.82,
+        "Taxes": 9506.91,
+        "Gross_Income": 86681.66,
+        "Net_Income": 77174.75,
+        "Total_Expenses": 76307.93
+    },
+    "max_ehc_childcare_none": {
+        "Housing": 15000.00,
+        "Childcare": 0.00,
+        "Food": 13612.32,
+        "Car_Insurance": 931.28,
+        "Car_Ownership": 6579.28,
+        "Public_Transport": 3264.00,
+        "Health_Insurance": 3412.00,
+        "Out_of_Pocket_Costs": 557.28,
+        "Entertainment": 2429.00,
+        "Miscellaneous": 6122.00,
+        "Savings": 520.65,
+        "Taxes": -362.87,
+        "Gross_Income": 52064.94,
+        "Net_Income": 52427.81,
+        "Total_Expenses": 51907.16
+    },
+    "max_mhc_childcare_family": {
+        "Housing": 15000.00,
+        "Childcare": 21271.35,
+        "Food": 13612.32,
+        "Car_Insurance": 931.28,
+        "Car_Ownership": 6579.28,
+        "Public_Transport": 3264.00,
+        "Health_Insurance": 12307.00,
+        "Out_of_Pocket_Costs": 835.92,
+        "Entertainment": 2429.00,
+        "Miscellaneous": 6122.00,
+        "Savings": 953.10,
+        "Taxes": 8328.29,
+        "Gross_Income": 91596.41,
+        "Net_Income": 83305.25,
+        "Total_Expenses": 82352.15
+    },
+    "max_mhc_childcare_center": {
+        "Housing": 15000.00,
+        "Childcare": 24400.77,
+        "Food": 13612.32,
+        "Car_Insurance": 931.28,
+        "Car_Ownership": 6579.28,
+        "Public_Transport": 3264.00,
+        "Health_Insurance": 12307.00,
+        "Out_of_Pocket_Costs": 835.92,
+        "Entertainment": 2429.00,
+        "Miscellaneous": 6122.00,
+        "Savings": 997.78,
+        "Taxes": 10852.88,
+        "Gross_Income": 97307.53,
+        "Net_Income": 86479.35,
+        "Total_Expenses": 85481.57
+    },
+    "max_mhc_childcare_none": {
+        "Housing": 15000.00,
+        "Childcare": 0.00,
+        "Food": 13612.32,
+        "Car_Insurance": 931.28,
+        "Car_Ownership": 6579.28,
+        "Public_Transport": 3264.00,
+        "Health_Insurance": 12307.00,
+        "Out_of_Pocket_Costs": 835.92,
+        "Entertainment": 2429.00,
+        "Miscellaneous": 6122.00,
+        "Savings": 649.44,
+        "Taxes": -9123.18,
+        "Gross_Income": 52482.44,
+        "Net_Income": 61730.24,
+        "Total_Expenses": 61080.80
+    }
+};
+
 //generated-standard formulas
 $(document).ready(function () {
 
@@ -139,11 +380,11 @@ function writeMHCTableData() {
 
     let markup =
         "<tr class='unit-data'>" +
-        "<td class='unit-data'>" + number_of_adults + "</td>" + // Adults
-        "<td class='unit-data'>" + number_of_infants + "</td>" + // Infants
-        "<td class='unit-data'>" + number_of_preschoolers + "</td>" + // Preschoolers
-        "<td class='unit-data'>" + number_of_schoolagers + "</td>" + // Schoolagers
-        "<td class='unit-data'>" + number_of_teenagers + "</td>" + // Teenagers
+        "<td class='unit-datas'>" + number_of_adults + "</td>" + // Adults
+        "<td class='unit-datas'>" + number_of_infants + "</td>" + // Infants
+        "<td class='unit-datas'>" + number_of_preschoolers + "</td>" + // Preschoolers
+        "<td class='unit-datas'>" + number_of_schoolagers + "</td>" + // Schoolagers
+        "<td class='unit-datas'>" + number_of_teenagers + "</td>" + // Teenagers
         "<td class='unit-data'>" + use_family_care_bool + "</td>" + // Family Care
         "<td class='unit-data'>" + use_marketplace_health_insurance_bool + "</td>" + // Marketplace Health Care
         "<td class='unit-data'>" + mhc_gross_income.toFixed(2) + "</td>" + // Gross Annual Income
@@ -188,11 +429,11 @@ function writeEHCTableData() {
 
     let markup =
         "<tr class='unit-data'>" +
-        "<td class='unit-data'>" + number_of_adults + "</td>" + // Adults
-        "<td class='unit-data'>" + number_of_infants + "</td>" + // Infants
-        "<td class='unit-data'>" + number_of_preschoolers + "</td>" + // Preschoolers
-        "<td class='unit-data'>" + number_of_schoolagers + "</td>" + // Schoolagers
-        "<td class='unit-data'>" + number_of_teenagers + "</td>" + // Teenagers
+        "<td class='unit-datas'>" + number_of_adults + "</td>" + // Adults
+        "<td class='unit-datas'>" + number_of_infants + "</td>" + // Infants
+        "<td class='unit-datas'>" + number_of_preschoolers + "</td>" + // Preschoolers
+        "<td class='unit-datas'>" + number_of_schoolagers + "</td>" + // Schoolagers
+        "<td class='unit-datas'>" + number_of_teenagers + "</td>" + // Teenagers
         "<td class='unit-data'>" + use_family_care_bool + "</td>" + // Family Care
         "<td class='unit-data'>" + use_marketplace_health_insurance_bool + "</td>" + // Marketplace Health Care
         "<td class='unit-data'>" + ehc_gross_income.toFixed(2) + "</td>" + // Gross Annual Income
@@ -260,6 +501,9 @@ function writeAllCombinations() {
 /** writeVerificationRows:
  * Writes select family composition rows for verification against Excel sheet. */
 function writeVerificationRows() {
+
+
+
     // Verification Test Combinations (top of table)
     let test_combinations_array = [
         {"adults":1,"infants":0,"preschoolers":0,"schoolagers":0,"teenagers":0}, // 1A (1A0K)
@@ -280,4 +524,114 @@ function writeVerificationRows() {
         // EHC
         else { writeEHCTableData(); }
     }
+    verifyTheStuffAndThings();
+}
+
+//verifies the stuff and things
+function verifyTheStuffAndThings(){
+    console.log("values:", $('#unit tr:eq(1) td:eq(11)').text());
+    //
+    // $.each(combinationValues, function(key, val){
+    //     var that = this;
+    //     $.each(val, function(i, j){
+    //         var
+    //     })
+    // })
+
+    if(Math.abs($('#unit tr:eq(1) td:eq(7)').val() - combinationValues.min_ehc.Gross_Income) > 0.01) {
+        $('#unit tr:eq(1) td:eq(7)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(7)').addClass('match');
+    }
+
+    if($('#unit tr:eq(1) td:eq(8)').text() != combinationValues.min_ehc.Taxes) {
+        $('#unit tr:eq(1) td:eq(8)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(8)').addClass('match');
+    }
+
+    if($('#unit tr:eq(1) td:eq(9)').text() != combinationValues.min_ehc.Net_Income) {
+        $('#unit tr:eq(1) td:eq(9)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(9)').addClass('match');
+    }
+
+    if($('#unit tr:eq(1) td:eq(10)').text() != combinationValues.min_ehc.Total_Expenses + combinationValues.min_ehc.Savings) {
+        $('#unit tr:eq(1) td:eq(10)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(10)').addClass('match');
+    }
+
+    if($('#unit tr:eq(1) td:eq(11)').text() != combinationValues.min_ehc.Total_Expenses) {
+        $('#unit tr:eq(1) td:eq(11)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(11)').addClass('match');
+    }
+
+    if($('#unit tr:eq(1) td:eq(12)').text() != combinationValues.min_ehc.Housing) {
+        $('#unit tr:eq(1) td:eq(12)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(12)').addClass('match');
+    }
+
+    if($('#unit tr:eq(1) td:eq(13)').text() != combinationValues.min_ehc.Childcare) {
+        $('#unit tr:eq(1) td:eq(13)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(13)').addClass('match');
+    }
+
+    if($('#unit tr:eq(1) td:eq(14)').text() != combinationValues.min_ehc.Food) {
+        $('#unit tr:eq(1) td:eq(14)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(14)').addClass('match');
+    }
+
+    if($('#unit tr:eq(1) td:eq(15)').text() != combinationValues.min_ehc.Car_Insurance) {
+        $('#unit tr:eq(1) td:eq(15)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(15)').addClass('match');
+    }
+
+    if($('#unit tr:eq(1) td:eq(16)').text() != combinationValues.min_ehc.Car_Ownership) {
+        $('#unit tr:eq(1) td:eq(16)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(16)').addClass('match');
+    }
+
+    if($('#unit tr:eq(1) td:eq(17)').text() != combinationValues.min_ehc.Public_Transport) {
+        $('#unit tr:eq(1) td:eq(17)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(17)').addClass('match');
+    }
+
+    if($('#unit tr:eq(1) td:eq(18)').text() != combinationValues.min_ehc.Health_Insurance) {
+        $('#unit tr:eq(1) td:eq(18)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(18)').addClass('match');
+    }
+
+    if($('#unit tr:eq(1) td:eq(19)').text() != combinationValues.min_ehc.Out_of_Pocket_Costs) {
+        $('#unit tr:eq(1) td:eq(19)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(19)').addClass('match');
+    }
+
+    if($('#unit tr:eq(1) td:eq(20)').text() != combinationValues.min_ehc.Entertainment) {
+        $('#unit tr:eq(1) td:eq(20)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(20)').addClass('match');
+    }
+
+    if($('#unit tr:eq(1) td:eq(21)').text() != combinationValues.min_ehc.Miscellaneous) {
+        $('#unit tr:eq(1) td:eq(21)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(21)').addClass('match');
+    }
+
+    if($('#unit tr:eq(1) td:eq(22)').text() != combinationValues.min_ehc.Savings) {
+        $('#unit tr:eq(1) td:eq(22)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(22)').addClass('match');
+    }
+
 }
