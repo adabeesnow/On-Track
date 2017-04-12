@@ -248,49 +248,58 @@ $(document).ready(function () {
 
     // -------------------------------------------- GET AJAX DATA ------------------------------------------------------
 
-    let parsedJSON;
-    $.ajax({
-        url: 'http://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/',
-        method: 'GET',
-        success: function (response) {
-            parsedJSON = $.parseJSON(response);
-            parsedJSON = parsedJSON.sort(
-                function (a, b) {
-                    return alphanum(a.entryName.replace(/\D/g, ''), b.entryName.replace(/\D/g, ''));
-                }
-            );
-            for (let i = 0; i < parsedJSON.length; i++) {
-                if (parsedJSON[i].entryName.includes("single_no_children")) {
-                    credit_amount_single_0_children_list.push(parsedJSON[i].entryValue);
-                }
-                if (parsedJSON[i].entryName.includes("single_one_child")) {
-                    credit_amount_single_1_children_list.push(parsedJSON[i].entryValue);
-                }
-                if (parsedJSON[i].entryName.includes("single_two_children")) {
-                    credit_amount_single_2_children_list.push(parsedJSON[i].entryValue);
-                }
-                if (parsedJSON[i].entryName.includes("single_three_children")) {
-                    credit_amount_single_3_children_list.push(parsedJSON[i].entryValue);
-                }
-                if (parsedJSON[i].entryName.includes("married_no_children")) {
-                    credit_amount_married_filing_jointly_0_children_list.push(parsedJSON[i].entryValue);
-                }
-                if (parsedJSON[i].entryName.includes("married_one_child")) {
-                    credit_amount_married_filing_jointly_1_children_list.push(parsedJSON[i].entryValue);
-                }
-                if (parsedJSON[i].entryName.includes("married_two_children")) {
-                    credit_amount_married_filing_jointly_2_children_list.push(parsedJSON[i].entryValue);
-                }
-                if (parsedJSON[i].entryName.includes("married_three_children")) {
-                    credit_amount_married_filing_jointly_3_children_list.push(parsedJSON[i].entryValue);
-                }
-                // Applicable Figure table data from 2016. Data from 2015 used below for testing purposes.
-                // if (parsedJSON[i].entryName.includes("a_f")) {
-                //     applicable_figure_list.push(parsedJSON[i].entryValue);
-                // }
-            }
-        }
-    });
+    // let parsedJSON;
+    // $.ajax({
+    //     url: 'http://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/',
+    //     method: 'GET',
+    //     success: function (response) {
+    //         parsedJSON = $.parseJSON(response);
+    //         parsedJSON = parsedJSON.sort(
+    //             function (a, b) {
+    //                 return alphanum(a.entryName.replace(/\D/g, ''), b.entryName.replace(/\D/g, ''));
+    //             }
+    //         );
+    //         for (let i = 0; i < parsedJSON.length; i++) {
+    //             if (parsedJSON[i].entryName.includes("single_no_children")) {
+    //                 credit_amount_single_0_children_list.push(parsedJSON[i].entryValue);
+    //             }
+    //             if (parsedJSON[i].entryName.includes("single_one_child")) {
+    //                 credit_amount_single_1_children_list.push(parsedJSON[i].entryValue);
+    //             }
+    //             if (parsedJSON[i].entryName.includes("single_two_children")) {
+    //                 credit_amount_single_2_children_list.push(parsedJSON[i].entryValue);
+    //             }
+    //             if (parsedJSON[i].entryName.includes("single_three_children")) {
+    //                 credit_amount_single_3_children_list.push(parsedJSON[i].entryValue);
+    //             }
+    //             if (parsedJSON[i].entryName.includes("married_no_children")) {
+    //                 credit_amount_married_filing_jointly_0_children_list.push(parsedJSON[i].entryValue);
+    //             }
+    //             if (parsedJSON[i].entryName.includes("married_one_child")) {
+    //                 credit_amount_married_filing_jointly_1_children_list.push(parsedJSON[i].entryValue);
+    //             }
+    //             if (parsedJSON[i].entryName.includes("married_two_children")) {
+    //                 credit_amount_married_filing_jointly_2_children_list.push(parsedJSON[i].entryValue);
+    //             }
+    //             if (parsedJSON[i].entryName.includes("married_three_children")) {
+    //                 credit_amount_married_filing_jointly_3_children_list.push(parsedJSON[i].entryValue);
+    //             }
+    //             // Applicable Figure table data from 2016. Data from 2015 used below for testing purposes.
+    //             // if (parsedJSON[i].entryName.includes("a_f")) {
+    //             //     applicable_figure_list.push(parsedJSON[i].entryValue);
+    //             // }
+    //         }
+    //     }
+    // });
+
+    credit_amount_single_0_children_list = [];
+    credit_amount_single_1_children_list = [];
+    credit_amount_single_2_children_list = [];
+    credit_amount_single_3_children_list = [];
+    credit_amount_married_filing_jointly_0_children_list = [];
+    credit_amount_married_filing_jointly_1_children_list = [];
+    credit_amount_married_filing_jointly_2_children_list = [];
+    credit_amount_married_filing_jointly_3_children_list = [];
 
     // 2015 data for Excel sheet comparison.
     applicable_figure_list = [0.0201, 0.0302, 0.0308, 0.0314, 0.032, 0.0326, 0.0331, 0.0337, 0.0343, 0.0349, 0.0355,
@@ -529,109 +538,1451 @@ function writeVerificationRows() {
 
 //verifies the stuff and things
 function verifyTheStuffAndThings(){
-    console.log("values:", $('#unit tr:eq(1) td:eq(11)').text());
-    //
-    // $.each(combinationValues, function(key, val){
-    //     var that = this;
-    //     $.each(val, function(i, j){
-    //         var
-    //     })
-    // })
 
-    if(Math.abs($('#unit tr:eq(1) td:eq(7)').val() - combinationValues.min_ehc.Gross_Income) > 0.01) {
+    console.log("values:", $('#unit tr:eq(1) td:eq(11)').text());
+
+    if(!use_marketplace_health_insurance_bool && childcare_needed_bool && !use_family_care_bool){
+        min_ehc_values();
+        med_ehc_childcare_center_values();
+        max_ehc_childcare_center_values();
+    } else if(!use_marketplace_health_insurance_bool && childcare_needed_bool && use_family_care_bool) {
+        min_ehc_values();
+        med_ehc_childcare_family_values();
+        max_ehc_childcare_family_values();
+    } else if(!use_marketplace_health_insurance_bool && !childcare_needed_bool && !use_family_care_bool){
+        min_ehc_values();
+        med_ehc_childcare_none_values();
+        max_ehc_childcare_none_values();
+    } else if(use_marketplace_health_insurance_bool && childcare_needed_bool && !use_family_care_bool){
+        min_mhc_values();
+        med_mhc_childcare_center_values();
+        max_mhc_childcare_center_values();
+    } else if(use_marketplace_health_insurance_bool && childcare_needed_bool && use_family_care_bool) {
+        min_mhc_values();
+        med_mhc_childcare_family_values();
+        max_mhc_childcare_family_values();
+    } else if(use_marketplace_health_insurance_bool && !childcare_needed_bool && !use_family_care_bool){
+        min_mhc_values();
+        med_mhc_childcare_none_values();
+        max_mhc_childcare_none_values();
+    }
+
+    // min_ehc_values
+    // min_mhc_values
+    // med_ehc_childcare_family_values
+    // med_ehc_childcare_center
+    // med_ehc_childcare_none
+    // med_mhc_childcare_family
+    // med_mhc_childcare_center
+    // med_mhc_childcare_none
+    // max_ehc_childcare_family
+    // max_ehc_childcare_center
+    // max_ehc_childcare_none
+    // max_mhc_childcare_family
+    // max_mhc_childcare_center
+    // max_mhc_childcare_none
+
+    // }
+    // if (childcare_value === "childcare-center-care") {
+    //     // If Center Care used: child_care_needed_bool = true, use_family_care_bool = false
+    //     childcare_needed_bool = true;
+    //     use_family_care_bool = false;
+    // } else if (childcare_value === "childcare-family-care") {
+    //     // If Family Care used: child_care_needed_bool = true, use_family_care_bool = true
+    //     childcare_needed_bool = true;
+    //     use_family_care_bool = true;
+    // } else if (childcare_value === "childcare-none") {
+    //     // If Childcare not required: child_care_needed_bool = false, use_family_care_bool = false
+    //     childcare_needed_bool = false;
+    //     use_family_care_bool = false;
+    // }
+
+}
+
+function min_ehc_values(){
+
+    if(Math.abs($('#unit tr:eq(1) td:eq(7)').text() - combinationValues.min_ehc.Gross_Income) > 0.011) { // 0.011 used to account for floats
         $('#unit tr:eq(1) td:eq(7)').addClass('mismatch');
     } else {
         $('#unit tr:eq(1) td:eq(7)').addClass('match');
     }
 
-    if($('#unit tr:eq(1) td:eq(8)').text() != combinationValues.min_ehc.Taxes) {
+    if(Math.abs($('#unit tr:eq(1) td:eq(8)').text() - combinationValues.min_ehc.Taxes) > 0.011) {
         $('#unit tr:eq(1) td:eq(8)').addClass('mismatch');
     } else {
         $('#unit tr:eq(1) td:eq(8)').addClass('match');
     }
 
-    if($('#unit tr:eq(1) td:eq(9)').text() != combinationValues.min_ehc.Net_Income) {
+    if(Math.abs($('#unit tr:eq(1) td:eq(9)').text() - combinationValues.min_ehc.Net_Income) > 0.011) {
         $('#unit tr:eq(1) td:eq(9)').addClass('mismatch');
     } else {
         $('#unit tr:eq(1) td:eq(9)').addClass('match');
     }
 
-    if($('#unit tr:eq(1) td:eq(10)').text() != combinationValues.min_ehc.Total_Expenses + combinationValues.min_ehc.Savings) {
+    if(Math.abs($('#unit tr:eq(1) td:eq(10)').text() - (combinationValues.min_ehc.Total_Expenses + combinationValues.min_ehc.Savings)) > 0.011) {
         $('#unit tr:eq(1) td:eq(10)').addClass('mismatch');
     } else {
         $('#unit tr:eq(1) td:eq(10)').addClass('match');
     }
 
-    if($('#unit tr:eq(1) td:eq(11)').text() != combinationValues.min_ehc.Total_Expenses) {
+    if(Math.abs($('#unit tr:eq(1) td:eq(11)').text() - combinationValues.min_ehc.Total_Expenses) > 0.011) {
         $('#unit tr:eq(1) td:eq(11)').addClass('mismatch');
     } else {
         $('#unit tr:eq(1) td:eq(11)').addClass('match');
     }
 
-    if($('#unit tr:eq(1) td:eq(12)').text() != combinationValues.min_ehc.Housing) {
+    if(Math.abs($('#unit tr:eq(1) td:eq(12)').text() - combinationValues.min_ehc.Housing) > 0.011) {
         $('#unit tr:eq(1) td:eq(12)').addClass('mismatch');
     } else {
         $('#unit tr:eq(1) td:eq(12)').addClass('match');
     }
 
-    if($('#unit tr:eq(1) td:eq(13)').text() != combinationValues.min_ehc.Childcare) {
+    if(Math.abs($('#unit tr:eq(1) td:eq(13)').text() - combinationValues.min_ehc.Childcare) > 0.011) {
         $('#unit tr:eq(1) td:eq(13)').addClass('mismatch');
     } else {
         $('#unit tr:eq(1) td:eq(13)').addClass('match');
     }
 
-    if($('#unit tr:eq(1) td:eq(14)').text() != combinationValues.min_ehc.Food) {
+    if(Math.abs($('#unit tr:eq(1) td:eq(14)').text() - combinationValues.min_ehc.Food) > 0.011) {
         $('#unit tr:eq(1) td:eq(14)').addClass('mismatch');
     } else {
         $('#unit tr:eq(1) td:eq(14)').addClass('match');
     }
 
-    if($('#unit tr:eq(1) td:eq(15)').text() != combinationValues.min_ehc.Car_Insurance) {
+    if(Math.abs($('#unit tr:eq(1) td:eq(15)').text() - combinationValues.min_ehc.Car_Insurance) > 0.011) {
         $('#unit tr:eq(1) td:eq(15)').addClass('mismatch');
     } else {
         $('#unit tr:eq(1) td:eq(15)').addClass('match');
     }
 
-    if($('#unit tr:eq(1) td:eq(16)').text() != combinationValues.min_ehc.Car_Ownership) {
+    if(Math.abs($('#unit tr:eq(1) td:eq(16)').text() - combinationValues.min_ehc.Car_Ownership) > 0.011) {
         $('#unit tr:eq(1) td:eq(16)').addClass('mismatch');
     } else {
         $('#unit tr:eq(1) td:eq(16)').addClass('match');
     }
 
-    if($('#unit tr:eq(1) td:eq(17)').text() != combinationValues.min_ehc.Public_Transport) {
+    if(Math.abs($('#unit tr:eq(1) td:eq(17)').text() - combinationValues.min_ehc.Public_Transport) > 0.011) {
         $('#unit tr:eq(1) td:eq(17)').addClass('mismatch');
     } else {
         $('#unit tr:eq(1) td:eq(17)').addClass('match');
     }
 
-    if($('#unit tr:eq(1) td:eq(18)').text() != combinationValues.min_ehc.Health_Insurance) {
+    if(Math.abs($('#unit tr:eq(1) td:eq(18)').text() - combinationValues.min_ehc.Health_Insurance) > 0.011) {
         $('#unit tr:eq(1) td:eq(18)').addClass('mismatch');
     } else {
         $('#unit tr:eq(1) td:eq(18)').addClass('match');
     }
 
-    if($('#unit tr:eq(1) td:eq(19)').text() != combinationValues.min_ehc.Out_of_Pocket_Costs) {
+    if(Math.abs($('#unit tr:eq(1) td:eq(19)').text() - combinationValues.min_ehc.Out_of_Pocket_Costs) > 0.011) {
         $('#unit tr:eq(1) td:eq(19)').addClass('mismatch');
     } else {
         $('#unit tr:eq(1) td:eq(19)').addClass('match');
     }
 
-    if($('#unit tr:eq(1) td:eq(20)').text() != combinationValues.min_ehc.Entertainment) {
+    if(Math.abs($('#unit tr:eq(1) td:eq(20)').text() - combinationValues.min_ehc.Entertainment) > 0.011) {
         $('#unit tr:eq(1) td:eq(20)').addClass('mismatch');
     } else {
         $('#unit tr:eq(1) td:eq(20)').addClass('match');
     }
 
-    if($('#unit tr:eq(1) td:eq(21)').text() != combinationValues.min_ehc.Miscellaneous) {
+    if(Math.abs($('#unit tr:eq(1) td:eq(21)').text() - combinationValues.min_ehc.Miscellaneous) > 0.011) {
         $('#unit tr:eq(1) td:eq(21)').addClass('mismatch');
     } else {
         $('#unit tr:eq(1) td:eq(21)').addClass('match');
     }
 
-    if($('#unit tr:eq(1) td:eq(22)').text() != combinationValues.min_ehc.Savings) {
+    if(Math.abs($('#unit tr:eq(1) td:eq(22)').text() - combinationValues.min_ehc.Savings) > 0.011) {
         $('#unit tr:eq(1) td:eq(22)').addClass('mismatch');
     } else {
         $('#unit tr:eq(1) td:eq(22)').addClass('match');
+    }
+}
+function min_mhc_values(){
+
+    if(Math.abs($('#unit tr:eq(1) td:eq(7)').text() - combinationValues.min_mhc.Gross_Income) > 0.011) { // 0.011 used to account for floats
+        $('#unit tr:eq(1) td:eq(7)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(7)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(1) td:eq(8)').text() - combinationValues.min_mhc.Taxes) > 0.011) {
+        $('#unit tr:eq(1) td:eq(8)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(8)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(1) td:eq(9)').text() - combinationValues.min_mhc.Net_Income) > 0.011) {
+        $('#unit tr:eq(1) td:eq(9)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(9)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(1) td:eq(10)').text() - (combinationValues.min_mhc.Total_Expenses + combinationValues.min_mhc.Savings)) > 0.011) {
+        $('#unit tr:eq(1) td:eq(10)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(10)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(1) td:eq(11)').text() - combinationValues.min_mhc.Total_Expenses) > 0.011) {
+        $('#unit tr:eq(1) td:eq(11)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(11)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(1) td:eq(12)').text() - combinationValues.min_mhc.Housing) > 0.011) {
+        $('#unit tr:eq(1) td:eq(12)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(12)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(1) td:eq(13)').text() - combinationValues.min_mhc.Childcare) > 0.011) {
+        $('#unit tr:eq(1) td:eq(13)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(13)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(1) td:eq(14)').text() - combinationValues.min_mhc.Food) > 0.011) {
+        $('#unit tr:eq(1) td:eq(14)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(14)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(1) td:eq(15)').text() - combinationValues.min_mhc.Car_Insurance) > 0.011) {
+        $('#unit tr:eq(1) td:eq(15)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(15)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(1) td:eq(16)').text() - combinationValues.min_mhc.Car_Ownership) > 0.011) {
+        $('#unit tr:eq(1) td:eq(16)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(16)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(1) td:eq(17)').text() - combinationValues.min_mhc.Public_Transport) > 0.011) {
+        $('#unit tr:eq(1) td:eq(17)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(17)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(1) td:eq(18)').text() - combinationValues.min_mhc.Health_Insurance) > 0.011) {
+        $('#unit tr:eq(1) td:eq(18)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(18)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(1) td:eq(19)').text() - combinationValues.min_mhc.Out_of_Pocket_Costs) > 0.011) {
+        $('#unit tr:eq(1) td:eq(19)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(19)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(1) td:eq(20)').text() - combinationValues.min_mhc.Entertainment) > 0.011) {
+        $('#unit tr:eq(1) td:eq(20)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(20)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(1) td:eq(21)').text() - combinationValues.min_mhc.Miscellaneous) > 0.011) {
+        $('#unit tr:eq(1) td:eq(21)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(21)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(1) td:eq(22)').text() - combinationValues.min_mhc.Savings) > 0.011) {
+        $('#unit tr:eq(1) td:eq(22)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(1) td:eq(22)').addClass('match');
+    }
+
+}
+function med_ehc_childcare_family_values(){
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(7)').text() - combinationValues.med_ehc_childcare_family.Gross_Income) > 0.011) { // 0.011 used to account for floats
+        $('#unit tr:eq(2) td:eq(7)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(7)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(8)').text() - combinationValues.med_ehc_childcare_family.Taxes) > 0.011) {
+        $('#unit tr:eq(2) td:eq(8)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(8)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(9)').text() - combinationValues.med_ehc_childcare_family.Net_Income) > 0.011) {
+        $('#unit tr:eq(2) td:eq(9)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(9)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(10)').text() - (combinationValues.med_ehc_childcare_family.Total_Expenses + combinationValues.med_ehc_childcare_family.Savings)) > 0.011) {
+        $('#unit tr:eq(2) td:eq(10)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(10)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(11)').text() - combinationValues.med_ehc_childcare_family.Total_Expenses) > 0.011) {
+        $('#unit tr:eq(2) td:eq(11)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(11)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(12)').text() - combinationValues.med_ehc_childcare_family.Housing) > 0.011) {
+        $('#unit tr:eq(2) td:eq(12)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(12)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(13)').text() - combinationValues.med_ehc_childcare_family.Childcare) > 0.011) {
+        $('#unit tr:eq(2) td:eq(13)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(13)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(14)').text() - combinationValues.med_ehc_childcare_family.Food) > 0.011) {
+        $('#unit tr:eq(2) td:eq(14)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(14)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(15)').text() - combinationValues.med_ehc_childcare_family.Car_Insurance) > 0.011) {
+        $('#unit tr:eq(2) td:eq(15)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(15)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(16)').text() - combinationValues.med_ehc_childcare_family.Car_Ownership) > 0.011) {
+        $('#unit tr:eq(2) td:eq(16)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(16)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(17)').text() - combinationValues.med_ehc_childcare_family.Public_Transport) > 0.011) {
+        $('#unit tr:eq(2) td:eq(17)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(17)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(18)').text() - combinationValues.med_ehc_childcare_family.Health_Insurance) > 0.011) {
+        $('#unit tr:eq(2) td:eq(18)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(18)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(19)').text() - combinationValues.med_ehc_childcare_family.Out_of_Pocket_Costs) > 0.011) {
+        $('#unit tr:eq(2) td:eq(19)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(19)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(20)').text() - combinationValues.med_ehc_childcare_family.Entertainment) > 0.011) {
+        $('#unit tr:eq(2) td:eq(20)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(20)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(21)').text() - combinationValues.med_ehc_childcare_family.Miscellaneous) > 0.011) {
+        $('#unit tr:eq(2) td:eq(21)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(21)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(22)').text() - combinationValues.med_ehc_childcare_family.Savings) > 0.011) {
+        $('#unit tr:eq(2) td:eq(22)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(22)').addClass('match');
+    }
+
+}
+function med_ehc_childcare_center_values(){
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(7)').text() - combinationValues.med_ehc_childcare_center.Gross_Income) > 0.011) { // 0.011 used to account for floats
+        $('#unit tr:eq(2) td:eq(7)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(7)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(8)').text() - combinationValues.med_ehc_childcare_center.Taxes) > 0.011) {
+        $('#unit tr:eq(2) td:eq(8)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(8)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(9)').text() - combinationValues.med_ehc_childcare_center.Net_Income) > 0.011) {
+        $('#unit tr:eq(2) td:eq(9)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(9)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(10)').text() - (combinationValues.med_ehc_childcare_center.Total_Expenses + combinationValues.med_ehc_childcare_center.Savings)) > 0.011) {
+        $('#unit tr:eq(2) td:eq(10)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(10)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(11)').text() - combinationValues.med_ehc_childcare_center.Total_Expenses) > 0.011) {
+        $('#unit tr:eq(2) td:eq(11)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(11)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(12)').text() - combinationValues.med_ehc_childcare_center.Housing) > 0.011) {
+        $('#unit tr:eq(2) td:eq(12)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(12)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(13)').text() - combinationValues.med_ehc_childcare_center.Childcare) > 0.011) {
+        $('#unit tr:eq(2) td:eq(13)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(13)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(14)').text() - combinationValues.med_ehc_childcare_center.Food) > 0.011) {
+        $('#unit tr:eq(2) td:eq(14)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(14)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(15)').text() - combinationValues.med_ehc_childcare_center.Car_Insurance) > 0.011) {
+        $('#unit tr:eq(2) td:eq(15)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(15)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(16)').text() - combinationValues.med_ehc_childcare_center.Car_Ownership) > 0.011) {
+        $('#unit tr:eq(2) td:eq(16)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(16)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(17)').text() - combinationValues.med_ehc_childcare_center.Public_Transport) > 0.011) {
+        $('#unit tr:eq(2) td:eq(17)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(17)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(18)').text() - combinationValues.med_ehc_childcare_center.Health_Insurance) > 0.011) {
+        $('#unit tr:eq(2) td:eq(18)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(18)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(19)').text() - combinationValues.med_ehc_childcare_center.Out_of_Pocket_Costs) > 0.011) {
+        $('#unit tr:eq(2) td:eq(19)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(19)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(20)').text() - combinationValues.med_ehc_childcare_center.Entertainment) > 0.011) {
+        $('#unit tr:eq(2) td:eq(20)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(20)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(21)').text() - combinationValues.med_ehc_childcare_center.Miscellaneous) > 0.011) {
+        $('#unit tr:eq(2) td:eq(21)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(21)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(22)').text() - combinationValues.med_ehc_childcare_center.Savings) > 0.011) {
+        $('#unit tr:eq(2) td:eq(22)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(22)').addClass('match');
+    }
+}
+function med_ehc_childcare_none_values(){
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(7)').text() - combinationValues.med_ehc_childcare_none.Gross_Income) > 0.011) { // 0.011 used to account for floats
+        $('#unit tr:eq(2) td:eq(7)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(7)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(8)').text() - combinationValues.med_ehc_childcare_none.Taxes) > 0.011) {
+        $('#unit tr:eq(2) td:eq(8)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(8)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(9)').text() - combinationValues.med_ehc_childcare_none.Net_Income) > 0.011) {
+        $('#unit tr:eq(2) td:eq(9)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(9)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(10)').text() - (combinationValues.med_ehc_childcare_none.Total_Expenses + combinationValues.med_ehc_childcare_none.Savings)) > 0.011) {
+        $('#unit tr:eq(2) td:eq(10)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(10)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(11)').text() - combinationValues.med_ehc_childcare_none.Total_Expenses) > 0.011) {
+        $('#unit tr:eq(2) td:eq(11)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(11)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(12)').text() - combinationValues.med_ehc_childcare_none.Housing) > 0.011) {
+        $('#unit tr:eq(2) td:eq(12)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(12)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(13)').text() - combinationValues.med_ehc_childcare_none.Childcare) > 0.011) {
+        $('#unit tr:eq(2) td:eq(13)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(13)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(14)').text() - combinationValues.med_ehc_childcare_none.Food) > 0.011) {
+        $('#unit tr:eq(2) td:eq(14)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(14)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(15)').text() - combinationValues.med_ehc_childcare_none.Car_Insurance) > 0.011) {
+        $('#unit tr:eq(2) td:eq(15)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(15)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(16)').text() - combinationValues.med_ehc_childcare_none.Car_Ownership) > 0.011) {
+        $('#unit tr:eq(2) td:eq(16)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(16)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(17)').text() - combinationValues.med_ehc_childcare_none.Public_Transport) > 0.011) {
+        $('#unit tr:eq(2) td:eq(17)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(17)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(18)').text() - combinationValues.med_ehc_childcare_none.Health_Insurance) > 0.011) {
+        $('#unit tr:eq(2) td:eq(18)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(18)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(19)').text() - combinationValues.med_ehc_childcare_none.Out_of_Pocket_Costs) > 0.011) {
+        $('#unit tr:eq(2) td:eq(19)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(19)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(20)').text() - combinationValues.med_ehc_childcare_none.Entertainment) > 0.011) {
+        $('#unit tr:eq(2) td:eq(20)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(20)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(21)').text() - combinationValues.med_ehc_childcare_none.Miscellaneous) > 0.011) {
+        $('#unit tr:eq(2) td:eq(21)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(21)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(22)').text() - combinationValues.med_ehc_childcare_none.Savings) > 0.011) {
+        $('#unit tr:eq(2) td:eq(22)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(22)').addClass('match');
+    }
+
+}
+function med_mhc_childcare_family_values(){
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(7)').text() - combinationValues.med_mhc_childcare_family.Gross_Income) > 0.011) { // 0.011 used to account for floats
+        $('#unit tr:eq(2) td:eq(7)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(7)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(8)').text() - combinationValues.med_mhc_childcare_family.Taxes) > 0.011) {
+        $('#unit tr:eq(2) td:eq(8)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(8)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(9)').text() - combinationValues.med_mhc_childcare_family.Net_Income) > 0.011) {
+        $('#unit tr:eq(2) td:eq(9)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(9)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(10)').text() - (combinationValues.med_mhc_childcare_family.Total_Expenses + combinationValues.med_mhc_childcare_family.Savings)) > 0.011) {
+        $('#unit tr:eq(2) td:eq(10)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(10)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(11)').text() - combinationValues.med_mhc_childcare_family.Total_Expenses) > 0.011) {
+        $('#unit tr:eq(2) td:eq(11)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(11)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(12)').text() - combinationValues.med_mhc_childcare_family.Housing) > 0.011) {
+        $('#unit tr:eq(2) td:eq(12)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(12)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(13)').text() - combinationValues.med_mhc_childcare_family.Childcare) > 0.011) {
+        $('#unit tr:eq(2) td:eq(13)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(13)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(14)').text() - combinationValues.med_mhc_childcare_family.Food) > 0.011) {
+        $('#unit tr:eq(2) td:eq(14)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(14)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(15)').text() - combinationValues.med_mhc_childcare_family.Car_Insurance) > 0.011) {
+        $('#unit tr:eq(2) td:eq(15)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(15)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(16)').text() - combinationValues.med_mhc_childcare_family.Car_Ownership) > 0.011) {
+        $('#unit tr:eq(2) td:eq(16)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(16)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(17)').text() - combinationValues.med_mhc_childcare_family.Public_Transport) > 0.011) {
+        $('#unit tr:eq(2) td:eq(17)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(17)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(18)').text() - combinationValues.med_mhc_childcare_family.Health_Insurance) > 0.011) {
+        $('#unit tr:eq(2) td:eq(18)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(18)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(19)').text() - combinationValues.med_mhc_childcare_family.Out_of_Pocket_Costs) > 0.011) {
+        $('#unit tr:eq(2) td:eq(19)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(19)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(20)').text() - combinationValues.med_mhc_childcare_family.Entertainment) > 0.011) {
+        $('#unit tr:eq(2) td:eq(20)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(20)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(21)').text() - combinationValues.med_mhc_childcare_family.Miscellaneous) > 0.011) {
+        $('#unit tr:eq(2) td:eq(21)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(21)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(22)').text() - combinationValues.med_mhc_childcare_family.Savings) > 0.011) {
+        $('#unit tr:eq(2) td:eq(22)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(22)').addClass('match');
+    }
+
+}
+function med_mhc_childcare_center_values(){
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(7)').text() - combinationValues.med_mhc_childcare_center.Gross_Income) > 0.011) { // 0.011 used to account for floats
+        $('#unit tr:eq(2) td:eq(7)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(7)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(8)').text() - combinationValues.med_mhc_childcare_center.Taxes) > 0.011) {
+        $('#unit tr:eq(2) td:eq(8)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(8)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(9)').text() - combinationValues.med_mhc_childcare_center.Net_Income) > 0.011) {
+        $('#unit tr:eq(2) td:eq(9)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(9)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(10)').text() - (combinationValues.med_mhc_childcare_center.Total_Expenses + combinationValues.med_mhc_childcare_center.Savings)) > 0.011) {
+        $('#unit tr:eq(2) td:eq(10)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(10)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(11)').text() - combinationValues.med_mhc_childcare_center.Total_Expenses) > 0.011) {
+        $('#unit tr:eq(2) td:eq(11)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(11)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(12)').text() - combinationValues.med_mhc_childcare_center.Housing) > 0.011) {
+        $('#unit tr:eq(2) td:eq(12)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(12)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(13)').text() - combinationValues.med_mhc_childcare_center.Childcare) > 0.011) {
+        $('#unit tr:eq(2) td:eq(13)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(13)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(14)').text() - combinationValues.med_mhc_childcare_center.Food) > 0.011) {
+        $('#unit tr:eq(2) td:eq(14)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(14)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(15)').text() - combinationValues.med_mhc_childcare_center.Car_Insurance) > 0.011) {
+        $('#unit tr:eq(2) td:eq(15)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(15)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(16)').text() - combinationValues.med_mhc_childcare_center.Car_Ownership) > 0.011) {
+        $('#unit tr:eq(2) td:eq(16)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(16)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(17)').text() - combinationValues.med_mhc_childcare_center.Public_Transport) > 0.011) {
+        $('#unit tr:eq(2) td:eq(17)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(17)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(18)').text() - combinationValues.med_mhc_childcare_center.Health_Insurance) > 0.011) {
+        $('#unit tr:eq(2) td:eq(18)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(18)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(19)').text() - combinationValues.med_mhc_childcare_center.Out_of_Pocket_Costs) > 0.011) {
+        $('#unit tr:eq(2) td:eq(19)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(19)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(20)').text() - combinationValues.med_mhc_childcare_center.Entertainment) > 0.011) {
+        $('#unit tr:eq(2) td:eq(20)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(20)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(21)').text() - combinationValues.med_mhc_childcare_center.Miscellaneous) > 0.011) {
+        $('#unit tr:eq(2) td:eq(21)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(21)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(22)').text() - combinationValues.med_mhc_childcare_center.Savings) > 0.011) {
+        $('#unit tr:eq(2) td:eq(22)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(22)').addClass('match');
+    }
+
+
+}
+function med_mhc_childcare_none_values(){
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(7)').text() - combinationValues.med_mhc_childcare_none.Gross_Income) > 0.011) { // 0.011 used to account for floats
+        $('#unit tr:eq(2) td:eq(7)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(7)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(8)').text() - combinationValues.med_mhc_childcare_none.Taxes) > 0.011) {
+        $('#unit tr:eq(2) td:eq(8)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(8)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(9)').text() - combinationValues.med_mhc_childcare_none.Net_Income) > 0.011) {
+        $('#unit tr:eq(2) td:eq(9)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(9)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(10)').text() - (combinationValues.med_mhc_childcare_none.Total_Expenses + combinationValues.med_mhc_childcare_none.Savings)) > 0.011) {
+        $('#unit tr:eq(2) td:eq(10)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(10)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(11)').text() - combinationValues.med_mhc_childcare_none.Total_Expenses) > 0.011) {
+        $('#unit tr:eq(2) td:eq(11)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(11)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(12)').text() - combinationValues.med_mhc_childcare_none.Housing) > 0.011) {
+        $('#unit tr:eq(2) td:eq(12)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(12)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(13)').text() - combinationValues.med_mhc_childcare_none.Childcare) > 0.011) {
+        $('#unit tr:eq(2) td:eq(13)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(13)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(14)').text() - combinationValues.med_mhc_childcare_none.Food) > 0.011) {
+        $('#unit tr:eq(2) td:eq(14)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(14)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(15)').text() - combinationValues.med_mhc_childcare_none.Car_Insurance) > 0.011) {
+        $('#unit tr:eq(2) td:eq(15)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(15)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(16)').text() - combinationValues.med_mhc_childcare_none.Car_Ownership) > 0.011) {
+        $('#unit tr:eq(2) td:eq(16)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(16)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(17)').text() - combinationValues.med_mhc_childcare_none.Public_Transport) > 0.011) {
+        $('#unit tr:eq(2) td:eq(17)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(17)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(18)').text() - combinationValues.med_mhc_childcare_none.Health_Insurance) > 0.011) {
+        $('#unit tr:eq(2) td:eq(18)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(18)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(19)').text() - combinationValues.med_mhc_childcare_none.Out_of_Pocket_Costs) > 0.011) {
+        $('#unit tr:eq(2) td:eq(19)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(19)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(20)').text() - combinationValues.med_mhc_childcare_none.Entertainment) > 0.011) {
+        $('#unit tr:eq(2) td:eq(20)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(20)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(21)').text() - combinationValues.med_mhc_childcare_none.Miscellaneous) > 0.011) {
+        $('#unit tr:eq(2) td:eq(21)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(21)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(2) td:eq(22)').text() - combinationValues.med_mhc_childcare_none.Savings) > 0.011) {
+        $('#unit tr:eq(2) td:eq(22)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(2) td:eq(22)').addClass('match');
+    }
+
+}
+function max_ehc_childcare_family_values(){
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(7)').text() - combinationValues.max_ehc_childcare_family.Gross_Income) > 0.011) { // 0.011 used to account for floats
+        $('#unit tr:eq(3) td:eq(7)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(7)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(8)').text() - combinationValues.max_ehc_childcare_family.Taxes) > 0.011) {
+        $('#unit tr:eq(3) td:eq(8)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(8)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(9)').text() - combinationValues.max_ehc_childcare_family.Net_Income) > 0.011) {
+        $('#unit tr:eq(3) td:eq(9)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(9)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(10)').text() - (combinationValues.max_ehc_childcare_family.Total_Expenses + combinationValues.max_ehc_childcare_family.Savings)) > 0.011) {
+        $('#unit tr:eq(3) td:eq(10)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(10)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(11)').text() - combinationValues.max_ehc_childcare_family.Total_Expenses) > 0.011) {
+        $('#unit tr:eq(3) td:eq(11)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(11)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(12)').text() - combinationValues.max_ehc_childcare_family.Housing) > 0.011) {
+        $('#unit tr:eq(3) td:eq(12)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(12)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(13)').text() - combinationValues.max_ehc_childcare_family.Childcare) > 0.011) {
+        $('#unit tr:eq(3) td:eq(13)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(13)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(14)').text() - combinationValues.max_ehc_childcare_family.Food) > 0.011) {
+        $('#unit tr:eq(3) td:eq(14)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(14)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(15)').text() - combinationValues.max_ehc_childcare_family.Car_Insurance) > 0.011) {
+        $('#unit tr:eq(3) td:eq(15)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(15)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(16)').text() - combinationValues.max_ehc_childcare_family.Car_Ownership) > 0.011) {
+        $('#unit tr:eq(3) td:eq(16)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(16)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(17)').text() - combinationValues.max_ehc_childcare_family.Public_Transport) > 0.011) {
+        $('#unit tr:eq(3) td:eq(17)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(17)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(18)').text() - combinationValues.max_ehc_childcare_family.Health_Insurance) > 0.011) {
+        $('#unit tr:eq(3) td:eq(18)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(18)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(19)').text() - combinationValues.max_ehc_childcare_family.Out_of_Pocket_Costs) > 0.011) {
+        $('#unit tr:eq(3) td:eq(19)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(19)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(20)').text() - combinationValues.max_ehc_childcare_family.Entertainment) > 0.011) {
+        $('#unit tr:eq(3) td:eq(20)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(20)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(21)').text() - combinationValues.max_ehc_childcare_family.Miscellaneous) > 0.011) {
+        $('#unit tr:eq(3) td:eq(21)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(21)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(22)').text() - combinationValues.max_ehc_childcare_family.Savings) > 0.011) {
+        $('#unit tr:eq(3) td:eq(22)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(22)').addClass('match');
+    }
+
+
+}
+function max_ehc_childcare_center_values(){
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(7)').text() - combinationValues.max_ehc_childcare_center.Gross_Income) > 0.011) { // 0.011 used to account for floats
+        $('#unit tr:eq(3) td:eq(7)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(7)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(8)').text() - combinationValues.max_ehc_childcare_center.Taxes) > 0.011) {
+        $('#unit tr:eq(3) td:eq(8)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(8)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(9)').text() - combinationValues.max_ehc_childcare_center.Net_Income) > 0.011) {
+        $('#unit tr:eq(3) td:eq(9)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(9)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(10)').text() - (combinationValues.max_ehc_childcare_center.Total_Expenses + combinationValues.max_ehc_childcare_center.Savings)) > 0.011) {
+        $('#unit tr:eq(3) td:eq(10)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(10)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(11)').text() - combinationValues.max_ehc_childcare_center.Total_Expenses) > 0.011) {
+        $('#unit tr:eq(3) td:eq(11)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(11)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(12)').text() - combinationValues.max_ehc_childcare_center.Housing) > 0.011) {
+        $('#unit tr:eq(3) td:eq(12)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(12)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(13)').text() - combinationValues.max_ehc_childcare_center.Childcare) > 0.011) {
+        $('#unit tr:eq(3) td:eq(13)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(13)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(14)').text() - combinationValues.max_ehc_childcare_center.Food) > 0.011) {
+        $('#unit tr:eq(3) td:eq(14)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(14)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(15)').text() - combinationValues.max_ehc_childcare_center.Car_Insurance) > 0.011) {
+        $('#unit tr:eq(3) td:eq(15)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(15)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(16)').text() - combinationValues.max_ehc_childcare_center.Car_Ownership) > 0.011) {
+        $('#unit tr:eq(3) td:eq(16)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(16)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(17)').text() - combinationValues.max_ehc_childcare_center.Public_Transport) > 0.011) {
+        $('#unit tr:eq(3) td:eq(17)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(17)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(18)').text() - combinationValues.max_ehc_childcare_center.Health_Insurance) > 0.011) {
+        $('#unit tr:eq(3) td:eq(18)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(18)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(19)').text() - combinationValues.max_ehc_childcare_center.Out_of_Pocket_Costs) > 0.011) {
+        $('#unit tr:eq(3) td:eq(19)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(19)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(20)').text() - combinationValues.max_ehc_childcare_center.Entertainment) > 0.011) {
+        $('#unit tr:eq(3) td:eq(20)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(20)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(21)').text() - combinationValues.max_ehc_childcare_center.Miscellaneous) > 0.011) {
+        $('#unit tr:eq(3) td:eq(21)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(21)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(22)').text() - combinationValues.max_ehc_childcare_center.Savings) > 0.011) {
+        $('#unit tr:eq(3) td:eq(22)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(22)').addClass('match');
+    }
+
+}
+function max_ehc_childcare_none_values(){
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(7)').text() - combinationValues.max_ehc_childcare_none.Gross_Income) > 0.011) { // 0.011 used to account for floats
+        $('#unit tr:eq(3) td:eq(7)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(7)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(8)').text() - combinationValues.max_ehc_childcare_none.Taxes) > 0.011) {
+        $('#unit tr:eq(3) td:eq(8)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(8)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(9)').text() - combinationValues.max_ehc_childcare_none.Net_Income) > 0.011) {
+        $('#unit tr:eq(3) td:eq(9)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(9)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(10)').text() - (combinationValues.max_ehc_childcare_none.Total_Expenses + combinationValues.max_ehc_childcare_none.Savings)) > 0.011) {
+        $('#unit tr:eq(3) td:eq(10)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(10)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(11)').text() - combinationValues.max_ehc_childcare_none.Total_Expenses) > 0.011) {
+        $('#unit tr:eq(3) td:eq(11)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(11)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(12)').text() - combinationValues.max_ehc_childcare_none.Housing) > 0.011) {
+        $('#unit tr:eq(3) td:eq(12)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(12)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(13)').text() - combinationValues.max_ehc_childcare_none.Childcare) > 0.011) {
+        $('#unit tr:eq(3) td:eq(13)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(13)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(14)').text() - combinationValues.max_ehc_childcare_none.Food) > 0.011) {
+        $('#unit tr:eq(3) td:eq(14)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(14)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(15)').text() - combinationValues.max_ehc_childcare_none.Car_Insurance) > 0.011) {
+        $('#unit tr:eq(3) td:eq(15)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(15)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(16)').text() - combinationValues.max_ehc_childcare_none.Car_Ownership) > 0.011) {
+        $('#unit tr:eq(3) td:eq(16)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(16)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(17)').text() - combinationValues.max_ehc_childcare_none.Public_Transport) > 0.011) {
+        $('#unit tr:eq(3) td:eq(17)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(17)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(18)').text() - combinationValues.max_ehc_childcare_none.Health_Insurance) > 0.011) {
+        $('#unit tr:eq(3) td:eq(18)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(18)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(19)').text() - combinationValues.max_ehc_childcare_none.Out_of_Pocket_Costs) > 0.011) {
+        $('#unit tr:eq(3) td:eq(19)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(19)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(20)').text() - combinationValues.max_ehc_childcare_none.Entertainment) > 0.011) {
+        $('#unit tr:eq(3) td:eq(20)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(20)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(21)').text() - combinationValues.max_ehc_childcare_none.Miscellaneous) > 0.011) {
+        $('#unit tr:eq(3) td:eq(21)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(21)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(22)').text() - combinationValues.max_ehc_childcare_none.Savings) > 0.011) {
+        $('#unit tr:eq(3) td:eq(22)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(22)').addClass('match');
+    }
+}
+function max_mhc_childcare_family_values(){
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(7)').text() - combinationValues.max_mhc_childcare_family.Gross_Income) > 0.011) { // 0.011 used to account for floats
+        $('#unit tr:eq(3) td:eq(7)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(7)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(8)').text() - combinationValues.max_mhc_childcare_family.Taxes) > 0.011) {
+        $('#unit tr:eq(3) td:eq(8)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(8)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(9)').text() - combinationValues.max_mhc_childcare_family.Net_Income) > 0.011) {
+        $('#unit tr:eq(3) td:eq(9)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(9)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(10)').text() - (combinationValues.max_mhc_childcare_family.Total_Expenses + combinationValues.max_mhc_childcare_family.Savings)) > 0.011) {
+        $('#unit tr:eq(3) td:eq(10)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(10)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(11)').text() - combinationValues.max_mhc_childcare_family.Total_Expenses) > 0.011) {
+        $('#unit tr:eq(3) td:eq(11)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(11)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(12)').text() - combinationValues.max_mhc_childcare_family.Housing) > 0.011) {
+        $('#unit tr:eq(3) td:eq(12)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(12)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(13)').text() - combinationValues.max_mhc_childcare_family.Childcare) > 0.011) {
+        $('#unit tr:eq(3) td:eq(13)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(13)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(14)').text() - combinationValues.max_mhc_childcare_family.Food) > 0.011) {
+        $('#unit tr:eq(3) td:eq(14)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(14)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(15)').text() - combinationValues.max_mhc_childcare_family.Car_Insurance) > 0.011) {
+        $('#unit tr:eq(3) td:eq(15)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(15)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(16)').text() - combinationValues.max_mhc_childcare_family.Car_Ownership) > 0.011) {
+        $('#unit tr:eq(3) td:eq(16)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(16)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(17)').text() - combinationValues.max_mhc_childcare_family.Public_Transport) > 0.011) {
+        $('#unit tr:eq(3) td:eq(17)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(17)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(18)').text() - combinationValues.max_mhc_childcare_family.Health_Insurance) > 0.011) {
+        $('#unit tr:eq(3) td:eq(18)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(18)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(19)').text() - combinationValues.max_mhc_childcare_family.Out_of_Pocket_Costs) > 0.011) {
+        $('#unit tr:eq(3) td:eq(19)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(19)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(20)').text() - combinationValues.max_mhc_childcare_family.Entertainment) > 0.011) {
+        $('#unit tr:eq(3) td:eq(20)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(20)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(21)').text() - combinationValues.max_mhc_childcare_family.Miscellaneous) > 0.011) {
+        $('#unit tr:eq(3) td:eq(21)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(21)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(22)').text() - combinationValues.max_mhc_childcare_family.Savings) > 0.011) {
+        $('#unit tr:eq(3) td:eq(22)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(22)').addClass('match');
+    }
+
+
+}
+function max_mhc_childcare_center_values(){
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(7)').text() - combinationValues.max_mhc_childcare_center.Gross_Income) > 0.011) { // 0.011 used to account for floats
+        $('#unit tr:eq(3) td:eq(7)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(7)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(8)').text() - combinationValues.max_mhc_childcare_center.Taxes) > 0.011) {
+        $('#unit tr:eq(3) td:eq(8)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(8)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(9)').text() - combinationValues.max_mhc_childcare_center.Net_Income) > 0.011) {
+        $('#unit tr:eq(3) td:eq(9)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(9)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(10)').text() - (combinationValues.max_mhc_childcare_center.Total_Expenses + combinationValues.max_mhc_childcare_center.Savings)) > 0.011) {
+        $('#unit tr:eq(3) td:eq(10)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(10)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(11)').text() - combinationValues.max_mhc_childcare_center.Total_Expenses) > 0.011) {
+        $('#unit tr:eq(3) td:eq(11)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(11)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(12)').text() - combinationValues.max_mhc_childcare_center.Housing) > 0.011) {
+        $('#unit tr:eq(3) td:eq(12)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(12)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(13)').text() - combinationValues.max_mhc_childcare_center.Childcare) > 0.011) {
+        $('#unit tr:eq(3) td:eq(13)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(13)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(14)').text() - combinationValues.max_mhc_childcare_center.Food) > 0.011) {
+        $('#unit tr:eq(3) td:eq(14)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(14)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(15)').text() - combinationValues.max_mhc_childcare_center.Car_Insurance) > 0.011) {
+        $('#unit tr:eq(3) td:eq(15)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(15)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(16)').text() - combinationValues.max_mhc_childcare_center.Car_Ownership) > 0.011) {
+        $('#unit tr:eq(3) td:eq(16)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(16)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(17)').text() - combinationValues.max_mhc_childcare_center.Public_Transport) > 0.011) {
+        $('#unit tr:eq(3) td:eq(17)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(17)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(18)').text() - combinationValues.max_mhc_childcare_center.Health_Insurance) > 0.011) {
+        $('#unit tr:eq(3) td:eq(18)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(18)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(19)').text() - combinationValues.max_mhc_childcare_center.Out_of_Pocket_Costs) > 0.011) {
+        $('#unit tr:eq(3) td:eq(19)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(19)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(20)').text() - combinationValues.max_mhc_childcare_center.Entertainment) > 0.011) {
+        $('#unit tr:eq(3) td:eq(20)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(20)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(21)').text() - combinationValues.max_mhc_childcare_center.Miscellaneous) > 0.011) {
+        $('#unit tr:eq(3) td:eq(21)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(21)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(22)').text() - combinationValues.max_mhc_childcare_center.Savings) > 0.011) {
+        $('#unit tr:eq(3) td:eq(22)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(22)').addClass('match');
+    }
+
+
+}
+function max_mhc_childcare_none_values(){
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(7)').text() - combinationValues.max_mhc_childcare_none.Gross_Income) > 0.011) { // 0.011 used to account for floats
+        $('#unit tr:eq(3) td:eq(7)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(7)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(8)').text() - combinationValues.max_mhc_childcare_none.Taxes) > 0.011) {
+        $('#unit tr:eq(3) td:eq(8)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(8)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(9)').text() - combinationValues.max_mhc_childcare_none.Net_Income) > 0.011) {
+        $('#unit tr:eq(3) td:eq(9)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(9)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(10)').text() - (combinationValues.max_mhc_childcare_none.Total_Expenses + combinationValues.max_mhc_childcare_none.Savings)) > 0.011) {
+        $('#unit tr:eq(3) td:eq(10)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(10)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(11)').text() - combinationValues.max_mhc_childcare_none.Total_Expenses) > 0.011) {
+        $('#unit tr:eq(3) td:eq(11)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(11)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(12)').text() - combinationValues.max_mhc_childcare_none.Housing) > 0.011) {
+        $('#unit tr:eq(3) td:eq(12)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(12)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(13)').text() - combinationValues.max_mhc_childcare_none.Childcare) > 0.011) {
+        $('#unit tr:eq(3) td:eq(13)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(13)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(14)').text() - combinationValues.max_mhc_childcare_none.Food) > 0.011) {
+        $('#unit tr:eq(3) td:eq(14)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(14)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(15)').text() - combinationValues.max_mhc_childcare_none.Car_Insurance) > 0.011) {
+        $('#unit tr:eq(3) td:eq(15)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(15)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(16)').text() - combinationValues.max_mhc_childcare_none.Car_Ownership) > 0.011) {
+        $('#unit tr:eq(3) td:eq(16)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(16)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(17)').text() - combinationValues.max_mhc_childcare_none.Public_Transport) > 0.011) {
+        $('#unit tr:eq(3) td:eq(17)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(17)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(18)').text() - combinationValues.max_mhc_childcare_none.Health_Insurance) > 0.011) {
+        $('#unit tr:eq(3) td:eq(18)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(18)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(19)').text() - combinationValues.max_mhc_childcare_none.Out_of_Pocket_Costs) > 0.011) {
+        $('#unit tr:eq(3) td:eq(19)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(19)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(20)').text() - combinationValues.max_mhc_childcare_none.Entertainment) > 0.011) {
+        $('#unit tr:eq(3) td:eq(20)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(20)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(21)').text() - combinationValues.max_mhc_childcare_none.Miscellaneous) > 0.011) {
+        $('#unit tr:eq(3) td:eq(21)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(21)').addClass('match');
+    }
+
+    if(Math.abs($('#unit tr:eq(3) td:eq(22)').text() - combinationValues.max_mhc_childcare_none.Savings) > 0.011) {
+        $('#unit tr:eq(3) td:eq(22)').addClass('mismatch');
+    } else {
+        $('#unit tr:eq(3) td:eq(22)').addClass('match');
     }
 
 }
