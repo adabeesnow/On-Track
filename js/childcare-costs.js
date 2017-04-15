@@ -64,7 +64,7 @@ let familyCareMonthlyAvgPreschooler = function () {
         family_care_avg_3_yr +
         family_care_avg_4_yr +
         family_care_avg_5_yr
-    );
+    ) / 3;
     return avg_cost * number_of_preschoolers
 };
 

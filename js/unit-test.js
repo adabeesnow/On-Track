@@ -34,8 +34,8 @@ let combinationValues = {
         "Savings": 251.24,
         "Taxes": 2035.47,
         "Gross_Income": 22604.55,
-        "Net_Income": 20594.27,
-        "Total_Expenses": 20343.032
+        "Net_Income": 20569.08,
+        "Total_Expenses": 20343.03
     },
     "med_ehc_childcare_family": {
         "Housing": 9096.00,
@@ -102,7 +102,7 @@ let combinationValues = {
         "Savings": 488.50,
         "Taxes": -437.40,
         "Gross_Income": 42070.46,
-        "Net_Income": 42575.66,
+        "Net_Income": 42507.86,
         "Total_Expenses": 42087.16
     },
     "med_mhc_childcare_center": {
@@ -119,7 +119,7 @@ let combinationValues = {
         "Savings": 497.50,
         "Taxes": -7.48,
         "Gross_Income": 43141.43,
-        "Net_Income": 43214.99,
+        "Net_Income": 43148.91,
         "Total_Expenses": 42717.49
     },
     "med_mhc_childcare_none": {
@@ -136,7 +136,7 @@ let combinationValues = {
         "Savings": 412.90,
         "Taxes": -3566.53,
         "Gross_Income": 34047.25,
-        "Net_Income": 37686.21,
+        "Net_Income": 37613.78,
         "Total_Expenses": 37273.31
     },
     "max_ehc_childcare_family": {
@@ -204,7 +204,7 @@ let combinationValues = {
         "Savings": 953.10,
         "Taxes": 8328.29,
         "Gross_Income": 91596.41,
-        "Net_Income": 83305.25,
+        "Net_Income": 83268.11,
         "Total_Expenses": 82352.15
     },
     "max_mhc_childcare_center": {
@@ -221,7 +221,7 @@ let combinationValues = {
         "Savings": 997.78,
         "Taxes": 10852.88,
         "Gross_Income": 97307.53,
-        "Net_Income": 86479.35,
+        "Net_Income": 86454.65,
         "Total_Expenses": 85481.57
     },
     "max_mhc_childcare_none": {
@@ -238,7 +238,7 @@ let combinationValues = {
         "Savings": 649.44,
         "Taxes": -9123.18,
         "Gross_Income": 52482.44,
-        "Net_Income": 61730.24,
+        "Net_Income": 61605.63,
         "Total_Expenses": 61080.80
     }
 };
@@ -8954,12 +8954,12 @@ function writeMHCTableData() {
     // If difference between net income and expenses+savings is > $0.01, our table data are marked with the 'danger' class.
     if (Math.abs(mhcNetYearlyIncome() - mhcTotalExpensesPlusSavings()) > 0.01) {
         markup +=
-            "<td class='unit-data danger'>" + mhcNetYearlyIncome().toFixed(2) + "</td>" +        // Net Annual Income
-            "<td class='unit-data danger'>" + mhcTotalExpensesPlusSavings().toFixed(2) + "</td>";    // Total Expenses + Savings
+            "<td class='unit-data'>" + mhcNetYearlyIncome().toFixed(2) + "</td>" +        // Net Annual Income
+            "<td class='unit-data'>" + mhcTotalExpensesPlusSavings().toFixed(2) + "</td>";    // Total Expenses + Savings
     } else {
         markup +=
-            "<td class='unit-data success'>" + mhcNetYearlyIncome().toFixed(2) + "</td>" +       // Net Annual Income
-            "<td class='unit-data success'>" + mhcTotalExpensesPlusSavings().toFixed(2) + "</td>";   // Total Expenses + Savings
+            "<td class='unit-data'>" + mhcNetYearlyIncome().toFixed(2) + "</td>" +       // Net Annual Income
+            "<td class='unit-data'>" + mhcTotalExpensesPlusSavings().toFixed(2) + "</td>";   // Total Expenses + Savings
     }
 
     markup +=
@@ -9003,12 +9003,12 @@ function writeEHCTableData() {
     // If difference between net income and expenses+savings is > $0.01, our table data are marked with the 'danger' class.
     if (Math.abs(ehcNetYearlyIncome() - ehcTotalExpensesPlusSavings()) > 0.01) {
         markup +=
-            "<td class='unit-data danger'>" + ehcNetYearlyIncome().toFixed(2) + "</td>" +        // Net Annual Income
-            "<td class='unit-data danger'>" + ehcTotalExpensesPlusSavings().toFixed(2) + "</td>";    // Total Expenses + Savings
+            "<td class='unit-data ddanger'>" + ehcNetYearlyIncome().toFixed(2) + "</td>" +        // Net Annual Income
+            "<td class='unit-data ddanger'>" + ehcTotalExpensesPlusSavings().toFixed(2) + "</td>";    // Total Expenses + Savings
     } else {
         markup +=
-            "<td class='unit-data success'>" + ehcNetYearlyIncome().toFixed(2) + "</td>" +       // Net Annual Income
-            "<td class='unit-data success'>" + ehcTotalExpensesPlusSavings().toFixed(2) + "</td>";   // Total Expenses + Savings
+            "<td class='unit-data ssuccess'>" + ehcNetYearlyIncome().toFixed(2) + "</td>" +       // Net Annual Income
+            "<td class='unit-data ssuccess'>" + ehcTotalExpensesPlusSavings().toFixed(2) + "</td>";   // Total Expenses + Savings
     }
 
     markup +=
