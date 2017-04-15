@@ -31,7 +31,7 @@ let combinationValues = {
         "Out_of_Pocket_Costs": 161.43,
         "Entertainment": 1139.00,
         "Miscellaneous": 1614.00,
-        "Savings": 251.24,
+        "Savings": 226.05,
         "Taxes": 2035.47,
         "Gross_Income": 22604.55,
         "Net_Income": 20569.08,
@@ -99,7 +99,7 @@ let combinationValues = {
         "Out_of_Pocket_Costs": 462.72,
         "Entertainment": 1650.00,
         "Miscellaneous": 2541.00,
-        "Savings": 488.50,
+        "Savings": 420.70,
         "Taxes": -437.40,
         "Gross_Income": 42070.46,
         "Net_Income": 42507.86,
@@ -116,7 +116,7 @@ let combinationValues = {
         "Out_of_Pocket_Costs": 462.72,
         "Entertainment": 1650.00,
         "Miscellaneous": 2541.00,
-        "Savings": 497.50,
+        "Savings": 431.41,
         "Taxes": -7.48,
         "Gross_Income": 43141.43,
         "Net_Income": 43148.91,
@@ -133,7 +133,7 @@ let combinationValues = {
         "Out_of_Pocket_Costs": 462.72,
         "Entertainment": 1650.00,
         "Miscellaneous": 2541.00,
-        "Savings": 412.90,
+        "Savings": 340.47,
         "Taxes": -3566.53,
         "Gross_Income": 34047.25,
         "Net_Income": 37613.78,
@@ -201,7 +201,7 @@ let combinationValues = {
         "Out_of_Pocket_Costs": 835.92,
         "Entertainment": 2429.00,
         "Miscellaneous": 6122.00,
-        "Savings": 953.10,
+        "Savings": 915.96,
         "Taxes": 8328.29,
         "Gross_Income": 91596.41,
         "Net_Income": 83268.11,
@@ -218,7 +218,7 @@ let combinationValues = {
         "Out_of_Pocket_Costs": 835.92,
         "Entertainment": 2429.00,
         "Miscellaneous": 6122.00,
-        "Savings": 997.78,
+        "Savings": 973.08,
         "Taxes": 10852.88,
         "Gross_Income": 97307.53,
         "Net_Income": 86454.65,
@@ -235,7 +235,7 @@ let combinationValues = {
         "Out_of_Pocket_Costs": 835.92,
         "Entertainment": 2429.00,
         "Miscellaneous": 6122.00,
-        "Savings": 649.44,
+        "Savings":  524.82,
         "Taxes": -9123.18,
         "Gross_Income": 52482.44,
         "Net_Income": 61605.63,
@@ -10461,6 +10461,8 @@ function max_mhc_childcare_none_values(){
 
     if(Math.abs($('#unit tr:eq(3) td:eq(10)').text() - (combinationValues.max_mhc_childcare_none.Total_Expenses + combinationValues.max_mhc_childcare_none.Savings)) > 0.011) {
         $('#unit tr:eq(3) td:eq(10)').addClass('mismatch');
+        console.log("max-mhc-none CELL:",$('#unit tr:eq(3) td:eq(10)').text());
+        console.log("max-mhc-none JSON:",combinationValues.max_mhc_childcare_none.Total_Expenses + combinationValues.max_mhc_childcare_none.Savings);
     } else {
         $('#unit tr:eq(3) td:eq(10)').addClass('match');
     }
