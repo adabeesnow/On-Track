@@ -15,7 +15,7 @@
     <script src="admin.js"></script>
 
     <style>
-        input{
+        input {
             width: 100%;
         }
     </style>
@@ -27,8 +27,89 @@
                     col-sm-6 col-sm-offset-3
                     col-lg-4 col-lg-offset-4">
             <div class="panel-group" id="categories">
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
+            <div class="panel-group user-management">
+                <div class="panel panel-default">
+                    <a href="#settings-panel" data-toggle="collapse">
+                        <div class="panel-heading">
+                            Settings
+                        </div>
+                    </a>
+                    <div class="panel-collapse collapse" id="settings-panel">
+
+                        <div class="panel panel-default">
+                            <a href="#user-setup-panel" data-toggle="collapse">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        Create user
+                                    </h4>
+                                </div>
+                            </a>
+                            <div class="panel-collapse collapse" id="user-setup-panel">
+                                <div class="panel-body">
+                                    <form action="#" onsubmit="create_user(); return false;">
+                                        <div class="form-group">
+                                            <label for="username">Username</label>
+                                            <input type="text" class="form-control" name="username" id="username">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password">Password</label>
+                                            <input type="password" class="form-control" name="password" id="password">
+                                        </div>
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <a href="#change-password-panel" data-toggle="collapse">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        Change My Password
+                                    </h4>
+                                </div>
+                            </a>
+                            <div class="panel-collapse collapse" id="change-password-panel">
+                                <div class="panel-body">
+                                    <form action="#" onsubmit="change_password(); return false;">
+                                        <div class="form-group">
+                                            <label for="username">Old password</label>
+                                            <input type="password" class="form-control" name="username"
+                                                   id="old-password">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password">New password</label>
+                                            <input type="password" class="form-control" name="password"
+                                                   id="new-password">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password">New password</label>
+                                            <input type="password" class="form-control" name="password"
+                                                   id="new-password-confirm">
+                                        </div>
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <button class="btn btn-success"
+                                    onclick="logout()">
+                                Logout
+                            </button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 </body>
 </html>

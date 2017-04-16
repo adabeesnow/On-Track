@@ -59,14 +59,23 @@ class UserController
     public function patchUser($args){
         $username = Token::getUsernameFromToken();
         if($username == null){
+            http_response_code(StatusCodes::BAD_REQUEST);
             return array("error"=>"Token not valid.");
         }
 
         $data = (object)json_decode(file_get_contents('php://input'));
         $dbo = DatabaseConnection::getInstance();
 
-        if($username != strip_tags($data->username)){
-            return array("error"=>"You can only change your own password.");
+//        if($username != strip_tags($data->username)){
+//            return array("error"=>"You can only change your own password.");
+//        }
+
+        $old_password = $data->oldPassword;
+        $tc = new TokenController();
+        var_dump($username);
+        if (!$tc->buildToken($username, $old_password)){
+            http_response_code(StatusCodes::BAD_REQUEST);
+            return array("error"=>"Incorrect old password");
         }
 
         $password = $data->password;
@@ -74,16 +83,18 @@ class UserController
         $query_change_password = 'UPDATE OnTrackUsers SET Password = :pass WHERE Username = :username';
         $statement_change_password = $dbo->prepare($query_change_password);
         $statement_change_password->bindParam(':username', $username);
-        $statement_change_password->bindParam(':pass', $password);
+        $hashword = password_hash($password, PASSWORD_BCRYPT);
+        $statement_change_password->bindParam(':pass', $hashword);
 
-        $userId = $data->userId;
+        if(!$statement_change_password->execute()){
+            http_response_code(StatusCodes::INTERNAL_SERVER_ERROR);
+            return array("error"=>"password not changed.");
+        }
+
 
         return array(
-            "userId"=>$userId
+            "success"=>"password changed"
         );
-
-
-
     }
 
     public function deleteUser($args){

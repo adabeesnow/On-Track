@@ -134,6 +134,13 @@ $(document).ready(function () {
     }
 });
 
+let beforeSend = function(request){
+    request.setRequestHeader(
+        "Authorization",
+        "Bearer " + localStorage.getItem("token")
+    );
+    console.log("BEFORE SEND");
+};
 
 let update_display_name = function () {
     let self = $(this);
@@ -160,15 +167,72 @@ let update_display_name = function () {
         'url': 'http://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/',
         'method': 'PUT',
         'dataType': 'json',
-        beforeSend: function(request){
-            request.setRequestHeader(
-                "Authorization",
-                "Bearer " + localStorage.getItem("token")
-            );
-        },
+        beforeSend: beforeSend,
         'data': JSON.stringify(data),
         'success': function (response) {
             console.log(response)
         }
     });
+};
+
+let create_user = function(){
+    let USER_URL = '../api/v1/user/';
+    let username = $("#username").val();
+    let password = $("#password").val();
+    $.ajax({
+        url: USER_URL,
+        method: 'POST',
+        data: JSON.stringify({
+            'username': username,
+            'password': password
+        }),
+        beforeSend: beforeSend,
+        dataType: 'json',
+        success: function (response) {
+            console.log(response);
+            if(response){
+                window.location.assign("admin.html");
+                $("#user-setup-panel").html(
+                    "User created."
+                )
+            } else {
+                alert('User not created, sorry.');
+            }
+        }
+    })
+
+};
+
+let change_password = function(){
+    let USER_URL = '../api/v1/user/';
+    let oldPassword = $("#old-password").val();
+    let password = $("#new-password").val();
+    let password_confirm = $("#new-password-confirm").val();
+    if(password == password_confirm)
+    $.ajax({
+        url: USER_URL,
+        method: 'PUT',
+        data: JSON.stringify({
+            'oldPassword': oldPassword,
+            'password': password
+        }),
+        beforeSend: beforeSend,
+        dataType: 'json',
+        success: function (response) {
+            console.log(response);
+            if(response){
+                window.location.assign("admin.html");
+                $("#user-setup-panel").html(
+                    "User created."
+                )
+            } else {
+                alert('User not created, sorry.');
+            }
+        }
+    })
+};
+
+logout = function(){
+    localStorage.removeItem("token");
+    window.location.reload();
 };
