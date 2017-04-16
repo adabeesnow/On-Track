@@ -25,7 +25,7 @@ class DatabaseConnection
             return static::$instance;
         } else {
             try {
-                $connectionString = "mysql:host=".static::$host.";dbname=".static::$dbname;
+                $connectionString = "mysql:host=" . static::$host . ";dbname=" . static::$dbname;
                 static::$instance = new \PDO($connectionString, static::$user, static::$pass);
                 static::$instance->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
                 return static::$instance;
@@ -35,4 +35,5 @@ class DatabaseConnection
             }
         }
     }
+
 }

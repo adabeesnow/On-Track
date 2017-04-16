@@ -60,6 +60,7 @@ let create_entry_form = function (entry) {
     return row;
 };
 
+
 let FORM_CATEGORIES = [
     1, 2, 3, 4, 6, 16, 17
 ];
@@ -69,60 +70,70 @@ let EIC_CATEGORIES = [
 let APPLICABLE_FIGURES = 15;
 
 let entries_by_category = {};
-$.ajax({
-    'url': 'http://icarus.cs.weber.edu/~tg46219/cottages/api/v1/category/',
-    'method': 'GET',
-    'dataType': 'json',
-    'success': function (categories) {
+
+$(document).ready(function () {
+    if (localStorage.getItem('token')) {
+
         $.ajax({
-            'url': 'http://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/',
+            'url': 'http://icarus.cs.weber.edu/~tg46219/cottages/api/v1/category/',
             'method': 'GET',
             'dataType': 'json',
-            'success': function (entries) {
-                for (let category_id = 0; category_id < categories.length; category_id++) {
-                    let category = categories[category_id];
-                    category['entries'] = [];
-                    console.log('Category without entries', category);
-                    entries_by_category[category['CategoryId']] = category;
-                }
-                console.log("Categories without entries", entries_by_category);
-                for (let entry_id = 0; entry_id < entries.length; entry_id++) {
-                    let entry = entries[entry_id];
-                    let category_id = entry['categoryId'];
-                    if (entries_by_category[category_id]) {
-                        entries_by_category[category_id]['entries'].push(entry);
-                    }
-                    else {
-                        console.log("Error inserting into category ", category_id)
-                    }
-                }
-                console.log("Entries by Category", entries_by_category);
-
-                for (let category_index in entries_by_category) {
-                    let category = entries_by_category[category_index];
-                    if (category['CategoryId'] in FORM_CATEGORIES) {
-                        console.log('Form Category', category['CategoryId']);
-                        let panel_id = 'category_body_' + category['CategoryId'];
-                        let panel_title = category['CategoryName'];
-                        let panel_body = $('<div class="entries"></div>');
-                        for (let entry_id in category['entries']) {
-                            let entry = category['entries'][entry_id];
-                            create_entry_form(entry).appendTo(panel_body);
+            'success': function (categories) {
+                $.ajax({
+                    'url': 'http://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/',
+                    'method': 'GET',
+                    'dataType': 'json',
+                    'success': function (entries) {
+                        for (let category_id = 0; category_id < categories.length; category_id++) {
+                            let category = categories[category_id];
+                            category['entries'] = [];
+                            console.log('Category without entries', category);
+                            entries_by_category[category['CategoryId']] = category;
                         }
-                        console.log('Panel Body', panel_body);
+                        console.log("Categories without entries", entries_by_category);
+                        for (let entry_id = 0; entry_id < entries.length; entry_id++) {
+                            let entry = entries[entry_id];
+                            let category_id = entry['categoryId'];
+                            if (entries_by_category[category_id]) {
+                                entries_by_category[category_id]['entries'].push(entry);
+                            }
+                            else {
+                                console.log("Error inserting into category ", category_id)
+                            }
+                        }
+                        console.log("Entries by Category", entries_by_category);
 
-                        let panel = create_collapse_panel(panel_id, panel_title, panel_body);
-                        panel.appendTo("#categories");
+                        for (let category_index in entries_by_category) {
+                            let category = entries_by_category[category_index];
+                            if (category['CategoryId'] in FORM_CATEGORIES) {
+                                console.log('Form Category', category['CategoryId']);
+                                let panel_id = 'category_body_' + category['CategoryId'];
+                                let panel_title = category['CategoryName'];
+                                let panel_body = $('<div class="entries"></div>');
+                                for (let entry_id in category['entries']) {
+                                    let entry = category['entries'][entry_id];
+                                    create_entry_form(entry).appendTo(panel_body);
+                                }
+                                console.log('Panel Body', panel_body);
 
+                                let panel = create_collapse_panel(panel_id, panel_title, panel_body);
+                                panel.appendTo("#categories");
+
+                            }
+                            else if (category['CategoryId'] in EIC_CATEGORIES) {
+                                console.log('EIC Category')
+                            }
+                        }
                     }
-                    else if (category['CategoryId'] in EIC_CATEGORIES) {
-                        console.log('EIC Category')
-                    }
-                }
+                });
             }
         });
     }
+    else{
+        window.location.assign("login.html");
+    }
 });
+
 
 let update_display_name = function () {
     let self = $(this);
@@ -149,10 +160,15 @@ let update_display_name = function () {
         'url': 'http://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/',
         'method': 'PUT',
         'dataType': 'json',
+        beforeSend: function(request){
+            request.setRequestHeader(
+                "Authorization",
+                "Bearer " + localStorage.getItem("token")
+            );
+        },
         'data': JSON.stringify(data),
         'success': function (response) {
             console.log(response)
         }
     });
-    // console.log(data)
 };
