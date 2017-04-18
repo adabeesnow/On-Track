@@ -131,13 +131,13 @@ let ehcAdjustedChildTaxCredit = function () {
 
 let ehcEITC = function () {
     let credit_amount_list = [];
-    if (ehcNumberOfChildren() == 1) {
+    if (ehcNumberOfChildren() === 1) {
         credit_amount_list = credit_amount_married_filing_jointly_1_children_list;
     } else
-    if (ehcNumberOfChildren() == 2) {
+    if (ehcNumberOfChildren() === 2) {
         credit_amount_list = credit_amount_married_filing_jointly_2_children_list;
     } else
-    if (ehcNumberOfChildren() == 0) {
+    if (ehcNumberOfChildren() === 0) {
         credit_amount_list = credit_amount_married_filing_jointly_0_children_list;
     } else
     if (ehcNumberOfChildren() >= 3) {
@@ -152,12 +152,12 @@ let ehcEITC = function () {
         if (i >= income_at_least_list.length) {
             return false;
         }
-        if (ehc_gross_income > income_at_least_list[i]) {
+        if (income_at_least_list[i] > ehc_gross_income) {
             break;
         }
         i++;
     }
-    return credit_amount_list[i];
+    return credit_amount_list[i-1];
 };
 
 let ehcFederalTaxesLessChildCareTaxCredit = function () {
@@ -252,11 +252,6 @@ let ehcCalcGross = function() {
             maxIter: 1000                   // The maximum number of iterations for the goalSeek function to take.
         });
     }
-
-    // console.log('CALC gross: ' + gross);
-    // console.log('CALC tax: ' + tax);
-    // console.log('CALC net: ' + net(gross, tax));
-    // console.log('CALC expense: ' + expense);
 
     return gross;
 };

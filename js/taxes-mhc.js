@@ -306,12 +306,12 @@ let mhcEITC = function () {
         if (i >= income_at_least_list.length) {
             return false;
         }
-        if (mhc_gross_income > income_at_least_list[i]) {
+        if (income_at_least_list[i] > mhc_gross_income) {
             break;
         }
         i++;
     }
-    return credit_amount_list[i];
+    return credit_amount_list[i-1];
 };
 
 /**

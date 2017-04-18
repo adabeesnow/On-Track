@@ -75,7 +75,7 @@ $(document).ready(function () {
 
     getUserInputs();            // Get radio button values.
     writeVerificationRows();    // Write verification test rows to page.
-    writeAllCombinations();     // Write all combinations to page.
+    // writeAllCombinations();     // Write all combinations to page.
 
     // ---------------------------------------------- ON CHANGE --------------------------------------------------------
 
@@ -85,8 +85,7 @@ $(document).ready(function () {
 
         getUserInputs();            // Get radio button values.
         writeVerificationRows();    // Write verification test rows to page.
-        writeAllCombinations();     // Write all combinations to page.
-
+        // writeAllCombinations();     // Write all combinations to page.
     });
 });
 
@@ -266,9 +265,15 @@ function writeVerificationRows() {
         number_of_public_transport_passes_child = number_of_schoolagers + number_of_teenagers;
 
         // MHC
-        if (use_marketplace_health_insurance_bool === true) { writeMHCTableData(); log_taxes_mhc(test_combinations_array[i]);}
+        if (use_marketplace_health_insurance_bool === true) {
+            writeMHCTableData();
+            log_taxes_mhc(test_combinations_array[i]);
+        }
         // EHC
-        else { writeEHCTableData(); log_taxes_ehc(test_combinations_array[i]);}
+        else {
+            writeEHCTableData();
+            log_taxes_ehc(test_combinations_array[i]);
+        }
 
     }
     verifyTheStuffAndThings();
@@ -307,7 +312,7 @@ function verifyTheStuffAndThings(){
 
 }
 
-const threshold = 0.02;
+const threshold = 0.03;
 
 function min_ehc_values(){
 
