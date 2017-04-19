@@ -333,34 +333,39 @@ let mhcNetYearlyIncome = function(){
 // Taxes!O6
 let mhcEITC = function () {
 
-    let credit_amount_list = [];
-    if (mhcNumberOfChildren() === 1) {
-        credit_amount_list = credit_amount_single_1_children_list;
-    } else
-    if (mhcNumberOfChildren() === 2) {
-        credit_amount_list = credit_amount_single_2_children_list;
-    } else
-    if (mhcNumberOfChildren() === 0) {
-        credit_amount_list = credit_amount_single_0_children_list;
-    } else
-    if (mhcNumberOfChildren() >= 3) {
-        credit_amount_list = credit_amount_single_3_children_list;
-    }
-    else {
-        return false;
-    }
+    /*  Excel app always returns 0 on this for some reason. No idea why.
+        Actual calculation is below the "return 0" if it's ever needed.
+     */
+    return 0;
 
-    let i = 0;
-    while (i <= income_at_least_list.length) {
-        if (i >= income_at_least_list.length) {
-            return false;
-        }
-        if (income_at_least_list[i] > mhc_gross_income) {
-            break;
-        }
-        i++;
-    }
-    return credit_amount_list[i-1];
+    // let credit_amount_list = [];
+    // if (mhcNumberOfChildren() === 1) {
+    //     credit_amount_list = credit_amount_single_1_children_list;
+    // } else
+    // if (mhcNumberOfChildren() === 2) {
+    //     credit_amount_list = credit_amount_single_2_children_list;
+    // } else
+    // if (mhcNumberOfChildren() === 0) {
+    //     credit_amount_list = credit_amount_single_0_children_list;
+    // } else
+    // if (mhcNumberOfChildren() >= 3) {
+    //     credit_amount_list = credit_amount_single_3_children_list;
+    // }
+    // else {
+    //     return false;
+    // }
+    //
+    // let i = 0;
+    // while (i <= income_at_least_list.length) {
+    //     if (i >= income_at_least_list.length) {
+    //         return false;
+    //     }
+    //     if (income_at_least_list[i] > mhc_gross_income) {
+    //         break;
+    //     }
+    //     i++;
+    // }
+    // return credit_amount_list[i-1];
 };
 
 /**
