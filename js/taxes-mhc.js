@@ -37,9 +37,10 @@ let mhcFederalPovertyLine = function () {
         else {
             return poverty_level_list[family_size-1];
         }
+    } else {
+        return poverty_level_list[poverty_level_list.length-1]
     }
-    // TODO: Better handling for this: Family sizes greater than 8 ore not supported.
-    else return null;
+
 };
 
 let mhcGrossIncomeOverFederalPovertyLine = function () {
@@ -47,7 +48,7 @@ let mhcGrossIncomeOverFederalPovertyLine = function () {
 };
 
 let mhcValueFromApplicableFigureTable = function () {
-    let percent_of_poverty_line = Math.floor(mhcGrossIncomeOverFederalPovertyLine());
+    let percent_of_poverty_line = mhcGrossIncomeOverFederalPovertyLine();
     if (percent_of_poverty_line < 133) {
         return applicable_figure_list[0]
     }
@@ -166,7 +167,24 @@ let mhcFedTaxOwedBeforeCredits = function () {
 // };
 
 let mhcChildCareTaxCredit = function () {
-    return (mhc_gross_income>75000?0:(mhc_gross_income>43000?mhcQualifyingChildCareExpenses()*0.2:(mhc_gross_income>41000?mhcQualifyingChildCareExpenses()*0.21:(mhc_gross_income>39000?mhcQualifyingChildCareExpenses()*0.22:(mhc_gross_income>37000?mhcQualifyingChildCareExpenses()*0.23:(mhc_gross_income>35000?mhcQualifyingChildCareExpenses()*0.24:(mhc_gross_income>33000?mhcQualifyingChildCareExpenses()*0.25:(mhc_gross_income>31000?mhcQualifyingChildCareExpenses()*0.26:(mhc_gross_income>29000?mhcQualifyingChildCareExpenses()*0.27:(mhc_gross_income>27000?mhcQualifyingChildCareExpenses()*0.28:(mhc_gross_income>25000?mhcQualifyingChildCareExpenses()*0.29:(mhc_gross_income>23000?mhcQualifyingChildCareExpenses()*0.3:(mhc_gross_income>21000?mhcQualifyingChildCareExpenses()*0.31:(mhc_gross_income>19000?mhcQualifyingChildCareExpenses()*0.32:(mhc_gross_income>17000?mhcQualifyingChildCareExpenses()*0.33:(mhc_gross_income>17000?mhcQualifyingChildCareExpenses()*0.34:(mhc_gross_income<15000?mhcQualifyingChildCareExpenses()*0.35:0)))))))))))))))));
+    return (mhc_gross_income>75000?0:
+        (mhc_gross_income>43000?mhcQualifyingChildCareExpenses()*0.2:
+            (mhc_gross_income>41000?mhcQualifyingChildCareExpenses()*0.21:
+                (mhc_gross_income>39000?mhcQualifyingChildCareExpenses()*0.22:
+                    (mhc_gross_income>37000?mhcQualifyingChildCareExpenses()*0.23:
+                        (mhc_gross_income>35000?mhcQualifyingChildCareExpenses()*0.24:
+                            (mhc_gross_income>33000?mhcQualifyingChildCareExpenses()*0.25:
+                                (mhc_gross_income>31000?mhcQualifyingChildCareExpenses()*0.26:
+                                    (mhc_gross_income>29000?mhcQualifyingChildCareExpenses()*0.27:
+                                        (mhc_gross_income>27000?mhcQualifyingChildCareExpenses()*0.28:
+                                            (mhc_gross_income>25000?mhcQualifyingChildCareExpenses()*0.29:
+                                                (mhc_gross_income>23000?mhcQualifyingChildCareExpenses()*0.3:
+                                                    (mhc_gross_income>21000?mhcQualifyingChildCareExpenses()*0.31:
+                                                        (mhc_gross_income>19000?mhcQualifyingChildCareExpenses()*0.32:
+                                                            (mhc_gross_income>17000?mhcQualifyingChildCareExpenses()*0.33:
+                                                                (mhc_gross_income>17000?mhcQualifyingChildCareExpenses()*0.34:
+                                                                    (mhc_gross_income<15000?mhcQualifyingChildCareExpenses()*0.35:
+                                                                        0)))))))))))))))));
 };
 
 let mhcFedTaxLessChildCareTaxCredit = function () {
@@ -185,14 +203,26 @@ let mhcAdjustedChildTaxCreditUsed = function () {
 };
 
 let mhcAdditionalChildTaxCredit = function () {
-    return (mhcNumberOfChildren() <= 3 ? (((((mhc_gross_income - 3000) <= 0 ? 0 : (mhc_gross_income - 3000)) * 0.15)) <
-        ((((mhcNumberOfChildren() * 1000) - mhcAdjustedChildTaxCreditUsed()) <= 0 ? 0 : ((mhcNumberOfChildren() * 1000) - mhcAdjustedChildTaxCreditUsed()))) ? (((mhc_gross_income - 3000) <= 0 ? 0 : (mhc_gross_income - 3000)) * 0.15) :
-            ((((mhcNumberOfChildren() * 1000) - mhcAdjustedChildTaxCreditUsed()) <= 0 ? 0 : ((mhcNumberOfChildren() * 1000) - mhcAdjustedChildTaxCreditUsed())))) : (((mhc_gross_income - 3000) * 0.15) >= ((mhcNumberOfChildren() * 1000) - mhcAdjustedChildTaxCreditUsed()) ? ((mhcNumberOfChildren() * 1000) - mhcAdjustedChildTaxCreditUsed()) :
-            (((((0.0765 * mhc_gross_income) - mhcEITC()) < 0 ? 0 : ((0.0765 * mhc_gross_income) - mhcEITC())) > (((mhc_gross_income - 3000) <= 0 ? 0 : (mhc_gross_income - 3000)) * 0.15) ? (((0.0765 * mhc_gross_income) - mhcEITC())
-                < 0 ? 0 : (((0.0765 * mhc_gross_income) - mhcEITC()))) : (((mhc_gross_income - 3000) <= 0 ? 0 : (mhc_gross_income - 3000)) * 0.15)) < ((((mhcNumberOfChildren() * 1000) - mhcAdjustedChildTaxCreditUsed()) <= 0 ? 0 :
-                ((mhcNumberOfChildren() * 1000) - mhcAdjustedChildTaxCreditUsed()))) ? ((((0.0765 * mhc_gross_income) - mhcEITC()) < 0 ? 0 : ((0.0765 * mhc_gross_income) - mhcEITC()))
-                > (((mhc_gross_income - 3000) <= 0 ? 0 : (mhc_gross_income - 3000)) * 0.15) ? (((0.0765 * mhc_gross_income) - mhcEITC()) < 0 ? 0 : (((0.0765 * mhc_gross_income) - mhcEITC()))) :
-                    (((mhc_gross_income - 3000) <= 0 ? 0 : (mhc_gross_income - 3000)) * 0.15)) : ((mhcNumberOfChildren() * 1000) - mhcAdjustedChildTaxCreditUsed()))))
+    return (mhcNumberOfChildren()<=3?
+        (((((mhc_gross_income-3000)<=0?0:
+            (mhc_gross_income-3000))*0.15))<((((mhcNumberOfChildren()*1000)-mhcAdjustedChildTaxCreditUsed())<=0?0:
+            ((mhcNumberOfChildren()*1000)-mhcAdjustedChildTaxCreditUsed())))?(((mhc_gross_income-3000)<=0?0:
+            (mhc_gross_income-3000))*0.15):((((mhcNumberOfChildren()*1000)-mhcAdjustedChildTaxCreditUsed())<=0?0:
+            ((mhcNumberOfChildren()*1000)-mhcAdjustedChildTaxCreditUsed())))):
+        (((mhc_gross_income-3000)*0.15)>=((mhcNumberOfChildren()*1000)-mhcAdjustedChildTaxCreditUsed())?
+            ((mhcNumberOfChildren()*1000)-mhcAdjustedChildTaxCreditUsed()):
+            (((((0.0765*mhc_gross_income)-mhcEITC())<0?0:
+                ((0.0765*mhc_gross_income)-mhcEITC()))>(((mhc_gross_income-3000)<=0?0:
+                (mhc_gross_income-3000))*0.15)?(((0.0765*mhc_gross_income)-mhcEITC())<0?0:
+                (((0.0765*mhc_gross_income)-mhcEITC()))):(((mhc_gross_income-3000)<=0?0:
+                (mhc_gross_income-3000))*0.15))<((((mhcNumberOfChildren()*1000)-mhcAdjustedChildTaxCreditUsed())<=0?0:
+                ((mhcNumberOfChildren()*1000)-mhcAdjustedChildTaxCreditUsed())))?((((0.0765*mhc_gross_income)-mhcEITC())<0?0:
+                ((0.0765*mhc_gross_income)-mhcEITC()))>(((mhc_gross_income-3000)<=0?0:
+                (mhc_gross_income-3000))*0.15)?(((0.0765*mhc_gross_income)-mhcEITC())<0?0:
+                (((0.0765*mhc_gross_income)-mhcEITC()))):(((mhc_gross_income-3000)<=0?0:
+                (mhc_gross_income-3000))*0.15)):
+                ((mhcNumberOfChildren()*1000)-mhcAdjustedChildTaxCreditUsed()
+                ))));
 };
 
 let mhcStandardDeduction = function() {
@@ -250,10 +280,11 @@ let mhcSumOfRefundableTaxCredits = function () {
     return firstOperand + mhcAdditionalChildTaxCredit() + mhcPremiumTaxCredit();
 };
 let mhcFedTaxOwedLessNonRefundTaxCredits = function () {
-    return Math.max(
-        mhcFedTaxOwedBeforeCredits() - mhcSumOfNonRefundableTaxCredits(),
-        0
-    )
+    if (mhcFedTaxOwedBeforeCredits() - mhcSumOfNonRefundableTaxCredits() < 0) {
+        return 0;
+    } else {
+        return mhcFedTaxOwedBeforeCredits() - mhcSumOfNonRefundableTaxCredits();
+    }
 };
 let mhcFedDeductionPlusStateExemptionX6Per = function () {
     return (mhcStandardDeduction() + mhcStateExemptions()) * .06
@@ -277,10 +308,11 @@ let mhcFederalTaxOwed = function () {
     return mhcFedTaxOwedLessNonRefundTaxCredits() - mhcSumOfRefundableTaxCredits();
 };
 let mhcUtahTaxesOwed = function () {
-    return Math.max(
-        0,
-        mhcStateTaxBeforeCredits() - mhcUtahTaxCredit() - mhcUtahsHealthBenefitPlanCredit()
-    )
+    if ((mhcStateTaxBeforeCredits() - mhcUtahTaxCredit() - mhcUtahsHealthBenefitPlanCredit()) < 0){
+        return 0;
+    } else {
+        return mhcStateTaxBeforeCredits() - mhcUtahTaxCredit() - mhcUtahsHealthBenefitPlanCredit();
+    }
 };
 let mhcTotalExpenses = function () {
     return overallCost()
