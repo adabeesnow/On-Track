@@ -231,11 +231,85 @@ let combinationValues = {
         "Out_of_Pocket_Costs": 835.92,
         "Entertainment": 2429.00,
         "Miscellaneous": 6122.00,
-        "Savings":  524.82,
+        "Savings": 524.82,
         "Taxes": -9123.18,
         "Gross_Income": 52482.44,
         "Net_Income": 61605.63,
         "Total_Expenses": 61080.80
+    },
+
+    "min2_ehc_childcare_family": {
+
+    },
+
+    "min2_ehc_childcare_center": {
+
+    },
+
+    "min2_ehc_childcare_none": {
+
+    },
+
+    "min2_mhc_childcare_family": {
+
+    },
+
+    "min2_mhc_childcare_center": {
+
+    },
+
+    "min2_mhc_childcare_none": {
+
+    },
+
+
+    "med2_ehc_childcare_family": {
+
+    },
+
+    "med2_ehc_childcare_center": {
+
+    },
+
+    "med2_ehc_childcare_none": {
+
+    },
+
+    "med2_mhc_childcare_family": {
+
+    },
+
+    "med2_mhc_childcare_center": {
+
+    },
+
+    "med2_mhc_childcare_none": {
+
+    },
+
+
+    "max2_ehc_childcare_family": {
+
+    },
+
+    "max2_ehc_childcare_center": {
+
+    },
+
+    "max2_ehc_childcare_none": {
+
+    },
+
+    "max2_mhc_childcare_family": {
+
+    },
+
+    "max2_mhc_childcare_center": {
+
+    },
+
+    "max2_mhc_childcare_none": {
+
     }
 };
 
