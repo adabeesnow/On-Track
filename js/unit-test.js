@@ -256,7 +256,7 @@ function writeVerificationRows() {
         {"adults":2,"infants":1,"preschoolers":1,"schoolagers":2,"teenagers":1}, // MAX 2A 1I 1P 2S 1T (2A5K)
         {"adults":1,"infants":1,"preschoolers":1,"schoolagers":1,"teenagers":0}, // MIN2 1A 1I 1P 1S 0T(2A5K)
         {"adults":3,"infants":0,"preschoolers":0,"schoolagers":0,"teenagers":2}, // MED2 3A 0I 0P 0S 2T (2A5K)
-        {"adults":1,"infants":2,"preschoolers":2,"schoolagers":2,"teenagers":0}, // MAX2 1A 2I 2P 2S 0T (2A5K)
+        {"adults":1,"infants":2,"preschoolers":2,"schoolagers":2,"teenagers":0} // MAX2 1A 2I 2P 2S 0T (2A5K)
     ];
     // Loop over each verification-test combination, append calculation results to top of table
     for (let i = 0; i < test_combinations_array.length; i++) {
@@ -291,26 +291,44 @@ function verifyTheStuffAndThings(){
         min_ehc_values();
         med_ehc_childcare_center_values();
         max_ehc_childcare_center_values();
+        min2_ehc_childcare_center_values();
+        med2_ehc_childcare_center_values();
+        max2_ehc_childcare_center_values();
     } else if(!use_marketplace_health_insurance_bool && childcare_needed_bool && use_family_care_bool) {
         min_ehc_values();
         med_ehc_childcare_family_values();
         max_ehc_childcare_family_values();
+        min2_ehc_childcare_family_values();
+        med2_ehc_childcare_family_values();
+        max2_ehc_childcare_family_values();
     } else if(!use_marketplace_health_insurance_bool && !childcare_needed_bool && !use_family_care_bool){
         min_ehc_values();
         med_ehc_childcare_none_values();
         max_ehc_childcare_none_values();
+        min2_ehc_childcare_none_values();
+        med2_ehc_childcare_none_values();
+        max2_ehc_childcare_none_values();
     } else if(use_marketplace_health_insurance_bool && childcare_needed_bool && !use_family_care_bool){
         min_mhc_values();
         med_mhc_childcare_center_values();
         max_mhc_childcare_center_values();
+        min2_mhc_childcare_center_values();
+        med2_mhc_childcare_center_values();
+        max2_mhc_childcare_center_values();
     } else if(use_marketplace_health_insurance_bool && childcare_needed_bool && use_family_care_bool) {
         min_mhc_values();
         med_mhc_childcare_family_values();
         max_mhc_childcare_family_values();
+        min2_mhc_childcare_family_values();
+        med2_mhc_childcare_family_values();
+        max2_mhc_childcare_family_values();
     } else if(use_marketplace_health_insurance_bool && !childcare_needed_bool && !use_family_care_bool){
         min_mhc_values();
         med_mhc_childcare_none_values();
         max_mhc_childcare_none_values();
+        min2_mhc_childcare_none_values();
+        med2_mhc_childcare_none_values();
+        max2_mhc_childcare_none_values();
     }
 
 }

@@ -18,8 +18,8 @@ class TokenController
     public function buildToken($username, $password)
     {
         $data = (object)json_decode(file_get_contents('php://input'));
-        $username = $data->username;
-        $password = $data->password;
+        if(!$username) $username = $data->username;
+        if(!$password) $password = $data->password;
         $dbo = DatabaseConnection::getInstance();
         $query_get_password_hash = '
         SELECT Password, UserId
@@ -30,14 +30,14 @@ class TokenController
         $statement_get_password = $dbo->prepare($query_get_password_hash);
         $statement_get_password->bindValue(':username', $username);
 
-        if($statement_get_password->execute()){
+        if ($statement_get_password->execute()) {
             $fetched_data = $statement_get_password->fetch(PDO::FETCH_ASSOC);
             $hashed_password = $fetched_data['Password'];
 
-            if(password_verify($password, $hashed_password)){
-                    $token_object = new Token();
-                    $token = ($token_object)->buildToken(Token::ROLE_ADMIN, $username);
-                    return $token;
+            if (password_verify($password, $hashed_password)) {
+                $token_object = new Token();
+                $token = ($token_object)->buildToken(Token::ROLE_ADMIN, $username);
+                return $token;
             }
         }
         return null;
