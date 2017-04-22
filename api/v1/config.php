@@ -8,5 +8,5 @@
 
 
 global $baseURI;
-$baseURI = '/~tg46219/cottages/api/v1';
+$baseURI = '/~cottage6/weberstate/ontrack/api/v1/';
 

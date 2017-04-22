@@ -75,12 +75,12 @@ $(document).ready(function () {
     if (localStorage.getItem('token')) {
 
         $.ajax({
-            'url': 'http://icarus.cs.weber.edu/~tg46219/cottages/api/v1/category/',
+            'url': 'https://icarus.cs.weber.edu/~tg46219/cottages/api/v1/category/',
             'method': 'GET',
             'dataType': 'json',
             'success': function (categories) {
                 $.ajax({
-                    'url': 'http://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/',
+                    'url': 'https://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/',
                     'method': 'GET',
                     'dataType': 'json',
                     'success': function (entries) {
@@ -157,7 +157,7 @@ let update_display_name = function () {
     console.log(data);
 
     $.ajax({
-        'url': 'http://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/',
+        'url': 'https://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/',
         'method': 'PUT',
         'dataType': 'json',
         beforeSend: function(request){

@@ -1,6 +1,6 @@
 function post_to_database(name, value, category) {
     $.ajax({
-        'url': 'http://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/',
+        'url': 'https://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/',
         data:JSON.stringify({
             'entryName': name,
             'entryValue': value,
@@ -15,7 +15,7 @@ function post_to_database(name, value, category) {
 let database_values = [];
 
 $.ajax({
-    'url': 'http://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/',
+    'url': 'https://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/',
     'method': 'GET',
     success: function(response){
         database_values = JSON.parse(response);

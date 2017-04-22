@@ -7,7 +7,7 @@ $(document).ready(function () {
 
     let parsedJSON;
     $.ajax({
-        url: 'http://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/',
+        url: 'https://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/',
         method: 'GET',
         success: function (response) {
             parsedJSON = $.parseJSON(response);

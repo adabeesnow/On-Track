@@ -50,7 +50,7 @@ foreach ($tables as $table) {
                     echo str_replace("$", "", $cell->textContent);
                     echo '<br/>';
 
-                    $icarus = 'http://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/';
+                    $icarus = 'https://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/';
 
                     $json_data = json_encode(array(
                         "entryId"=>$count,
