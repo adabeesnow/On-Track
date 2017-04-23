@@ -1,4 +1,5 @@
 <?php
+
 use OnTrack\Http\Methods;
 
 require_once 'config.php';
@@ -18,144 +19,80 @@ require_once 'src/Models/User.php';
 require_once 'src/Models/Token.php';
 
 require_once 'src/Utilities/DatabaseConnection.php';
+require_once 'src/Utilities/Setup.php';
 
-$dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) use ($baseURI) {
+$main = function () {
+    $args = array();
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
-    // Categories
-
-    $handleGetCategory = function($args){
-        return (new \OnTrack\Controllers\CategoryController())->getCategory($args);
-    };
-    $handleGetCategories = function($args){
-        return (new \OnTrack\Controllers\CategoryController())->getCategories($args);
-    };
-    $handlePostCategory = function($args){
-        return (new \OnTrack\Controllers\CategoryController())->postCategory($args);
-    };
-    $handlePutCategory = function($args){
-        return (new \OnTrack\Controllers\CategoryController())->putCategory($args);
-    };
-    $handleDeleteCategory = function($args){
-        return (new \OnTrack\Controllers\CategoryController())->deleteCategory($args);
-    };
-
-    $r->addRoute('GET', $baseURI . '/category/{id:\d+}', $handleGetCategory);
-    $r->addRoute('GET', $baseURI . '/category/{id:\d+}/', $handleGetCategory);
-    $r->addRoute('GET', $baseURI . '/category', $handleGetCategories);
-    $r->addRoute('GET', $baseURI . '/category/', $handleGetCategories);
-    $r->addRoute('POST', $baseURI . '/category', $handlePostCategory);
-    $r->addRoute('POST', $baseURI . '/category/', $handlePostCategory);
-    $r->addRoute('PUT', $baseURI . '/category', $handlePutCategory);
-    $r->addRoute('PUT', $baseURI . '/category/', $handlePutCategory);
-    $r->addRoute('DELETE', $baseURI . '/category', $handleDeleteCategory);
-    $r->addRoute('DELETE', $baseURI . '/category/', $handleDeleteCategory);
-
-
-    // Entries
-
-    $handleGetEntry = function($args){
-        return (new \OnTrack\Controllers\EntryController())->getEntry($args);
-    };
-    $handleGetEntries = function($args){
-        return (new \OnTrack\Controllers\EntryController())->getEntries($args);
-    };
-    $handlePostEntry = function($args){
-        return (new \OnTrack\Controllers\EntryController())->postEntry($args);
-    };
-    $handlePutEntry = function($args){
-        return (new \OnTrack\Controllers\EntryController())->putEntry($args);
-    };
-    $handleDeleteEntry = function($args){
-        return (new \OnTrack\Controllers\EntryController())->deleteEntry($args);
-    };
-
-    $r->addRoute('GET', $baseURI . '/entry/{id:\d+}', $handleGetEntry);
-    $r->addRoute('GET', $baseURI . '/entry/{id:\d+}/', $handleGetEntry);
-    $r->addRoute('GET', $baseURI . '/entry', $handleGetEntries);
-    $r->addRoute('GET', $baseURI . '/entry/', $handleGetEntries);
-    $r->addRoute('POST', $baseURI . '/entry', $handlePostEntry);
-    $r->addRoute('POST', $baseURI . '/entry/', $handlePostEntry);
-    $r->addRoute('PUT', $baseURI . '/entry', $handlePutEntry);
-    $r->addRoute('PUT', $baseURI . '/entry/', $handlePutEntry);
-    $r->addRoute('DELETE', $baseURI . '/entry', $handleDeleteEntry);
-    $r->addRoute('DELETE', $baseURI . '/entry/', $handleDeleteEntry);
-
-
-//    $handleGetUser = function($args){
-//        return (new \OnTrack\Controllers\UserController())->getUser($args);
-//    };
-    $handlePostUser = function($args){
-        return (new \OnTrack\Controllers\UserController())->postUser($args);
-    };
-    $handlePutUser = function($args){
-        return (new \OnTrack\Controllers\UserController())->patchUser($args);
-    };
-    $handleDeleteUser = function($args){
-        return (new \OnTrack\Controllers\UserController())->deleteUser($args);
-    };
-
-//    $r->addRoute('GET', $baseURI . '/user/{id:\d+}', $handleGetUser);
-//    $r->addRoute('GET', $baseURI . '/user/{id:\d+}/', $handleGetUser);
-    $r->addRoute('POST', $baseURI . '/user', $handlePostUser);
-    $r->addRoute('POST', $baseURI . '/user/', $handlePostUser);
-    $r->addRoute('PUT', $baseURI . '/user', $handlePutUser);
-    $r->addRoute('PUT', $baseURI . '/user/', $handlePutUser);
-    $r->addRoute('DELETE', $baseURI . '/user', $handleDeleteUser);
-    $r->addRoute('DELETE', $baseURI . '/user/', $handleDeleteUser);
-
-
-    $handlePostToken = function ($args) {
-
-        $tokenController = new \OnTrack\Controllers\TokenController();
-        //Is the data via a form?
-        if (!empty($_POST['username'])) {
-            $username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
-            $password = $_POST['password'];
-        } else {
-            //Attempt to parse json input
-            $json = (object) json_decode(file_get_contents('php://input'));
-            if (count((array)$json) >= 2) {
-                $username = filter_var($json->username, FILTER_SANITIZE_STRING);
-                $password = $json->password;
-            } else {
-                http_response_code(\OnTrack\Http\StatusCodes::BAD_REQUEST);
-                exit();
-            }
+        if ($_GET['endpoint'] == 'entry') {
+            if (isset($_GET['id'])) {
+                $args = array("id" => $_GET['id']);
+                echo json_encode((new \OnTrack\Controllers\EntryController())->getEntry($args));
+            } else echo json_encode((new \OnTrack\Controllers\EntryController())->getEntries($args));
         }
-        return $tokenController->buildToken($username, $password);
-    };
 
-    $r->addRoute('POST', $baseURI . '/token/', $handlePostToken);
-    $r->addRoute('POST', $baseURI . '/token', $handlePostToken);
+        if ($_GET['endpoint'] == 'category') {
+            if (isset($_GET['id'])) {
+                $args = array("id" => $_GET['id']);
+                echo json_encode((new \OnTrack\Controllers\CategoryController())->getCategory($args));
+            } else echo json_encode((new \OnTrack\Controllers\CategoryController())->getCategories($args));
+        }
 
-});
 
-$method = $_SERVER['REQUEST_METHOD'];
-$uri = $_SERVER['REQUEST_URI'];
+    }
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_GET['endpoint'] == 'entry') {
+            echo json_encode((new \OnTrack\Controllers\EntryController())->postEntry($args));
+        }
+        if ($_GET['endpoint'] == 'category') {
+            echo json_encode((new \OnTrack\Controllers\CategoryController())->postCategory($args));
+        }
+        if ($_GET['endpoint'] == 'token') {
+            $tokenController = new \OnTrack\Controllers\TokenController();
+            //Is the data via a form?
+            if (!empty($_POST['username'])) {
+                $username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
+                $password = $_POST['password'];
+            } else {
+                //Attempt to parse json input
+                $json = (object)json_decode(file_get_contents('php://input'));
+                if (count((array)$json) >= 2) {
+                    $username = filter_var($json->username, FILTER_SANITIZE_STRING);
+                    $password = $json->password;
+                } else {
+                    http_response_code(\OnTrack\Http\StatusCodes::BAD_REQUEST);
+                    exit();
+                }
+            }
+            echo $tokenController->buildToken($username, $password);
+        };
+        if ($_GET['endpoint'] == 'user') {
+            echo json_encode((new \OnTrack\Controllers\UserController())->postUser($args));
+        }
+    }
+    if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+        if ($_GET['endpoint'] == 'entry') {
+            echo json_encode((new \OnTrack\Controllers\EntryController())->putEntry($args));
+        }
+        if ($_GET['endpoint'] == 'category') {
+            echo json_encode((new \OnTrack\Controllers\CategoryController())->putCategory($args));
+        }
+        if ($_GET['endpoint'] == 'user') {
+            echo json_encode((new \OnTrack\Controllers\UserController())->patchUser($args));
+        }
+    }
+    if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+        if ($_GET['endpoint'] == 'entry') {
+            echo json_encode((new \OnTrack\Controllers\EntryController())->deleteEntry($args));
+        }
+        if ($_GET['endpoint'] == 'category') {
+            echo json_encode((new \OnTrack\Controllers\CategoryController())->deleteCategory($args));
+        }
+        if ($_GET['endpoint'] == 'user') {
+            echo json_encode((new \OnTrack\Controllers\UserController())->deleteUser($args));
+        }
+    }
+};
 
-$pos = strpos($uri, '?');
-if ($pos !== false) {
-    $uri = substr($uri, 0, $pos);
-}
-
-$uri = rawurldecode($uri);
-
-$routeInfo = $dispatcher->dispatch($method, $uri);
-
-switch($routeInfo[0]) {
-    case FastRoute\Dispatcher::NOT_FOUND:
-        http_response_code(OnTrack\Http\StatusCodes::NOT_FOUND);
-        //Handle 404
-        break;
-    case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
-        http_response_code(OnTrack\Http\StatusCodes::METHOD_NOT_ALLOWED);
-        //Handle 403
-        break;
-    case FastRoute\Dispatcher::FOUND:
-        $handler  = $routeInfo[1];
-        $vars = $routeInfo[2];
-
-        $response = $handler($vars);
-        echo json_encode($response);
-        break;
-}
+$main();

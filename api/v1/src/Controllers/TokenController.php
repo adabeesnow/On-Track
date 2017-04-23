@@ -36,7 +36,7 @@ class TokenController
 
             if (password_verify($password, $hashed_password)) {
                 $token_object = new Token();
-                $token = ($token_object)->buildToken(Token::ROLE_ADMIN, $username);
+                $token = $token_object->buildToken(Token::ROLE_ADMIN, $username);
                 return $token;
             }
         }

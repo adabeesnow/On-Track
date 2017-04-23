@@ -143,15 +143,16 @@ class EntryController
         $entryId = $args['id'];
         $dbo = DatabaseConnection::getInstance();
 
-
         $query_select_entry = '
         SELECT EntryId, EntryName, EntryValue, CategoryId, DisplayName
         FROM Entry
         WHERE EntryId = :entryId
         ';
 
+
         $statement_select_entry = $dbo->prepare($query_select_entry);
         $statement_select_entry->bindParam(':entryId', $entryId);
+
 
         if (!$statement_select_entry->execute()) {
             http_response_code(StatusCodes::BAD_REQUEST);
@@ -169,7 +170,6 @@ class EntryController
             $result['CategoryId'],
             $result['DisplayName']
         );
-
 
         return $entry->jsonSerialize();
     }
