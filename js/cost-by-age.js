@@ -1,25 +1,25 @@
 /**
  * Created by doebo on 2/22/2017.
  */
-let numInfants = function() {
-    return number_of_infants;
-};
-
-let numPreschoolers= function() {
-    return number_of_preschoolers;
-};
-
-let numSchoolagers= function() {
-    return number_of_schoolagers;
-};
-
-let numTeenagers = function() {
-    return number_of_teenagers;
-};
-
-let numAdults = function() {
-    return number_of_adults;
-};
+// let numInfants = function() {
+//     return number_of_infants;
+// };
+//
+// let numPreschoolers= function() {
+//     return number_of_preschoolers;
+// };
+//
+// let numSchoolagers= function() {
+//     return number_of_schoolagers;
+// };
+//
+// let numTeenagers = function() {
+//     return number_of_teenagers;
+// };
+//
+// let numAdults = function() {
+//     return number_of_adults;
+// };
 
 let childCareAnnualTotal = function () {
     if (childcare_needed_bool) {
