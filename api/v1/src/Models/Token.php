@@ -31,7 +31,7 @@ class Token
         $issuedAt = time();
         $notBefore = $issuedAt;                   //Adding 10 seconds to compensate for clock-skew
         $expire = $notBefore + self::$lengthValid;  // Expiration time
-        $serverName = "https://secure.bluehost.com/";
+        $serverName = "https://secure.bluehost.com";
         $data = [
             'iat' => $issuedAt,         // Issued at: time when the token was generated
             'jti' => $tokenId,          // Json Token Id: an unique identifier for the token

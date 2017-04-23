@@ -315,7 +315,7 @@ let mhcUtahTaxesOwed = function () {
     }
 };
 let mhcTotalExpenses = function () {
-    return overallCost()
+    return overallCost();
 };
 let mhcSavings1PercentGross = function () {
     return mhc_gross_income * .01;

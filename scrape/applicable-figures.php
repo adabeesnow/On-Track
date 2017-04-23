@@ -45,7 +45,7 @@ natsort($values);
 foreach($values as $key=>$value){
     if (strlen($key) > 6){
         print($key . ' - ' . $value . '</br>');
-        $icarus = 'http://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/';
+        $icarus = 'https://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/';
         $json_data = json_encode(array(
             "entryName"=>$key,
             "entryValue"=>str_replace(' ', '', $value),
@@ -82,7 +82,7 @@ foreach($values as $key=>$value){
 //                    echo str_replace("$", "", $cell->textContent);
 //                    echo '<br/>';
 //
-//                    $icarus = 'http://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/';
+//                    $icarus = 'https://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/';
 //
 //                    $json_data = json_encode(array(
 //                        "entryId"=>$count,

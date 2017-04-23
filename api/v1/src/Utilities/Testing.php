@@ -29,8 +29,8 @@ class Testing
      */
     public static function callAPIOverHTTP($endpoint, $method = Methods::GET, $body = "", $token = "", $type = self::JSON)
     {
-        $baseURI = '/~tg46219/cottages/api/v1';
-        $url = "http://icarus.cs.weber.edu".$baseURI . $endpoint;
+        $baseURI = '/~cottage6/weberstate/ontrack/api/v1';
+        $url = "https://secure.bluehost.com".$baseURI . $endpoint;
         $headers = array();
         array_push($headers, "Content-Length: " . strlen($body));
         array_push($headers, "Authorization: Bearer $token");
