@@ -185,7 +185,7 @@ function ehcEITC() {
 }
 // Taxes	P6
 function ehcChildTaxCredit() {
-    return ehcFederalTaxesOwedBeforeCredits() * child_tax_credit_each;
+    return ehcNumKids() * child_tax_credit_each;
 }
 // Taxes	Q9
 function ehcAdjustedChildTaxCredit() {

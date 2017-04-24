@@ -1,4 +1,5 @@
 // Family Composition -------------------------------------------------------------------
+// Total of these cannot be > 8.
 let num_adults        = 0; // 'Family Composition'!G4
 let num_infants       = 0; // 'Family Composition'!G7
 let num_preschoolers  = 0; // 'Family Composition'!G10
