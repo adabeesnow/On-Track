@@ -459,6 +459,11 @@ function goToNextStep(wizard, options, state)
     return paginationClick(wizard, options, state, increaseCurrentIndexBy(state, 1));
 }
 
+function _goToStep(wizard, options, state, index)
+{
+    return paginationClick(wizard, options, state, index);
+}
+
 /**
  * Routes to the previous step.
  *
@@ -1427,6 +1432,8 @@ $.fn.steps.next = function ()
     return goToNextStep(this, getOptions(this), getState(this));
 };
 
+
+
 /**
  * Routes to the previous step.
  *
@@ -1459,7 +1466,22 @@ $.fn.steps.remove = function (index)
  **/
 $.fn.steps.setStep = function (index, step)
 {
+    return paginationClick()
     throw new Error("Not yet implemented!");
+};
+/*
+
+Sets a specific step object by index
+*/
+
+$.fn.steps.setStep = function (step)
+{
+
+    var options = getOptions(this),
+        state = getState(this);
+
+    return _goToStep(this, options, state, step);
+
 };
 
 /**
