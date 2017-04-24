@@ -1466,7 +1466,6 @@ $.fn.steps.remove = function (index)
  **/
 $.fn.steps.setStep = function (index, step)
 {
-    return paginationClick()
     throw new Error("Not yet implemented!");
 };
 /*
