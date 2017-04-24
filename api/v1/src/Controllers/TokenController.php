@@ -12,6 +12,7 @@ use PDO;
 use OnTrack\Models\Token;
 use OnTrack\Http\StatusCodes;
 use OnTrack\Utilities\DatabaseConnection;
+//require_once '../../vendor/ircmaxell/password-compat/lib/password.php';
 
 class TokenController
 {

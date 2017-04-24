@@ -4,6 +4,7 @@ use OnTrack\Http\Methods;
 
 require_once 'config.php';
 require_once 'vendor/autoload.php';
+require_once 'vendor/ircmaxell/password-compat/lib/password.php';
 
 require_once 'src/Http/Methods.php';
 require_once 'src/Http/StatusCodes.php';
