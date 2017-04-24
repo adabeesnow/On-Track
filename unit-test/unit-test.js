@@ -170,7 +170,7 @@ function writeAllCombinations() {
                             num_schoolagers = t;
                             num_teenagers = z;
                             // Number of child bus passes is set equal to number of schoolagers and teenagers.
-                            bus_passes_child = number_of_schoolagers + number_of_teenagers;
+                            bus_passes_child = num_schoolagers + num_teenagers;
 
                             // MHC
                             if (marketplace_healthcare === "Yes") { writeMHCTableData(); }

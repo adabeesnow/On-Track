@@ -37,25 +37,25 @@
     </style>
     <script>
         $(document).ready(function () {
-            if (!localStorage.getItem("number_of_adults")) {
+            if (!localStorage.getItem("num_adults")) {
                 $("#continue-button").hide();
 
             }
         });
         let reset_values = function () {
-            localStorage.removeItem("number_of_adults");
-            localStorage.removeItem("number_of_infants");
-            localStorage.removeItem("number_of_preschoolers");
-            localStorage.removeItem("number_of_schoolagers");
-            localStorage.removeItem("number_of_teenagers");
+            localStorage.removeItem("num_adults");
+            localStorage.removeItem("num_infants");
+            localStorage.removeItem("num_preschoolers");
+            localStorage.removeItem("num_schoolagers");
+            localStorage.removeItem("num_teenagers");
             localStorage.removeItem("estimated_babysitting_cost");
             localStorage.removeItem("childcare_needed_bool");
             localStorage.removeItem("use_family_care_bool");
-            localStorage.removeItem("number_of_bedrooms");
-            localStorage.removeItem("use_marketplace_health_insurance_bool");
-            localStorage.removeItem("number_of_cars");
-            localStorage.removeItem("number_of_public_transport_passes_adult");
-            localStorage.removeItem("number_of_public_transport_passes_child");
+            localStorage.removeItem("rooms");
+            localStorage.removeItem("marketplace_healthcare");
+            localStorage.removeItem("cars");
+            localStorage.removeItem("bus_passes_adult");
+            localStorage.removeItem("bus_passes_child");
             return true;
         }
     </script>

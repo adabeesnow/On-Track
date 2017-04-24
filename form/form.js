@@ -100,61 +100,61 @@ const getParams = query => {
 console.log("form.js loaded.");
 
 function store_input_data() {
-    localStorage.number_of_adults = $("#number-of-adults").val();
-    localStorage.number_of_infants = $("#number-of-infants").val();
-    localStorage.number_of_preschoolers = $("#number-of-preschoolers").val();
-    localStorage.number_of_schoolagers = $("#number-of-schoolagers").val();
-    localStorage.number_of_teenagers = $("#number-of-teenagers").val();
-    localStorage.estimated_babysitting_cost = parseFloat($("#babysitting-costs").val()) * 12;
-    localStorage.childcare_needed_bool = $("#child-care-needed").val();
-    localStorage.use_family_care_bool = $("#family-care").val();
-    localStorage.number_of_bedrooms = $("#number-of-rooms").val();
-    localStorage.use_marketplace_health_insurance_bool = $("#marketplace-healthcare").val();
-    localStorage.number_of_cars = $("#cars").val();
-    localStorage.number_of_public_transport_passes_adult = $("#adult-passes").val();
-    localStorage.number_of_public_transport_passes_child = $("#child-passes").val();
+    localStorage.num_adults = $("#number-of-adults").val();
+    localStorage.num_infants = $("#number-of-infants").val();
+    localStorage.num_preschoolers = $("#number-of-preschoolers").val();
+    localStorage.num_schoolagers = $("#number-of-schoolagers").val();
+    localStorage.num_teenagers = $("#number-of-teenagers").val();
+    localStorage.estimated_baby_sitting_annual = parseFloat($("#babysitting-costs").val()) * 12;
+    localStorage.use_childcare = $("#child-care-needed").val();
+    localStorage.use_family_care = $("#family-care").val();
+    localStorage.rooms = $("#number-of-rooms").val();
+    localStorage.marketplace_healthcare = $("#marketplace-healthcare").val();
+    localStorage.cars = $("#cars").val();
+    localStorage.bus_passes_adult = $("#adult-passes").val();
+    localStorage.bus_passes_child = $("#child-passes").val();
     window.location.href = 'results.html';
 }
 
 fill_inputs = function(){
-    if(localStorage.getItem("number_of_adults")){
-        $("#number-of-adults").val(parseInt(localStorage.getItem("number_of_adults")));
+    if(localStorage.getItem("num_adults")){
+        $("#number-of-adults").val(parseInt(localStorage.getItem("num_adults")));
     }
-    if(localStorage.getItem("number_of_infants")){
-        $("#number-of-infants").val(parseInt(localStorage.getItem("number_of_infants")));
+    if(localStorage.getItem("num_infants")){
+        $("#number-of-infants").val(parseInt(localStorage.getItem("num_infants")));
     }
-    if(localStorage.getItem("number_of_preschoolers")){
-        $("#number-of-preschoolers").val(parseInt(localStorage.getItem("number_of_preschoolers")));
+    if(localStorage.getItem("num_preschoolers")){
+        $("#number-of-preschoolers").val(parseInt(localStorage.getItem("num_preschoolers")));
     }
-    if(localStorage.getItem("number_of_schoolagers")){
-        $("#number-of-schoolagers").val(parseInt(localStorage.getItem("number_of_schoolagers")));
+    if(localStorage.getItem("num_schoolagers")){
+        $("#number-of-schoolagers").val(parseInt(localStorage.getItem("num_schoolagers")));
     }
-    if(localStorage.getItem("number_of_teenagers")){
-        $("#number-of-teenagers").val(parseInt(localStorage.getItem("number_of_teenagers")));
+    if(localStorage.getItem("num_teenagers")){
+        $("#number-of-teenagers").val(parseInt(localStorage.getItem("num_teenagers")));
     }
-    if(localStorage.getItem("estimated_babysitting_cost")){
-        $("#babysitting-costs").val(localStorage.getItem("estimated_babysitting_cost"));
+    if(localStorage.getItem("estimated_baby_sitting_annual")){
+        $("#babysitting-costs").val(localStorage.getItem("estimated_baby_sitting_annual"));
     }
-    if(localStorage.getItem("childcare_needed_bool")){
-        $("#child-care-needed").val(parseInt(localStorage.getItem("childcare_needed_bool")));
+    if(localStorage.getItem("use_childcare")){
+        $("#child-care-needed").val(localStorage.getItem("use_childcare"));
     }
-    if(localStorage.getItem("use_family_care_bool")){
-        $("#family-care").val(parseInt(localStorage.getItem("use_family_care_bool")));
+    if(localStorage.getItem("use_family_care")){
+        $("#family-care").val(localStorage.getItem("use_family_care"));
     }
-    if(localStorage.getItem("number_of_bedrooms")){
-        $("#number-of-rooms").val(parseInt(localStorage.getItem("number_of_bedrooms")));
+    if(localStorage.getItem("rooms")){
+        $("#number-of-rooms").val(parseInt(localStorage.getItem("rooms")));
     }
-    if(localStorage.getItem("use_marketplace_health_insurance_bool")){
-        $("#marketplace-healthcare").val(parseInt(localStorage.getItem("use_marketplace_health_insurance_bool")));
+    if(localStorage.getItem("marketplace_healthcare")){
+        $("#marketplace-healthcare").val(parseInt(localStorage.getItem("marketplace_healthcare")));
     }
-    if(localStorage.getItem("number_of_cars")){
-        $("#cars").val(parseInt(localStorage.getItem("number_of_cars")));
+    if(localStorage.getItem("cars")){
+        $("#cars").val(parseInt(localStorage.getItem("cars")));
     }
-    if(localStorage.getItem("number_of_public_transport_passes_adult")){
-        $("#adult-passes").val(parseInt(localStorage.getItem("number_of_public_transport_passes_adult")));
+    if(localStorage.getItem("bus_passes_adult")){
+        $("#adult-passes").val(parseInt(localStorage.getItem("bus_passes_adult")));
     }
-    if(localStorage.getItem("number_of_public_transport_passes_child")){
-        $("#child-passes").val(parseInt(localStorage.getItem("number_of_public_transport_passes_child")));
+    if(localStorage.getItem("bus_passes_child")){
+        $("#child-passes").val(parseInt(localStorage.getItem("bus_passes_child")));
     }
 };
 
