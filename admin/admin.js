@@ -75,12 +75,12 @@ $(document).ready(function () {
     if (localStorage.getItem('token')) {
 
         $.ajax({
-            'url': 'https://icarus.cs.weber.edu/~tg46219/cottages/api/v1/category/',
+            'url': '../api/v1/api.php?endpoint=category',
             'method': 'GET',
             'dataType': 'json',
             'success': function (categories) {
                 $.ajax({
-                    'url': 'https://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/',
+                    'url': '../api/v1/api.php?endpoint=entry',
                     'method': 'GET',
                     'dataType': 'json',
                     'success': function (entries) {
@@ -164,7 +164,7 @@ let update_display_name = function () {
     console.log(data);
 
     $.ajax({
-        'url': 'https://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/',
+        'url': '../api/v1/api.php?endpoint=entry',
         'method': 'PUT',
         'dataType': 'json',
         beforeSend: beforeSend,
@@ -176,7 +176,7 @@ let update_display_name = function () {
 };
 
 let create_user = function(){
-    let USER_URL = '../api/v1/user/';
+    let USER_URL = '../api/v1/api.php?endpoint=user';
     let username = $("#username").val();
     let password = $("#password").val();
     $.ajax({
@@ -204,7 +204,7 @@ let create_user = function(){
 };
 
 let change_password = function(){
-    let USER_URL = '../api/v1/user/';
+    let USER_URL = '../api/v1/api.php?endpoint=user';
     let oldPassword = $("#old-password").val();
     let password = $("#new-password").val();
     let password_confirm = $("#new-password-confirm").val();

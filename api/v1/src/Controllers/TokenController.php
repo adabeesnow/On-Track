@@ -12,6 +12,7 @@ use PDO;
 use OnTrack\Models\Token;
 use OnTrack\Http\StatusCodes;
 use OnTrack\Utilities\DatabaseConnection;
+//require_once '../../vendor/ircmaxell/password-compat/lib/password.php';
 
 class TokenController
 {
@@ -36,7 +37,7 @@ class TokenController
 
             if (password_verify($password, $hashed_password)) {
                 $token_object = new Token();
-                $token = ($token_object)->buildToken(Token::ROLE_ADMIN, $username);
+                $token = $token_object->buildToken(Token::ROLE_ADMIN, $username);
                 return $token;
             }
         }
