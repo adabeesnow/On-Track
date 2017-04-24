@@ -118,9 +118,9 @@ class Setup
 //        }
 //
         $entries = json_decode(file_get_contents($ENTRY_URL));
-//        var_dump($entries);
+        var_dump($entries);
         foreach($entries as $entry){
-            var_dump($entry);
+
             $QUERY_INPUT_ENTRY = "INSERT INTO Entry VALUES (:id, :value, :name, :displayname, :categoryId)";
             $statement_input_entry = $dbo->prepare($QUERY_INPUT_ENTRY);
             $statement_input_entry->bindParam(":id", $entry->entryId);
@@ -128,7 +128,7 @@ class Setup
             $statement_input_entry->bindParam(":name", $entry->entryName);
             $statement_input_entry->bindParam(":displayname", $entry->displayName);
             $statement_input_entry->bindParam(":categoryId", $entry->categoryId);
-            echo $statement_input_entry->execute();
+            echo $statement_input_entry->execute() . ' - ' . $entry->entryId;
             echo '<br/>';
         }
 

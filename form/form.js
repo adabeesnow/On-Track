@@ -1,4 +1,5 @@
 let wizard;
+let qs;
 
 $(document).ready(function () {
 
@@ -57,9 +58,44 @@ $(document).ready(function () {
         });
     }
 
+    qs = (function(a) {
+        if (a == "") return {};
+        let b = {};
+        for (let i = 0; i < a.length; ++i)
+        {
+            let p=a[i].split('=', 2);
+            if (p.length == 1)
+                b[p[0]] = "";
+            else
+                b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+        }
+        return b;
+    })(window.location.search.substr(1).split('&'));
+
+
+    if(qs['page']){
+        wizard.steps("setStep", parseInt(qs['page']));
+    }
+
+
+
 
     fill_inputs();
 });
+
+const getParams = query => {
+    if (!query) {
+        return { };
+    }
+
+    return (/^[?#]/.test(query) ? query.slice(1) : query)
+        .split('&')
+        .reduce((params, param) => {
+            let [ key, value ] = param.split('=');
+            params[key] = value ? decodeURIComponent(value.replace(/\+/g, ' ')) : '';
+            return params;
+        }, { });
+};
 
 console.log("form.js loaded.");
 
@@ -121,3 +157,19 @@ fill_inputs = function(){
         $("#child-passes").val(parseInt(localStorage.getItem("number_of_public_transport_passes_child")));
     }
 };
+
+
+// function _goToStep(wizard, options, state, index)
+// {
+//     return paginationClick(wizard, options, state, index);
+// }
+//
+// $.fn.steps.setStep = function (step)
+// {
+//
+//     var options = getOptions(this),
+//         state = getState(this);
+//
+//     return _goToStep(this, options, state, step);
+//
+// };

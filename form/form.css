@@ -279,6 +279,7 @@ body{
 img.page-title-img{
     height: auto;
     max-width: 130px;
+    margin: 20px;
 }
 
 .user-inputs{

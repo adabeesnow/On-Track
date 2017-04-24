@@ -12,7 +12,7 @@ $(document).ready(function () {
 
     let parsedJSON;
     $.ajax({
-        url: 'https://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/',
+        url: '../api/v1/api.php?endpoint=entry',
         method: 'GET',
         success: function (response) {
             parsedJSON = $.parseJSON(response);
