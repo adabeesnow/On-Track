@@ -73,12 +73,14 @@ let entries_by_category = {};
 
 $(document).ready(function () {
     if (localStorage.getItem('token')) {
+        console.log(1);
 
         $.ajax({
             'url': '../api/v1/api.php?endpoint=category',
             'method': 'GET',
             'dataType': 'json',
             'success': function (categories) {
+                console.log(2);
                 $.ajax({
                     'url': '../api/v1/api.php?endpoint=entry',
                     'method': 'GET',
@@ -124,6 +126,9 @@ $(document).ready(function () {
                                 console.log('EIC Category')
                             }
                         }
+                    },
+                    error: function(response){
+                        console.log(response);
                     }
                 });
             }
