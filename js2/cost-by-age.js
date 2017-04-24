@@ -34,12 +34,12 @@ function familySize() {
     numAdults());
 }
 // CostByAge	B11
-function costExcessiveChildren() {
+function numExcessiveChildren() {
     return numKids() - 5 < 1 ? 0 :
         numKids() - 5;
 }
 // CostByAge	B12
-function costExcessiveAdults() {
+function numExcessiveAdults() {
     return numAdults() - 2 < 1 ? 0 :
         numAdults() - 2;
 }
@@ -48,17 +48,39 @@ function numCars() {
     return cars === "Standard" ? numAdults() :
         cars;
 }
-// CostByAge	B19 TODO
+// CostByAge	B19
 function costOverall() {
-
+    return (
+        (rooms === "Standard" ? costTotalHousing() :
+            rooms === 1 ? housing1BedAverageAnnual() :
+                rooms === 2 ? housing2BedAverageAnnual() :
+                    rooms === 3 ? housing3BedAverageAnnual() :
+                        rooms === 4 ? housing4BedAverageAnnual() : 0)
+        +
+        (estimated_baby_sitting_annual > 0 ? estimated_baby_sitting_annual :
+            use_family_care === "Yes" ? costTotalFamilyCare() :
+                costTotalCenterCare())
+        +
+        costTotalCarInsurance() +
+        costTotalCarOwnership() +
+        (marketplace_healthcare === "No" ? costTotalEmployerCombined() :
+            costTotalMarketplaceCombined())
+        +
+        costTotalEntertainment() +
+        costTotalMisc() +
+        costExcessiveChildren() +
+        costExcessiveAdults() +
+        costTotalPublicTransport() +
+        costTotalFood()
+    )
 }
 // CostByAge	C16
 function costTotalHousing() {
     return (
-    numKids() < 1 ? housing1BedAverageAnnual() :
-        numKids() <= 2 ? housing2BedAverageAnnual() :
-            numKids() <= 4 ? housing3BedAverageAnnual() :
-                housing4BedAverageAnnual());
+        numKids() < 1 ? housing1BedAverageAnnual() :
+            numKids() <= 2 ? housing2BedAverageAnnual() :
+                numKids() <= 4 ? housing3BedAverageAnnual() :
+                    housing4BedAverageAnnual());
 }
 // CostByAge	D2
 function costCenterCareInfant() {
@@ -75,11 +97,11 @@ function costCenterCareSchoolager() {
 // CostByAge	D16
 function costTotalCenterCare() {
     return use_childcare === "Yes" ?
-            costCenterCareInfant() +
-            costCenterCarePreschooler() +
-            costCenterCareSchoolager()
-            :
-            0;
+        costCenterCareInfant() +
+        costCenterCarePreschooler() +
+        costCenterCareSchoolager()
+        :
+        0;
 }
 // CostByAge	E2
 function costFoodInfant() {
@@ -103,18 +125,21 @@ function costFoodAdult() {
 }
 // CostByAge	E16
 function costTotalFood() {
+    let food_multiplier = (
+        familySize() === 1 ? 1.20 :
+            familySize() === 2 ? 1.10 :
+                familySize() === 3 ? 1.05 :
+                    familySize() === 4 ? 1.00 :
+                        familySize() < 7 ? 0.95 :
+                            0.90
+    );
     return (costFoodInfant() +
             costFoodPreschooler() +
             costFoodSchoolager() +
             costFoodTeenager() +
-            costFoodAdult())
-            *
-            familySize() === 1 ? 1.20 :
-                familySize() === 2 ? 1.10 :
-                    familySize() === 3 ? 1.05 :
-                        familySize() === 4 ? 1.00 :
-                            familySize() < 7 ? 0.95 :
-                                0.90;
+            costFoodAdult()
+        ) * food_multiplier;
+
 }
 
 // CostByAge	F14
@@ -163,10 +188,10 @@ function costOOPEmployerAdult() {
 // CostByAge	I16
 function costTotalOOPEmployer() {
     return costOOPEmployerInfant() +
-            costOOPEmployerPreschooler() +
-            costOOPEmployerSchoolager() +
-            costOOPEmployerTeenager() +
-            costOOPEmployerAdult();
+        costOOPEmployerPreschooler() +
+        costOOPEmployerSchoolager() +
+        costOOPEmployerTeenager() +
+        costOOPEmployerAdult();
 }
 // CostByAge	I17
 function costTotalEmployerCombined() {
@@ -193,11 +218,11 @@ function costTotalMisc() {
 }
 // CostByAge	L16
 function costExcessiveChildren() {
-    return excessiveChildren() * excessive_child_annual;
+    return numExcessiveChildren() * excessive_child_annual;
 }
 // CostByAge	M16
 function costExcessiveAdults() {
-    return excessiveAdults() * excessive_child_annual;
+    return numExcessiveAdults() * excessive_adult_annual;
 }
 // CostByAge	P2
 function costFamilyCareInfant() {
@@ -214,8 +239,8 @@ function costFamilyCareSchoolager() {
 // CostByAge	P16
 function costTotalFamilyCare() {
     return costFamilyCareInfant() +
-            costFamilyCarePreschooler() +
-            costFamilyCareSchoolager();
+        costFamilyCarePreschooler() +
+        costFamilyCareSchoolager();
 }
 // CostByAge	R4
 function costPublicTransportChild() {
@@ -239,7 +264,7 @@ function costOOPMarketplacePreschooler() {
 }
 // CostByAge	S4
 function costOOPMarketplaceSchoolager() {
-    return oop_mhc_schoolager_annual * numPreschoolers();
+    return oop_mhc_schoolager_annual * numSchoolagers();
 }
 // CostByAge	S5
 function costOOPMarketplaceTeenager() {
@@ -252,10 +277,10 @@ function costOOPMarketplaceAdult() {
 // CostByAge	S16
 function costTotalOOPMarketplace() {
     return costOOPMarketplaceInfant() +
-            costOOPMarketplacePreschooler() +
-            costOOPMarketplaceSchoolager() +
-            costOOPMarketplaceTeenager() +
-            costOOPMarketplaceAdult();
+        costOOPMarketplacePreschooler() +
+        costOOPMarketplaceSchoolager() +
+        costOOPMarketplaceTeenager() +
+        costOOPMarketplaceAdult();
 }
 // CostByAge	V3
 function costMarketplaceExpenseAdult() {

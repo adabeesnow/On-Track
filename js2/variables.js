@@ -36,62 +36,38 @@ const oop_mhc_adult_annual = 161.43;      // 'CostByAge'!S6
 const expense_mhc_adult_annual = 2536;    // 'CostByAge'!V3
 const expense_mhc_child_annual = 1447;    // 'CostByAge'!V4
 
-// Taxes (Marketplace Healthcare - MHC) ----------------------------------------------------------------------
-const mhc_qualifying_childcare_expenses_0_kids = 0;           // 'Taxes'!A6
-const mhc_qualifying_childcare_expenses_1_kids = 3000;        // 'Taxes'!A6
-const mhc_qualifying_childcare_expenses_2_kids_plus = 6000;   // 'Taxes'!A6
-const mhc_standard_deduction_1_adults_0_kids = 6300;      // 'Taxes'!C6
-const mhc_standard_deduction_1_adults_1_kids_plus = 9250; // 'Taxes'!C6
-const mhc_standard_deduction_2_adults_any_kids = 12600;   // 'Taxes'!C6
-const mhc_exemptions_federal_each = 4000; // 'Taxes'!D6
-const mhc_exemptions_state_each = 4000; // 'Taxes'!E6
-let mhc_gross_income = 21999;   // // 'Taxes'!F6 - Actual value set by MHC goal seek function.
-const mhc_utah_state_credit_value_holder_1_adults_2_kids_plus = 20707;    // 'Taxes'!H6
-const mhc_utah_state_credit_value_holder_1_adults_1_kids_minus = 13805;   // 'Taxes'!H6
-const mhc_utah_state_credit_value_holder_2_adults_any_kids = 27610;       // 'Taxes'!H6
-const mhc_state_tax_multiplier = 0.05;    // 'Taxes'!I6
-const mhc_credit_before_phase_out_multiplier = 0.06;  //'Taxes'!K6
-const mhc_phase_out_multiplier = 0.013;   // 'Taxes'!L6
-const mhc_child_tax_credit_each = 1000;   // 'Taxes'!P6
-const mhc_adjusted_child_tax_credit_limit = 75000;        // 'Taxes'!Q6
-const mhc_adjusted_child_tax_credit_multiplier = 0.05;    // 'Taxes'!Q6
-const mhc_additional_child_tax_credit_income_adjustment = 3000;               // 'Taxes'!T6
-const mhc_additional_child_tax_credit_income_eitc_multiplier = 0.0765;        // 'Taxes'!T6
-const mhc_additional_child_tax_credit_income_adjustment_multiplier = 0.15;    // 'Taxes'!T6
-const mhc_applicable_figure_index_min = 133;  // 'Taxes'!X6
-const mhc_applicable_figure_index_max = 299;  // 'Taxes'!X6
-const mhc_benchmark_silver_adult_each = 2932; // 'Taxes'!Z6
-const mhc_benchmark_silver_child_each = 1673; // 'Taxes'!Z6
-const mhc_utah_health_benefit_plan_credit = 0.05; // 'Taxes'!AE6
-const mhc_fed_deduction_plus_state_exemption_multiplier = 0.06;   // 'Taxes'!AI6
-const mhc_federal_payroll_tax_multiplier = 0.0765;    // 'Taxes'!AK6
-const mhc_savings_multiplier = 0.01;  // 'Taxes'!AO6
+// Taxes (Both MHC and EHC) ----------------------------------------------------------------------------------
+const qualifying_childcare_expenses_0_kids =        0;      // 'Taxes'!A6/A9
+const qualifying_childcare_expenses_1_kids =        3000;   // 'Taxes'!A6/A9
+const qualifying_childcare_expenses_2_kids_plus =   6000;   // 'Taxes'!A6/A9
+const standard_deduction_1_adults_0_kids =      6300;   // 'Taxes'!C6/C9
+const standard_deduction_1_adults_1_kids_plus = 9250;   // 'Taxes'!C6/C9
+const standard_deduction_2_adults_any_kids =    12600;  // 'Taxes'!C6/C9
+const exemptions_federal_each = 4000;   // 'Taxes'!D6/D9
+const exemptions_state_each = 3000;     // 'Taxes'!E6/E9
+const utah_state_credit_value_holder_1_adults_2_kids_plus =     20707;  // 'Taxes'!H6/H9
+const utah_state_credit_value_holder_1_adults_1_kids_minus =    13805;  // 'Taxes'!H6/H9
+const utah_state_credit_value_holder_2_adults_any_kids =        27610;  // 'Taxes'!H6/H9
+const state_tax_multiplier = 0.05;  // 'Taxes'!I6/I9
+const credit_before_phase_out_multiplier = 0.06;    //'Taxes'!K6/K9
+const phase_out_multiplier = 0.013; // 'Taxes'!L6//L9
+const child_tax_credit_each = 1000; // 'Taxes'!P6/P9
+const adjusted_child_tax_credit_limit = 75000;      // 'Taxes'!Q6/Q9
+const adjusted_child_tax_credit_multiplier = 0.05;  // 'Taxes'!Q6/Q9
+const additional_child_tax_credit_income_adjustment = 3000;             // 'Taxes'!T6/T9
+const additional_child_tax_credit_income_eitc_multiplier = 0.0765;      // 'Taxes'!T6/T9
+const additional_child_tax_credit_income_adjustment_multiplier = 0.15;  // 'Taxes'!T6/T9
+const fed_deduction_plus_state_exemption_multiplier = 0.06; // 'Taxes'!AI6/Y9
+const federal_payroll_tax_multiplier = 0.0765;  // 'Taxes'!AK6/AA9
+const savings_multiplier = 0.01;    // 'Taxes'!AO6/AE9
 
-// Taxes (Employer Healthcare - EHC) ----------------------------------------------------------------------
-const ehc_qualifying_childcare_expenses_0_kids = 0;           // 'Taxes'!A9
-const ehc_qualifying_childcare_expenses_1_kids = 3000;        // 'Taxes'!A9
-const ehc_qualifying_childcare_expenses_2_kids_plus = 6000;   // 'Taxes'!A9
-const ehc_standard_deduction_1_adults_0_kids = 6300;      // 'Taxes'!C9
-const ehc_standard_deduction_1_adults_1_kids_plus = 9250; // 'Taxes'!C9
-const ehc_standard_deduction_2_adults_any_kids = 12600;   // 'Taxes'!C9
-const ehc_exemptions_federal_each = 4000; // 'Taxes'!D9
-const ehc_exemptions_state_each = 4000; // 'Taxes'!E9
-let ehc_gross_income = 19999;   // 'Taxes'!F9 - Actual value set by EHC goal seek function.
-const ehc_utah_state_credit_value_holder_1_adults_2_kids_plus = 20707;    // 'Taxes'!H9
-const ehc_utah_state_credit_value_holder_1_adults_1_kids_minus = 13805;   // 'Taxes'!H9
-const ehc_utah_state_credit_value_holder_2_adults_any_kids = 27610;       // 'Taxes'!H9
-const ehc_state_tax_multiplier = 0.05;    // 'Taxes'!I9
-const ehc_credit_before_phase_out_multiplier = 0.06;  //'Taxes'!K9
-const ehc_phase_out_multiplier = 0.013;   // 'Taxes'!L9
-const ehc_child_tax_credit_each = 1000;   // 'Taxes'!P9
-const mhc_adjusted_child_tax_credit_limit = 75000;        // 'Taxes'!Q6
-const mhc_adjusted_child_tax_credit_multiplier = 0.05;    // 'Taxes'!Q6
-const mhc_additional_child_tax_credit_income_adjustment = 3000;               // 'Taxes'!T6
-const mhc_additional_child_tax_credit_income_eitc_multiplier = 0.0765;        // 'Taxes'!T6
-const mhc_additional_child_tax_credit_income_adjustment_multiplier = 0.15;    // 'Taxes'!T6
-const mhc_fed_deduction_plus_state_exemption_multiplier = 0.06;   // 'Taxes'!Y9
-const mhc_federal_payroll_tax_multiplier = 0.0765;    // 'Taxes'!AA9
-const mhc_savings_multiplier = 0.01;  // 'Taxes'!AE9
+// Taxes (Marketplace Healthcare Only) ----------------------------------------------------------------------
+const mhc_applicable_figure_index_min = 133;    // 'Taxes'!X6
+const mhc_applicable_figure_index_max = 299;    // 'Taxes'!X6
+const mhc_benchmark_silver_adult_each = 2932;   // 'Taxes'!Z6
+const mhc_benchmark_silver_child_each = 1673;   // 'Taxes'!Z6
+const mhc_benchmark_silver_child_limit = 3;     // 'Taxes'!Z6
+const mhc_utah_health_benefit_plan_credit_multiplier = 0.05; // 'Taxes'!AE6
 
 // Employer Sponsored Health Insur ----------------------------------------------------------------------------
 const employer_health_insurance_average_1_person = 1406;    // 'Employer Sponsored Health Insur'!C3
@@ -447,7 +423,7 @@ const applicable_figure_table_values_list = [
 
 // Federal Poverty Level ---------------------------------------------------------------------
 const federal_poverty_level_family_size_list = [1, 2, 3, 4, 5, 6, 7, 8];    // 'Federal Poverty Level'!A3:A10
-const federal_poverty_level_poverty_level_list = [
+const federal_poverty_level_value_list = [
     11670,
     15730,
     19790,
@@ -490,7 +466,7 @@ const center_care_5_yr          = 511.33;   // 'Child Care Costs'!B16
 const center_care_kindergarten_in_school        = 466.12;   // 'Child Care Costs'!B17
 const center_care_kindergarten_not_in_school    = 489.09;   // 'Child Care Costs'!B18
 const center_care_schoolage_in_school           = 442.00;   // 'Child Care Costs'!B19
-const center_care_schoolage_not_in_school       = 476.89;   // 'Child Care Costs'!B20const center_care_0_to_12_mo    = 653.65;   // 'Child Care Costs'!B11
+const center_care_schoolage_not_in_school       = 476.89;   // 'Child Care Costs'!B20
 const family_care_0_to_12_mo    = 514.77;   // 'Child Care Costs'!D11
 const family_care_1_yr          = 521.68;   // 'Child Care Costs'!D12
 const family_care_2_yr          = 482.32;   // 'Child Care Costs'!D13
@@ -518,12 +494,12 @@ const food_adult         = 210.30;         // 'Food Costs'M6
 
 // Car Insurance ------------------------------------------------------------------------------
 const car_insurance_single  = 465.64;   // 'Car Insurance'!J3
-const car_insurance_married = 466.00;   // 'Car Insurance'!J4
+const car_insurance_married = 466.00;   // 'Car Insurance'!J4 - NO DEPENDENTS
 
 // Cost of Car Ownership ----------------------------------------------------------------------
 const car_price                 = 5341.00;  // 'Cost of Car Ownership'!B1
 const car_miles_per_gallon      = 26;       // 'Cost of Car Ownership'!B2
-const car_finance_cost          = 373.64;   // 'Cost of Car Ownership'!B3
+const car_finance_cost          = 373.64;   // 'Cost of Car Ownership'!B3 - NO DEPENDENTS
 const car_monthly_payment       = 158.74;   // 'Cost of Car Ownership'!B5
 const car_gas_price             = 2.75;     // 'Cost of Car Ownership'!B6
 const car_miles_driven          = 14716;    // 'Cost of Car Ownership'!B7
@@ -566,6 +542,7 @@ const misc_housekeeping_70k_5_plus  = 1115; // 'Misc'!F25
 const misc_apparel_70k_5_plus       = 3095; // 'Misc'!F26
 
 // EITC ----------------------------------------------------------------------------------------
+// All lists should have length of 1067
 const eitc_income_at_least_list =       [
     1    ,
     50   ,

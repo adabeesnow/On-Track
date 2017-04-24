@@ -1,276 +1,408 @@
-/**
- * Created by adsal on 2/22/2017.
- */
-
-let ehcQualifyingChildCareExpenses = function () {
-    let num_kids = number_of_infants + number_of_preschoolers + number_of_schoolagers;
+// Taxes	A9
+function ehcQualifyingChildCareExpenses() {
     return (
-        (num_kids) === 0 ? qualifying_child_care_expense_zero : (
-            (num_kids) == 1 ? qualifying_child_care_expense_one : (
-                (num_kids) > 1 ? qualifying_child_care_expense_2ormore : "False")));
-};
-
-let ehcFederalPayrollTax = function () {
-    return (federal_payroll_tax_multiplier * ehc_gross_income);
-};
-
-let ehcFederalTaxOwed = function () {
-    return ehcFedTaxOwedLessNonRefundableTax() - ehcSumOfRefundableTaxCredits();
-};
-
-let ehcUtahTaxesOwed = function () {
-    return ((ehcStateTaxBeforeCredits() - ehcUtahTaxCredit()) < 0 ? utah_taxes_owed_less_than_zero :
-        (ehcStateTaxBeforeCredits() - ehcUtahTaxCredit()));
-};
-
-//Use CostByAge!B19 formula 'overallCost'
-let ehcTotalExpenses = function () {
-    return overallCost();
-};
-
-let ehcSavings1PercentGross = function () {
-    return ehc_gross_income * 0.01;
-};
-
-let ehcTotalExpensesPlusSavings = function () {  // Used in goalSeek (ehcEITC) function.
-    return ehcSavings1PercentGross() + ehcTotalExpenses();
-};
-
-let ehcTotalTax = function () {
-    return ehcFederalTaxOwed() + ehcUtahTaxesOwed() + ehcFederalPayrollTax();
-};
-
-let ehcNetYearlyIncome = function () {
-    return ehc_gross_income - ehcTotalTax();
-};
-
-//use CostByAge!B9 'familySize' formula
-let ehcFamilySize = function () {
+        (numInfants() + numPreschoolers() + numSchoolagers()) === 0 ? qualifying_childcare_expenses_0_kids :
+            numInfants() + numPreschoolers() + numSchoolagers() === 1 ? qualifying_childcare_expenses_1_kids :
+                numInfants() + numPreschoolers() + numSchoolagers() > 1 ? qualifying_childcare_expenses_2_kids_plus :
+                    "False")
+}
+// Taxes	B9
+function ehcFamilySize() {
     return familySize();
-};
-
-let ehcStandardDeduction = function () {
-    return (number_of_adults === 1 ? (ehcFamilySize() > 1 ? 9250 : 6300) : 12600);
-};
-
-let ehcFederalExemptions = function () {
-    return ehcFamilySize() * 4000;
-};
-
-let ehcStateExemptions = function () {
-    return ehcFamilySize() * 3000;
-};
-
-let ehcGrossTaxableFederal = function () {
-    return ((ehc_gross_income - ehcFederalExemptions() - ehcStandardDeduction() < 0) ? 0 :
-        ehc_gross_income - ehcFederalExemptions() - ehcStandardDeduction());
-};
-
-let ehcUtahStateCreditValueHolder = function () {
-    return (number_of_adults === 1 ? (ehcFamilySize() >= 2 ? 20707 : 13805) : 27610);
-};
-
-let ehcStateTaxBeforeCredits = function () {
-    return ehc_gross_income * 0.05;
-};
-
-let ehcGrossTaxFedUtahStateCreditValueHold = function () {
-    return (ehc_gross_income - ehcUtahStateCreditValueHolder() > 0 ? ehc_gross_income - ehcUtahStateCreditValueHolder() : 0);
-};
-
-let ehcCreditBeforePhaseOut = function () {
-    return (ehcStandardDeduction() + ehcStateExemptions()) * 0.06;
-};
-
-let ehcPhaseOutX = function () {
-    return ehcGrossTaxFedUtahStateCreditValueHold() * 0.013;
-};
-
-let ehcNumberOfChildren = function () {
-    return (number_of_infants + number_of_preschoolers + number_of_schoolagers + number_of_teenagers);
-};
-
-let ehcFederalTaxesOwedBeforeCredits = function () {
-    return (number_of_adults === 1 ? (ehcFamilySize() > 1 ? ((ehcGrossTaxableFederal() - 13150) < 0 ? (ehcGrossTaxableFederal() * 0.1) :
-        ((ehcGrossTaxableFederal() - 50200) < 0 ? (ehcGrossTaxableFederal() - 13150) * 0.15 + 1315 :
-            ((ehcGrossTaxableFederal() - 129600) < 0 ? (ehcGrossTaxableFederal() - 50200) * 0.25 + 1315 + 5557.35 :
-                ((ehcGrossTaxableFederal() - 209850) < 0 ? (ehcGrossTaxableFederal() - 129600) * 0.28 + 1315 + 5557.35 + 19849.75 :
-                    ((ehcGrossTaxableFederal() - 411500) < 0 ? (ehcGrossTaxableFederal() - 209850) * 0.33 + 1315 + 5557.35 + 19849.75 + 22469.72 :
-                        (ehcGrossTaxableFederal() - 411500) * 0.396 + 1315 + 5557.35 + 19849.75 + 22469.72 + 66544.17))))) :
-        ((ehcGrossTaxableFederal() - 9225) < 0 ? (ehcGrossTaxableFederal() * 0.1) :
-            ((ehcGrossTaxableFederal() - 37450) < 0 ? (ehcGrossTaxableFederal() - 9225) * 0.15 + 922.5 :
-                ((ehcGrossTaxableFederal() - 90750) < 0 ? (ehcGrossTaxableFederal() - 37450) * 0.25 + 922.5 + 4233.75 :
-                    ((ehcGrossTaxableFederal() - 189300) < 0 ? (ehcGrossTaxableFederal() - 90751) * 0.28 + 922.5 + 4233.75 + 13324.75 :
-                        ((ehcGrossTaxableFederal() - 411500) < 0 ? (ehcGrossTaxableFederal() - 189301) * 0.33 + 922.5 + 4233.75 + 13324.75 + 27593 :
-                            (ehcGrossTaxableFederal() - 411500) * 0.396 + 922.5 + 4233.75 + 13324.75 + 27593 + 73325.67)))))) :
-        ((ehcGrossTaxableFederal() - 18450) < 0 ? (ehcGrossTaxableFederal() * 0.1) :
-            ((ehcGrossTaxableFederal() - 74900) < 0 ? (ehcGrossTaxableFederal() - 18450) * 0.15 + 1845 :
-                ((ehcGrossTaxableFederal() - 181500) < 0 ? (ehcGrossTaxableFederal() - 74900) * 0.25 + 1845 + 8467.5 :
-                    ((ehcGrossTaxableFederal() - 378600) < 0 ? (ehcGrossTaxableFederal() - 181500) * 0.28 + 1845 + 8467.5 + 26650 :
-                        ((ehcGrossTaxableFederal() - 823000) < 0 ? (ehcGrossTaxableFederal() - 378600) * 0.33 + 1845 + 8467.5 + 26650 + 55188 :
-                            (ehcGrossTaxableFederal() - 823000) * 0.396 + 1845 + 8467.5 + 26650 + 55188 + 146652))))));
-};
-
-let ehcChildTaxCredit = function () {
-    return ehcNumberOfChildren() * 1000;
-};
-
-let ehcAdjustedChildTaxCredit = function () {
-    let val1 = 0;
-    let val2 = 0;
-    let ehc_adj_child_tax_cred = ehcChildTaxCredit();
-    if(ehc_gross_income < 75000) {
-        val1 = ehc_adj_child_tax_cred;
-    } else {
-        if (((ehc_gross_income - 75000) * 0.05) < ehc_adj_child_tax_cred) {
-            val1 = 0;
-        } else {
-            val1 = ehc_adj_child_tax_cred - ((ehc_gross_income - 75000 * 0.05));
-        }
-    }
-    if (val1 < 0) {
-        return 0;
-    }
-    else {
-        if (ehc_gross_income < 75000) {
-            val2 = ehc_adj_child_tax_cred;
-        } else {
-            if (((ehc_gross_income - 75000) * 0.05) < ehc_adj_child_tax_cred) {
-                val2 = 0;
-            } else {
-                val2 = ehc_adj_child_tax_cred - ((ehc_gross_income - 75000 * 0.05));
-            }
-        }
-        return val2;
-    }
-};
-
-
-// icarus test
-
-
-let ehcEITC = function () {
-    let credit_amount_list = [];
-    if (ehcNumberOfChildren() === 1) {
-        credit_amount_list = credit_amount_married_filing_jointly_1_children_list;
-    } else if (ehcNumberOfChildren() === 2) {
-        credit_amount_list = credit_amount_married_filing_jointly_2_children_list;
-    } else if (ehcNumberOfChildren() === 0) {
-        credit_amount_list = credit_amount_married_filing_jointly_0_children_list;
-    } else if (ehcNumberOfChildren() >= 3) {
-        credit_amount_list = credit_amount_married_filing_jointly_3_children_list;
-    }
-    else {
-        return false;
-    }
-
-    let i = 0;
-    while (i <= income_at_least_list.length) {
-        if (i >= income_at_least_list.length) {
-            return false;
-        }
-        if (income_at_least_list[i] > ehc_gross_income) {
-            break;
-        }
-        i++;
-    }
-    return credit_amount_list[i - 1];
-};
-
-let ehcFederalTaxesLessChildCareTaxCredit = function () {
-    return (ehcFederalTaxesOwedBeforeCredits() < ehcChildCareTaxCredit() ? 0 :
-        ehcFederalTaxesOwedBeforeCredits() - ehcChildCareTaxCredit());
-};
-
-let ehcAdjustedChildTaxCreditUsed = function () {
-    return (ehcAdjustedChildTaxCredit() < ehcFederalTaxesLessChildCareTaxCredit() ? ehcAdjustedChildTaxCredit() :
-        ehcFederalTaxesLessChildCareTaxCredit());
-};
-
-let ehcAdditionalChildTaxCredit = function () {
-    return ((ehcNumberOfChildren() <= 3 ? (((((ehc_gross_income - 3000) <= 0 ? 0 : (ehc_gross_income - 3000)) * 0.15)) < ((((ehcNumberOfChildren() * 1000)
-    - ehcAdjustedChildTaxCreditUsed()) <= 0 ? 0 : ((ehcNumberOfChildren() * 1000) - ehcAdjustedChildTaxCreditUsed()))) ?
-        (((ehc_gross_income - 3000) <= 0 ? 0 : (ehc_gross_income - 3000)) * 0.15) : ((((ehcNumberOfChildren() * 1000) - ehcAdjustedChildTaxCreditUsed()) <= 0 ? 0 :
-            ((ehcNumberOfChildren() * 1000) - ehcAdjustedChildTaxCreditUsed())))) : (((ehc_gross_income - 3000) * 0.15) >= ((ehcNumberOfChildren() * 1000)
-    - ehcAdjustedChildTaxCreditUsed()) ? ((ehcNumberOfChildren() * 1000) - ehcAdjustedChildTaxCreditUsed()) : (((((0.0765 * ehc_gross_income) - ehcEITC()) < 0 ? 0 :
-        ((0.0765 * ehc_gross_income) - ehcEITC())) > (((ehc_gross_income - 3000) <= 0 ? 0 : (ehc_gross_income - 3000)) * 0.15) ? (((0.0765 * ehc_gross_income) - ehcEITC()) < 0 ? 0 :
-        (((0.0765 * ehc_gross_income) - ehcEITC()))) : (((ehc_gross_income - 3000) <= 0 ? 0 : (ehc_gross_income - 3000)) * 0.15)) < ((((ehcNumberOfChildren() * 1000)
-    - ehcAdjustedChildTaxCreditUsed()) <= 0 ? 0 : ((ehcNumberOfChildren() * 1000) - ehcAdjustedChildTaxCreditUsed()))) ? ((((0.0765 * ehc_gross_income) - ehcEITC()) < 0 ? 0 :
-        ((0.0765 * ehc_gross_income) - ehcEITC())) > (((ehc_gross_income - 3000) <= 0 ? 0 : (ehc_gross_income - 3000)) * 0.15) ? (((0.0765 * ehc_gross_income) - ehcEITC())
-    < 0 ? 0 : (((0.0765 * ehc_gross_income) - ehcEITC()))) : (((ehc_gross_income - 3000) <= 0 ? 0 : (ehc_gross_income - 3000)) * 0.15)) : ((ehcNumberOfChildren() * 1000)
-    - ehcAdjustedChildTaxCreditUsed())))));
-};
-
-// let ehcChildCareTaxCredit = function () {
-//     let base_level = 43000;
-//
-//     if (ehc_gross_income > 75000) {
-//         return 0
-//     } else {
-//         let difference_points = base_level - ehc_gross_income;
-//         if (difference_points < 0) {
-//             return .2;
-//         }
-//         else {
-//             difference_points = Math.floor(difference_points / 2000);
-//             return difference_points * .01 + .2;
-//         }
-//     }
-// };
-let ehcChildCareTaxCredit = function () {
-    return ( ehc_gross_income>110000? 0: ( ehc_gross_income>43000? ehcQualifyingChildCareExpenses()*0.2: ( ehc_gross_income>41000? ehcQualifyingChildCareExpenses()*0.21: ( ehc_gross_income>39000? ehcQualifyingChildCareExpenses()*0.22: ( ehc_gross_income>37000? ehcQualifyingChildCareExpenses()*0.23: ( ehc_gross_income>35000? ehcQualifyingChildCareExpenses()*0.24: ( ehc_gross_income>33000? ehcQualifyingChildCareExpenses()*0.25: ( ehc_gross_income>31000? ehcQualifyingChildCareExpenses()*0.26: ( ehc_gross_income>29000? ehcQualifyingChildCareExpenses()*0.27: ( ehc_gross_income>27000? ehcQualifyingChildCareExpenses()*0.28: ( ehc_gross_income>25000? ehcQualifyingChildCareExpenses()*0.29: ( ehc_gross_income>23000? ehcQualifyingChildCareExpenses()*0.3: ( ehc_gross_income>21000? ehcQualifyingChildCareExpenses()*0.31: ( ehc_gross_income>19000? ehcQualifyingChildCareExpenses()*0.32: ( ehc_gross_income>17000? ehcQualifyingChildCareExpenses()*0.33: ( ehc_gross_income>17000? ehcQualifyingChildCareExpenses()*0.34: ( ehc_gross_income<15000? ehcQualifyingChildCareExpenses()*0.35: 0 ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
-};
-
-let ehcSumOfNonRefundableTaxCredits = function () {
-    return ehcChildCareTaxCredit() + ehcAdjustedChildTaxCredit();
-};
-
-let ehcSumOfRefundableTaxCredits = function () {
-    if (ehcEITC() == false)
-        return ehcAdditionalChildTaxCredit();
-    else
-        return ehcEITC() + ehcAdditionalChildTaxCredit();
-};
-
-let ehcFedTaxOwedLessNonRefundableTax = function () {
-    return (ehcFederalTaxesOwedBeforeCredits() - ehcSumOfNonRefundableTaxCredits() < 0 ? 0 :
-        ehcFederalTaxesOwedBeforeCredits() - ehcSumOfNonRefundableTaxCredits());
-};
-
-let ehcFedDeductionPlusStateExemption = function () {   // Not used in original spreadsheet.
-    return (ehcStateExemptions() + ehcStandardDeduction()) * 0.06;
-};
-
-let ehcUtahTaxCredit = function () {
-    return (ehcPhaseOutX() > ehcCreditBeforePhaseOut() ? 0 : ehcCreditBeforePhaseOut() - ehcPhaseOutX());
-};
-
-/**
- * Performs a goalSeek function 6x for accuracy, returns the new ehc_gross_income value.
- * Changing cell:   gross
- * Goal cell:       expense
- * GoalSeek cell:   net
- */
-let ehcCalcGross = function () {
-    let gross = ehc_gross_income;
-    let expense = ehcTotalExpensesPlusSavings();
-    let tax = ehcTotalTax();
-    let net = function (gross, tax) {
-        return gross - tax;
+}
+// Taxes	C9
+function ehcStandardDeduction() {
+    return num_adults === 1 ?
+        (ehcFamilySize() > 1 ? standard_deduction_1_adults_1_kids_plus :
+            standard_deduction_1_adults_0_kids)
+        :
+        standard_deduction_2_adults_any_kids;
+}
+// Taxes	D9
+function ehcExemptionsFederal() {
+    return ehcFamilySize() * exemptions_federal_each;
+}
+// Taxes	E9
+function ehcExemptionsState() {
+    return ehcFamilySize() * exemptions_state_each;
+}
+// Taxes    F9
+let ehc_gross_income = 19999; // Starting guess value.
+function ehcCalculateGrossIncome() {
+    let ehc_gross = ehc_gross_income;
+    let ehc_expenses_plus_savings = ehcTotalExpensesPlusSavings();
+    let ehc_total_tax = ehcTotalTax();
+    let ehc_net_income = function (ehc_gross, ehc_total_tax) {
+        return ehc_gross - ehc_total_tax;
     };
 
-    for (let i = 0; i < 50; i++) {
-        gross = goalSeek({
-            Func: net,                      // The function which should return the value of the goal cell.
-            aFuncParams: [gross, tax],      // The params to be passed to the function above.
-            oFuncArgTarget: {
-                Position: 0                 // The position in the aFuncParams array of the value which will be changed.
-            },
-            Goal: expense,                  // The value which the function above should match.
-            Tol: 0.01,                      // The tolerance of the final result.
-            maxIter: 1000                   // The maximum number of iterations for the goalSeek function to take.
-        });
+    ehc_gross = goalSeek({
+        Func: ehc_net_income,   // The function which should return the value of the goal cell.
+        aFuncParams: [ehc_gross, ehc_total_tax],    // The params to be passed to the function above.
+        oFuncArgTarget: {
+            Position: 0 // The position in the aFuncParams array of the value which will be changed.
+        },
+        Goal: ehc_expenses_plus_savings,    // The value which the function above should match.
+        Tol: 0.01,  // The tolerance of the final result.
+        maxIter: 1000   // The maximum number of iterations for the goalSeek function to take.
+    });
+    return ehc_gross;
+}
+// Taxes	G9
+function ehcGrossTaxableFederal() {
+    return (ehc_gross_income - ehcExemptionsFederal() - ehcStandardDeduction()) > 0 ?
+        (ehc_gross_income - ehcExemptionsFederal() - ehcStandardDeduction())
+        :
+        0;
+}
+// Taxes	H9
+function ehcUtahStateCreditValueHolder() {
+    return num_adults === 1 ?
+        (ehcFamilySize() >= 2 ? utah_state_credit_value_holder_1_adults_2_kids_plus :
+            utah_state_credit_value_holder_1_adults_1_kids_minus)
+        :
+        utah_state_credit_value_holder_2_adults_any_kids;
+}
+// Taxes	I9
+function ehcStateTaxBeforeCredits() {
+    return ehc_gross_income * state_tax_multiplier;
+}
+// Taxes	J9
+function ehcGrossTaxableFederalUtahStateCreditValueHolder() {
+    return (ehc_gross_income - ehcUtahStateCreditValueHolder()) > 0 ?
+        (ehc_gross_income - ehcUtahStateCreditValueHolder())
+        :
+        0;
+}
+// Taxes	K9
+function ehcCreditBeforePhaseOut() {
+    return (ehcStandardDeduction() + ehcExemptionsState())
+        *
+        credit_before_phase_out_multiplier;
+}
+// Taxes	L9
+function ehcPhaseOutXMultiplier() {
+    return ehcGrossTaxableFederalUtahStateCreditValueHolder() * phase_out_multiplier;
+}
+// Taxes	M9
+function ehcNumKids() {
+    return numInfants() + numPreschoolers() + numSchoolagers() + numTeenagers();
+}
+// Taxes	N9
+function ehcFederalTaxesOwedBeforeCredits() {
+    return num_adults === 1 ? (
+        ehcFamilySize() > 1 ? ( // adults = 1, family size > 1
+            ehcGrossTaxableFederal() - 13150 < 0 ?
+                ehcGrossTaxableFederal()
+                * 0.1
+                : (
+                ehcGrossTaxableFederal() - 50200 < 0 ?
+                    (ehcGrossTaxableFederal() - 13150)
+                    * 0.15 + 1315
+                    : (
+                    ehcGrossTaxableFederal() - 129600 < 0 ?
+                        (ehcGrossTaxableFederal() - 50200)
+                        * 0.25 + 1315 + 5557.35
+                        : (
+                        ehcGrossTaxableFederal() - 209850 < 0 ?
+                            (ehcGrossTaxableFederal() - 129600)
+                            * 0.28 + 1315 + 5557.35 + 19849.75
+                            : (
+                            ehcGrossTaxableFederal() - 411500 < 0 ?
+                                (ehcGrossTaxableFederal() - 209850)
+                                * 0.33 + 1315 + 5557.35 + 19849.75 + 22469.72
+                                : (
+                                (ehcGrossTaxableFederal() - 209850)
+                                * 0.33 + 1315 + 5557.35 + 19849.75 + 22469.72 + 66544.17
+                            ))))))
+            : ( // adults = 1, family size = 1
+            ehcGrossTaxableFederal() - 9225 < 0 ?
+                ehcGrossTaxableFederal() * 0.1
+                : (
+                ehcGrossTaxableFederal() - 37450 < 0 ?
+                    (ehcGrossTaxableFederal() - 9225)
+                    * 0.15 + 922.5
+                    : (
+                    ehcGrossTaxableFederal() - 90750 < 0 ?
+                        (ehcGrossTaxableFederal() - 37450)
+                        * 0.25 + 922.5 + 4233.75
+                        : (
+                        ehcGrossTaxableFederal() - 189300 < 0 ?
+                            (ehcGrossTaxableFederal() - 90751)
+                            * 0.28 + 922.5 + 4233.75 + 13324.75
+                            : (
+                            ehcGrossTaxableFederal() - 411500 < 0 ?
+                                (ehcGrossTaxableFederal() - 189301)
+                                * 0.33 + 922.5 + 4233.75 + 13324.75 + 27593
+                                : (
+                                (ehcGrossTaxableFederal() - 411500)
+                                * 0.396 + 922.5 + 4233.75 + 13324.75 + 27593 + 73325.67
+                            )))))))
+        : ( // adults > 1, family size = any
+            ehcGrossTaxableFederal() - 18450 < 0 ?
+                ehcGrossTaxableFederal() * 0.1
+                : (
+                ehcGrossTaxableFederal() - 74900 < 0 ?
+                    (ehcGrossTaxableFederal() - 18450)
+                    * 0.15 + 1845
+                    : (
+                    ehcGrossTaxableFederal() - 181500 < 0 ?
+                        (ehcGrossTaxableFederal() - 74900)
+                        * 0.25 + 1845 + 8467.5
+                        : (
+                        ehcGrossTaxableFederal() - 378600 < 0 ?
+                            (ehcGrossTaxableFederal() - 181500)
+                            * 0.28 + 1845 + 8467.5 + 26650
+                            : (
+                            ehcGrossTaxableFederal() - 823000 < 0 ?
+                                (ehcGrossTaxableFederal() - 378600)
+                                * 0.33 + 1845 + 8467.5 + 26650 + 55188
+                                : (
+                                (ehcGrossTaxableFederal() - 823000)
+                                * 0.396 + 1845 + 8467.5 + 26650 + 55188 + 146652
+                            ))))));
+}
+// Taxes	O9
+function ehcEITC() {
+    // choose correct list based on number of children
+    let eitc_lookup_list = (
+        ehcNumKids() === 1 ? eitc_mfj_1_kids_amounts_list
+            : (ehcNumKids() === 2 ? eitc_mfj_2_kids_amounts_list
+            : (ehcNumKids() === 0 ? eitc_mfj_0_kids_amounts_list
+                : (ehcNumKids() >= 3 ? eitc_mfj_3_kids_amounts_list
+                        : false
+                ))));
+    // find index in at-least/less-than lists where gross income > at-least[index] and < less-than[index]
+    for (let i = 0; i < eitc_income_at_least_list.length; i++) {
+        if (ehc_gross_income >= eitc_income_at_least_list[i] &&
+            ehc_gross_income < eitc_income_less_than_list[i]) {
+            // get the eitc value at that index
+            return eitc_lookup_list[i];
+        }
     }
+    // return 0 if we looked through the whole list and didn't find a value (simulates IFNA(index-match, 0))
+    return 0;
+}
+// Taxes	P6
+function ehcChildTaxCredit() {
+    return ehcFederalTaxesOwedBeforeCredits() * child_tax_credit_each;
+}
+// Taxes	Q9
+function ehcAdjustedChildTaxCredit() {
+    return (
+        ehc_gross_income < adjusted_child_tax_credit_limit ?
+            ehcChildTaxCredit()
+            : (
+            (ehc_gross_income - adjusted_child_tax_credit_limit)
+            * adjusted_child_tax_credit_multiplier < ehcChildTaxCredit() ?
+                0 :
+                ehcChildTaxCredit() -
+                (ehc_gross_income
+                - adjusted_child_tax_credit_limit
+                * adjusted_child_tax_credit_multiplier)
+        )
+    ) < 0 ? 0
+        :
+        ehc_gross_income < adjusted_child_tax_credit_limit ?
+            ehcChildTaxCredit()
+            :
+            (ehc_gross_income - adjusted_child_tax_credit_limit)
+            * adjusted_child_tax_credit_multiplier < ehcChildTaxCredit() ?
+                0 :
+                ehcChildTaxCredit() -
+                (ehc_gross_income
+                - adjusted_child_tax_credit_limit
+                * adjusted_child_tax_credit_multiplier);
+}
+// Taxes	R9
+function ehcFederalTaxesLessChildCareTaxCredit() {
+    return ehcFederalTaxesOwedBeforeCredits() < ehcChildCareTaxCredit() ? 0 :
+        ehcFederalTaxesOwedBeforeCredits() - ehcChildCareTaxCredit();
+}
+// Taxes	S9
+function ehcAdjustedChildTaxCreditUsed() {
+    return ehcAdjustedChildTaxCredit() < ehcFederalTaxesLessChildCareTaxCredit() ?
+        ehcAdjustedChildTaxCredit() :
+        ehcFederalTaxesLessChildCareTaxCredit();
+}
+// Taxes	T9
+function ehcAdditionalChildTaxCredit() {
+    // Automatically generated from Excel -> Javascript converter.
+    return (ehcNumKids() <= 3 ?
+        (((((ehc_gross_income - additional_child_tax_credit_income_adjustment) <= 0 ?
+            0 : (ehc_gross_income - additional_child_tax_credit_income_adjustment))
+        * additional_child_tax_credit_income_adjustment_multiplier)) < ((((ehcNumKids() * 1000)
+        - ehcAdjustedChildTaxCreditUsed()) <= 0 ?
+            0 : ((ehcNumKids() * 1000) - ehcAdjustedChildTaxCreditUsed()))) ?
+            (((ehc_gross_income - additional_child_tax_credit_income_adjustment) <= 0 ?
+                0 : (ehc_gross_income - additional_child_tax_credit_income_adjustment))
+            * additional_child_tax_credit_income_adjustment_multiplier) :
+            ((((ehcNumKids() * 1000) - ehcAdjustedChildTaxCreditUsed()) <= 0 ?
+                0 : ((ehcNumKids() * 1000) - ehcAdjustedChildTaxCreditUsed())))) :
+        (((ehc_gross_income - additional_child_tax_credit_income_adjustment)
+        * additional_child_tax_credit_income_adjustment_multiplier) >= ((ehcNumKids() * 1000)
+        - ehcAdjustedChildTaxCreditUsed()) ? ((ehcNumKids() * 1000) - ehcAdjustedChildTaxCreditUsed()) :
+            (((((additional_child_tax_credit_income_eitc_multiplier * ehc_gross_income) - ehcEITC) < 0 ?
+                0 : ((additional_child_tax_credit_income_eitc_multiplier * ehc_gross_income)
+                - ehcEITC)) > (((ehc_gross_income - additional_child_tax_credit_income_adjustment) <= 0 ?
+                0 : (ehc_gross_income - additional_child_tax_credit_income_adjustment))
+            * additional_child_tax_credit_income_adjustment_multiplier) ?
+                (((additional_child_tax_credit_income_eitc_multiplier * ehc_gross_income) - ehcEITC) < 0 ?
+                    0 : (((additional_child_tax_credit_income_eitc_multiplier * ehc_gross_income)
+                    - ehcEITC))) : (((ehc_gross_income - additional_child_tax_credit_income_adjustment) <= 0 ?
+                    0 : (ehc_gross_income - additional_child_tax_credit_income_adjustment))
+                * additional_child_tax_credit_income_adjustment_multiplier)) < ((((ehcNumKids() * 1000)
+            - ehcAdjustedChildTaxCreditUsed()) <= 0 ?
+                0 : ((ehcNumKids() * 1000) - ehcAdjustedChildTaxCreditUsed()))) ?
+                ((((additional_child_tax_credit_income_eitc_multiplier * ehc_gross_income) - ehcEITC) < 0 ?
+                    0 : ((additional_child_tax_credit_income_eitc_multiplier * ehc_gross_income)
+                    - ehcEITC)) > (((ehc_gross_income - additional_child_tax_credit_income_adjustment) <= 0 ?
+                    0 : (ehc_gross_income - additional_child_tax_credit_income_adjustment))
+                * additional_child_tax_credit_income_adjustment_multiplier) ?
+                    (((additional_child_tax_credit_income_eitc_multiplier * ehc_gross_income) - ehcEITC) < 0 ?
+                        0 : (((additional_child_tax_credit_income_eitc_multiplier * ehc_gross_income) - ehcEITC))) :
+                    (((ehc_gross_income - additional_child_tax_credit_income_adjustment) <= 0 ?
+                        0 : (ehc_gross_income - additional_child_tax_credit_income_adjustment))
+                    * additional_child_tax_credit_income_adjustment_multiplier)) :
+                ((ehcNumKids() * 1000) - ehcAdjustedChildTaxCreditUsed()))));
+}
+// Taxes	U9
+function ehcChildCareTaxCredit() {
+    return (ehc_gross_income > 75000 ?
+        0 :
+        (ehc_gross_income > 43000 ?
+            ehcQualifyingChildCareExpenses() * 0.2 :
+            (ehc_gross_income > 41000 ?
+                ehcQualifyingChildCareExpenses() * 0.21 :
+                (ehc_gross_income > 39000 ?
+                    ehcQualifyingChildCareExpenses() * 0.22 :
+                    (ehc_gross_income > 37000 ?
+                        ehcQualifyingChildCareExpenses() * 0.23 :
+                        (ehc_gross_income > 35000 ?
+                            ehcQualifyingChildCareExpenses() * 0.24 :
+                            (ehc_gross_income > 33000 ?
+                                ehcQualifyingChildCareExpenses() * 0.25 :
+                                (ehc_gross_income > 31000 ?
+                                    ehcQualifyingChildCareExpenses() * 0.26 :
+                                    (ehc_gross_income > 29000 ?
+                                        ehcQualifyingChildCareExpenses() * 0.27 :
+                                        (ehc_gross_income > 27000 ?
+                                            ehcQualifyingChildCareExpenses() * 0.28 :
+                                            (ehc_gross_income > 25000 ?
+                                                ehcQualifyingChildCareExpenses() * 0.29 :
+                                                (ehc_gross_income > 23000 ?
+                                                    ehcQualifyingChildCareExpenses() * 0.3 :
+                                                    (ehc_gross_income > 21000 ?
+                                                        ehcQualifyingChildCareExpenses() * 0.31 :
+                                                        (ehc_gross_income > 19000 ?
+                                                            ehcQualifyingChildCareExpenses() * 0.32 :
+                                                            (ehc_gross_income > 17000 ?
+                                                                ehcQualifyingChildCareExpenses() * 0.33 :
+                                                                (ehc_gross_income > 17000 ?
+                                                                    ehcQualifyingChildCareExpenses() * 0.34 :
+                                                                    (ehc_gross_income < 15000 ?
+                                                                            ehcQualifyingChildCareExpenses() * 0.35 :
+                                                                            0
+                                                                    )))))))))))))))));
+}
+// Taxes	V9
+function ehcSumOfNonRefundableTaxCredits() {
+    return ehcChildCareTaxCredit() + ehcAdjustedChildTaxCredit()
+}
+// Taxes	W9
+function ehcSumOfRefundableTaxCredits() {
+    return ehcEITC() + ehcAdditionalChildTaxCredit();
+}
+// Taxes	X9
+function ehcFederalTaxesOwedLessNonRefundableTaxCredits() {
+    return ehcFederalTaxesOwedBeforeCredits() - ehcSumOfNonRefundableTaxCredits() < 0 ?
+        0 :
+        ehcFederalTaxesOwedBeforeCredits() - ehcSumOfNonRefundableTaxCredits();
+}
+// Taxes	Y9 - NO DEPENDENTS
+function ehcFederalDeductionPlusStateExemtionTimesMultiplier() {
+    return (ehcExemptionsState() + ehcStandardDeduction())
+        * fed_deduction_plus_state_exemption_multiplier;
+}
+// Taxes	Z9
+function ehcUtahTaxCredit() {
+    return ehcPhaseOutXMultiplier() > ehcCreditBeforePhaseOut() ?
+        0 :
+        ehcCreditBeforePhaseOut() - ehcPhaseOutXMultiplier();
+}
+// Taxes	AA9
+function ehcFederalPayrollTax() {
+    return ehc_gross_income * federal_payroll_tax_multiplier;
+}
+// Taxes	AB9
+function ehcFederalTaxOwed() {
+    return ehcFederalTaxesOwedLessNonRefundableTaxCredits() - ehcSumOfRefundableTaxCredits();
+}
+// Taxes	AC9
+function ehcUtahTaxOwed() {
+    return (ehcStateTaxBeforeCredits() - ehcUtahTaxCredit()) < 0 ?
+        0 :
+        (ehcStateTaxBeforeCredits() - ehcUtahTaxCredit());
+}
+// Taxes	AD9
+function ehcTotalExpenses() {
+    return costOverall();
+}
+// Taxes	AE9
+function ehcSavingsAsPercentageOfGrossIncome() {
+    return ehc_gross_income * savings_multiplier;
+}
+// Taxes	AF9
+function ehcTotalExpensesPlusSavings() {
+    return ehcTotalExpenses() + ehcSavingsAsPercentageOfGrossIncome();
+}
+// Taxes	AG9
+function ehcTotalTax() {
+    return ehcFederalTaxOwed() + ehcUtahTaxOwed() + ehcFederalPayrollTax();
+}
+// Taxes	AH9
+function ehcNetYearlyIncome() {
+    return ehc_gross_income - ehcTotalTax();
+}
 
-    return gross;
-};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

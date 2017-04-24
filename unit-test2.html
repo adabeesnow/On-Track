@@ -5,48 +5,53 @@
     <title>On-Track Unit Test</title>
 </head>
 
+<!--Libraries-->
 <script src="jquery/jquery-3.1.1.js"></script>
 <script src="js2/lib/alphanum.js"></script>
-<link rel="stylesheet" href="unit-test.css"/>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script src="js2/lib/goalSeek.js"></script>
+<link rel="stylesheet"
+      href="unit-test.css"/>
+<link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous">
+<link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+      integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+      crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-<script src="js2/car-insurance.js"></script>
+<!--Calculation Scripts-->
 <script src="js2/childcare-costs.js"></script>
 <script src="js2/cost-by-age.js"></script>
 <script src="js2/cost-of-car-ownership.js"></script>
-<script src="js2/food-costs.js"></script>
 <script src="js2/generated-standard.js"></script>
-<script src="js2/goalSeek.js"></script>
 <script src="js2/housing.js"></script>
 <script src="js2/misc.js"></script>
 <script src="js2/taxes-ehc.js"></script>
 <script src="js2/taxes-mhc.js"></script>
-<script src="js2/user-inputs.js"></script>
-<script src="js2/variables.js"></script>
 <script src="js2/unit-test.js"></script>
 <script src="js2/unit-test-data.js"></script>
-<body>
-I'M 2
-<div class="box">
+<script src="js2/variables.js"></script>
 
+<body>
+
+<!--Unit Test Controls-->
+<div class="box">
     <div class="row header">
         <div class="col-xs-1 col-xs-offset-3">
             <strong>Health Care</strong>
             <div class="radio">
                 <label>
-                    <input type="radio" name="radio-healthcare" id="radio-ehc" value=false checked>
+                    <input type="radio" name="radio-healthcare" id="radio-ehc" value="No" checked>
                     Employer
                 </label>
             </div>
             <div class="radio">
                 <label>
-                    <input type="radio" name="radio-healthcare" id="radio-mhc" value=true>
+                    <input type="radio" name="radio-healthcare" id="radio-mhc" value="Yes">
                     Marketplace
                 </label>
             </div>
@@ -75,81 +80,14 @@ I'M 2
                 </label>
             </div>
         </div>
-
-        <!--<div class="col-xs-1">-->
-        <!--<strong>Use Family Care</strong>-->
-        <!--<div class="radio">-->
-        <!--<label>-->
-        <!--<input type="radio" name="radio-family-care" id="radio-family-care-used" value=true>-->
-        <!--Yes-->
-        <!--</label>-->
-        <!--</div>-->
-        <!--<div class="radio">-->
-        <!--<label>-->
-        <!--<input type="radio" name="radio-family-care" id="radio-family-care-not-used" value=false checked>-->
-        <!--No-->
-        <!--</label>-->
-        <!--</div>-->
-        <!--</div>-->
-
         <p>Adult Bus Passes default to 1</p>
         <p>Child Bus Passes default to Number of Schoolagers and Teenagers</p>
-        <!--<div class="col-xs-1">-->
-        <!--<strong>Adult Bus Passes</strong>-->
-        <!--<div class="radio">-->
-        <!--<label>-->
-        <!--<input type="radio" name="radio-public-transport-adult" id="radio-public-transport-adult-none" value=0 checked>-->
-        <!--None-->
-        <!--</label>-->
-        <!--</div>-->
-        <!--<div class="radio">-->
-        <!--<label>-->
-        <!--<input type="radio" name="radio-public-transport-adult" id="radio-public-transport-adult-one" value=1>-->
-        <!--One Adult-->
-        <!--</label>-->
-        <!--</div>-->
-        <!--<div class="radio">-->
-        <!--<label>-->
-        <!--<input type="radio" name="radio-public-transport-adult" id="radio-public-transport-adult-both" value=2>-->
-        <!--Both Adults-->
-        <!--</label>-->
-        <!--</div>-->
-        <!--</div>-->
-
-        <!--<div class="col-xs-2">-->
-        <!--<strong>Child Bus Passes</strong>-->
-        <!--<div class="radio">-->
-        <!--<label>-->
-        <!--<input type="radio" name="radio-public-transport-child" id="radio-public-transport-child-none" value="none" checked>-->
-        <!--None-->
-        <!--</label>-->
-        <!--</div>-->
-        <!--<div class="radio">-->
-        <!--<label>-->
-        <!--<input type="radio" name="radio-public-transport-child" id="radio-public-transport-child-schoolager" value="schoolager">-->
-        <!--Each Schoolager-->
-        <!--</label>-->
-        <!--</div>-->
-        <!--<div class="radio">-->
-        <!--<label>-->
-        <!--<input type="radio" name="radio-public-transport-child" id="radio-public-transport-child-teenager" value="teenager">-->
-        <!--Each Teenager-->
-        <!--</label>-->
-        <!--</div>-->
-        <!--<div class="radio">-->
-        <!--<label>-->
-        <!--<input type="radio" name="radio-public-transport-child" id="radio-public-transport-child-teen-and-schoolager" value="both">-->
-        <!--Each Teen and Schoolager-->
-        <!--</label>-->
-        <!--</div>-->
-
     </div>
 
-
-
+    <!--Unit Test Table-->
     <div class="row content">
-
         <table id="unit" class="table table-striped table-condensed table-bordered table-hover header-fixed">
+            <!--Table Headings-->
             <thead>
             <tr>
                 <th class="composition">Ad</th>
@@ -177,6 +115,7 @@ I'M 2
                 <th class="expense">Savings</th>
             </tr>
             </thead>
+            <!--Table Body (Unit test data will be appended here)-->
             <tbody>
 
             </tbody>
@@ -184,8 +123,7 @@ I'M 2
         </table>
     </div>
 
-
-
+    <!--Table Footer (Repeat of headers - makes it easier tell columns apart)-->
     <div class="row footer">
         <table id="footer" class="table table-condensed table-bordered header-fixed">
             <thead>
