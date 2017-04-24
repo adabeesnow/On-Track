@@ -1,38 +1,33 @@
-/**
- * Created by bpalm_000 on 2/22/2017.
- */
-let taxOnCarPurchase = function() {
-    return car_price * 0.071;
-};
-
-let carPaymentMonthly = function() {
+// CostOfCarOwnership	B13
+function carTaxOnPurchase() {
+    return car_price * car_tax_multiplier;
+}
+// CostOfCarOwnership	B14
+function carPaymentsMonthly() {
     return car_monthly_payment / 2;
-};
-
-let taxOnCarPurchaseYearly = function() {
-    return taxOnCarPurchase() / 6;
-};
-
-let carPaymentYearly = function() {
-    return  carPaymentMonthly() * 12;
-};
-
-let gasYearly = function() {
-    return car_gas_price * (car_miles / car_miles_per_gallon);
-};
-
-let totalCostPerCar = function() {
-    return car_registration +
-        car_emissions +
-        car_maintenance +
-        taxOnCarPurchaseYearly() +
-        carPaymentYearly() +
-        gasYearly();
-};
-
-// let totalCostTwoCars = function() { //Not used
-//     return totalCostPerCar() * 2;
-// };
-
-
-
+}
+// CostOfCarOwnership	C13
+function carTaxOnPurchaseAnnual() {
+    return carTaxOnPurchase() / 6;
+}
+// CostOfCarOwnership	C14
+function carPaymentsAnnual() {
+    return carPaymentsMonthly() * 12;
+}
+// CostOfCarOwnership	C15
+function carGasCostAnnual() {
+    return car_gas_price * (car_miles_driven / car_miles_per_gallon);
+}
+// CostOfCarOwnership	C17
+function carTotalCostAnnualOne() {
+    return (car_registration_annual +
+            car_emissions_annual +
+            car_maintenance_annual +
+            carTaxOnPurchaseAnnual() +
+            carPaymentsAnnual() +
+            carGasCostAnnual());
+}
+// CostOfCarOwnership	C18 - NO DEPENDENTS
+function carTotalCostAnnualTwo() {
+    return carTotalCostAnnualOne() * 2;
+}

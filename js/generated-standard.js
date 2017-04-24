@@ -1,89 +1,93 @@
-/**
- * Created by bpalm_000 on 2/22/2017.
- */
-let grossHourlyIncome = function(){
-    return annualGrossIncome() / 52 / 40;
-};
+// GeneratedStandard	J4
+function finalHousingAnnual() {
+    return rooms === "Standard" ? costTotalHousing() :
+        rooms === 1 ? housing1BedAverageAnnual() :
+            rooms === 2 ? housing2BedAverageAnnual() :
+                rooms === 3 ? housing3BedAverageAnnual() :
+                    rooms === 4 ? housing4BedAverageAnnual() :
+                        0;
+}
+// GeneratedStandard	J7
+function finalChildcareAnnual() {
+    return estimated_baby_sitting_annual > 0 ? estimated_baby_sitting_annual :
+        use_family_care === "Yes" ? costTotalFamilyCare() :
+            costTotalCenterCare();
+}
+// GeneratedStandard	J10
+function finalFoodAnnual() {
+    return costTotalFood();
+}
+// GeneratedStandard	J13
+function finalCarInsuranceAnnual() {
+    return costTotalCarInsurance();
+}
+// GeneratedStandard	J16
+function finalCarOwnershipAnnual() {
+    return costTotalCarOwnership();
+}
+// GeneratedStandard	J19
+function finalPublicTransportationAnnual() {
+    return costTotalPublicTransport();
+}
+// GeneratedStandard	J22
+function finalHealthInsuranceAnnual() {
+    return marketplace_healthcare === "No" ? costEmployerHealthInsurance() :
+        costTotalMarketplaceExpense();
+}
+// GeneratedStandard	J25
+function finalOutOfPocketAnnual() {
+    return marketplace_healthcare === "No" ? costTotalOOPEmployer() :
+        costTotalOOPMarketplace();
+}
+// GeneratedStandard	J28
+function finalEntertainmentAnnual() {
+    return costTotalEntertainment();
+}
+// GeneratedStandard	J31
+function finalMiscellaneousAnnual() {
+    return costTotalMisc();
+}
+// GeneratedStandard	AD4
+function finalSavingsAnnual() {
+    return marketplace_healthcare === "No" ? ehcSavingsAsPercentageOfGrossIncome() :
+        mhcSavingsAsPercentageOfGrossIncome();
+}
+// GeneratedStandard	AD7
+function finalNetTaxesAnnual() {
+    return marketplace_healthcare === "No" ? ehcTotalTax() :
+        mhcTotalTax()
+}
+// GeneratedStandard	Y22
+function finalGrossIncomeAnnual() {
+    return marketplace_healthcare === "No" ? ehc_gross_income :
+        mhc_gross_income;
+}
+// GeneratedStandard	AC22
+function finalGrossIncomeAnnualHourly() {
+    return finalGrossIncomeAnnual() / (52 * 40);
+}
+// GeneratedStandard	Y24
+function finalNetIncomeAnnual() {
+    return marketplace_healthcare === "No" ? ehcNetYearlyIncome() :
+        mhcNetYearlyIncome();
+}
+// GeneratedStandard	AC24
+function finalNetIncomeAnnualHourly() {
+    return finalNetIncomeAnnual() / (52 * 40);
+}
+// GeneratedStandard	Y27
+function finalTotalExpensesAnnual() {
+    return finalHousingAnnual() +
+    finalChildcareAnnual() +
+    finalFoodAnnual() +
+    finalCarInsuranceAnnual() +
+    finalCarOwnershipAnnual() +
+    finalPublicTransportationAnnual() +
+    finalHealthInsuranceAnnual() +
+    finalOutOfPocketAnnual() +
+    finalEntertainmentAnnual() +
+    finalMiscellaneousAnnual();
+}
 
-let netHourlyIncome = function(){
-    return annualNetIncome() / 52 / 40;
-};
 
-let savingsYearly = function() {
-    if (use_marketplace_health_insurance_bool == false) {
-        return ehcSavings1PercentGross();
-    } else {
-        return mhcSavings1PercentGross();
-    }
-};
-
-let netTaxesYearly = function() {
-    return (use_marketplace_health_insurance_bool==false?ehcTotalTax():mhcTotalTax());
-};
-
-let annualFoodCosts = function() {
-    //return foodCostAnnualTotal();
-    return annualFoodCostFamilyType();
-};
-
-let annualCarInsurance = function() {
-    return carInsurance();
-};
-
-let annualCarOwnership = function() {
-    return carOwnership();
-};
-
-let annualPublicTransportation = function() {
-    return publicTransitCost();
-};
-
-let annualHealthInsurance = function() {
-    return (use_marketplace_health_insurance_bool==false?healthCareEmployerCost():marketplaceHealthCareCostBeforeOOP());
-};
-
-let annualOutOfPocketCosts = function() {
-    return (use_marketplace_health_insurance_bool==false?healthCareEmployerOOPTotal():healthCareMarketplaceOOPTotal());
-};
-
-let annualEntertainmentCosts = function() {
-    return entertainmentCost();
-};
-
-let annualMiscellaneousCosts = function() {
-    return miscCost();
-};
-
-let annualHousingCosts = function() {
-    return (number_of_bedrooms==-1?housingCostAutomatic():(number_of_bedrooms==1?annualOneBedAverage():
-        (number_of_bedrooms==2?annualTwoBedAverage():(number_of_bedrooms==3?annualThreeBedAverage():
-            (number_of_bedrooms==4?annualFourBedAverage:0)))));
-};
-
-let annualChildcareCosts = function() {
-    return (estimated_babysitting_cost>0?estimated_babysitting_cost:(use_family_care_bool==true?familyChildCareCost():childCareAnnualTotal()));
-};
-
-let annualGrossIncome = function(){
-    if(use_marketplace_health_insurance_bool){
-        return mhc_gross_income
-    }
-    else{
-        return ehc_gross_income
-    }
-};
-
-let annualNetIncome = function(){
-    if(use_marketplace_health_insurance_bool){
-        return mhcNetYearlyIncome()
-    }
-    else{
-        return ehcNetYearlyIncome()
-    }
-};
-
-let annualTotalExpenses = function(){
-    return(annualHousingCosts() + annualChildcareCosts() + annualFoodCosts() + annualCarInsurance() + annualCarOwnership() +
-    annualPublicTransportation() + annualHealthInsurance() + annualOutOfPocketCosts() + annualEntertainmentCosts() + annualMiscellaneousCosts());
-};
 
