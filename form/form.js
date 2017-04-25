@@ -129,7 +129,7 @@ function store_input_data() {
     localStorage.num_preschoolers = $("#number-of-preschoolers").val();
     localStorage.num_schoolagers = $("#number-of-schoolagers").val();
     localStorage.num_teenagers = $("#number-of-teenagers").val();
-    localStorage.estimated_baby_sitting_annual = (parseFloat($("#babysitting-costs").val()) * 12);
+    localStorage.estimated_baby_sitting_annual = parseFloat($("#babysitting-costs").val()) * 12;
     localStorage.use_childcare = $("#child-care-needed").val();
     localStorage.use_family_care = $("#family-care").val();
     localStorage.rooms = $("#number-of-rooms").val();

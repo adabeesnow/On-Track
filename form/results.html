@@ -102,6 +102,13 @@
             text-align: right;
         }
 
+        /* Chrome 29+ */
+        @media print and (-webkit-min-device-pixel-ratio:0)
+        and (min-resolution:.001dpcm) {
+            .chrome-print-fix::first-letter {
+                color: black;
+            }
+        }
     </style>
 
     <script>
@@ -170,11 +177,11 @@
 
             let var_grossHourlyIncome = finalGrossIncomeAnnualHourly();
 //            let var_grossHourlyIncome = var_annualGrossIncome / 2080;
-            $('#gross-income-hourly').text('$' + var_grossHourlyIncome.toLocaleString(undefined, {maximumFractionDigits:2}));
+            $('#gross-income-hourly').text('$' + var_grossHourlyIncome.toFixed(2));
 
             let var_netHourlyIncome = finalNetIncomeAnnualHourly();
 //            let var_netHourlyIncome = var_annualNetIncome / 2080;
-            $('#net-income-hourly').text('$' + var_netHourlyIncome.toLocaleString(undefined, {maximumFractionDigits:2}));
+            $('#net-income-hourly').text('$' + var_netHourlyIncome.toFixed(2));
 
 
             console.log('Net Hourly Income:', var_netHourlyIncome);
@@ -308,10 +315,10 @@
     </div>
     <div class="row total-monthly-expenses">
         <div class="col-12">
-            <h3>Total Monthly Expenses</h3>
+            <h3 class="chrome-print-fix">Total Monthly Expenses</h3>
         </div>
         <div class="col-12">
-            <h2 id="total-monthly-expenses">Unknown</h2>
+            <h2 id="total-monthly-expenses" class="chrome-print-fix">Unknown</h2>
         </div>
     </div>
 
@@ -322,7 +329,7 @@
         </div>
         <div class="row col-sm-8 offset-sm-2 col-xs-12">
             <div class="col-xs-12 col-sm-6">
-                <h4>Gross Income</h4>
+                <h4 class="chrome-print-fix">Gross Income</h4>
                 <div class="row">
                     <div class="col-8">Annual</div>
                     <div class="col-4" id="gross-income-annual">Unknown</div>
@@ -335,7 +342,7 @@
             </div>
 
             <div class="col-xs-12 col-sm-6">
-                <h4>Net Income</h4>
+                <h4 class="chrome-print-fix">Net Income</h4>
                 <div class="row">
                     <div class="col-8">Annual</div>
                     <div class="col-4" id="net-income-annual">Unknown</div>
