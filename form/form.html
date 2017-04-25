@@ -108,13 +108,13 @@
                      class="page-title-img"
                      id="housing-page-title">
                 <h3 class="page-title-text">
-                    Housing Situation
+                    Your Housing Situation
                 </h3>
             </div>
             <div class="user-inputs col-xs-12 col-sm-10 offset-sm-1">
                 <div class="user-input">
                     <div class="form-label">
-                        <label for="number-of-rooms">Number of Rooms</label>
+                        <label for="number-of-rooms">Number of Bedrooms Needed</label>
                     </div>
                     <div class="form-input">
                         <select id="number-of-rooms">
@@ -127,13 +127,11 @@
                     </div>
                 </div>
                 <div class="form-description">
-                    The Ogden Living Standard assumes that parents and children do not share bedrooms, but children will
-                    share a room with other children to a maximum of two children per room. If this applies, keep it as
-                    standard. If it doesn't, select the correct number of rooms above.
+                    Based on the study, we show that a household like yours needs the number of bedrooms above.
+                    If you have a reasonable reason for having more or less bedrooms, please
+                    indicate the number here.
                 </div>
-
             </div>
-
             <div class="next-button">
                 <a class="btn btn-filled" href="#"
                    onclick="wizard.steps('next')"
@@ -145,7 +143,6 @@
                    role="menuitem">Previous</a>
             </div>
         </fieldset>
-
         <!--Child Care-->
         <h1>Step</h1>
         <fieldset>
@@ -228,7 +225,7 @@
                 <div class="user-input">
                     <div class="form-label">
                         <label for="marketplace-healthcare">
-                            Use Marketplace healthcare?
+                            Do you have Marketplace (or Obamacare) health insurance?
                         </label>
                     </div>
                     <div class="form-input">
@@ -264,7 +261,13 @@
                 </h3>
             </div>
             <div class="user-inputs col-xs-12 col-sm-10 offset-sm-1">
-
+                <div class="form-description">
+                The standard is based on the typical household, where adults usually have a
+                vehicle that allows them to get to and from work, attend school, do
+                the shopping, transport children, and or to run errands.  If your
+                circumstance is different, please indicate here how many vehicles
+                are needed here:
+                </div>
                 <div class="user-input">
                     <div class="form-label">
                         <label for="cars">Number of Cars</label>
@@ -301,7 +304,10 @@
                 </h3>
             </div>
             <div class="user-inputs col-xs-12 col-sm-10 offset-sm-1">
-
+                <div class="form-description">
+                    If you are using public transportation (the bus),
+                    please indicate the number of adult and child bus passes you require:
+                </div>
                 <div class="user-input">
                     <div class="form-label">
                         <label for="adult-passes">Adult passes</label>
@@ -310,7 +316,6 @@
                         <input id="adult-passes" type="number" value="0" min="0" max="5"/>
                     </div>
                 </div>
-
                 <div class="user-input">
                     <div class="form-label">
                         <label for="child-passes">Child passes</label>
@@ -319,10 +324,7 @@
                         <input id="child-passes" type="number" value="0" min="0" max="5"/>
                     </div>
                 </div>
-
-
             </div>
-
             <div class="next-button">
                 <a class="btn btn-filled" href="#"
                    onclick="wizard.steps('next')"
@@ -334,7 +336,6 @@
                    role="menuitem">Previous</a>
             </div>
         </fieldset>
-
         <!--Completed-->
         <h1>Step</h1>
         <fieldset>
