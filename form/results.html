@@ -106,75 +106,78 @@
 
     <script>
         update_page = function(){
-            use_marketplace_health_insurance_bool = localStorage.use_marketplace_health_insurance_bool;
+            marketplace_healthcare = localStorage.marketplace_healthcare;
 
             get_user_inputs_from_local_storage();
-            let var_annualHousingCosts = annualHousingCosts();
-            console.log(annualHousingCosts());
+
+            for(let i = 0; i < 50; i++){
+                ehc_gross_income = ehcCalculateGrossIncome();
+                mhc_gross_income = mhcCalculateGrossIncome();
+            }
+
+            let var_annualHousingCosts = finalHousingAnnual();
+            console.log(finalHousingAnnual());
             let monthlyHousingCosts = var_annualHousingCosts / 12;
             $('#housing-cost').text('$' + monthlyHousingCosts.toFixed(0));
 
-            let var_annualChildcareCosts = annualChildcareCosts();
+            let var_annualChildcareCosts = finalChildcareAnnual();
             $('#childcare-cost').text('$' + (var_annualChildcareCosts / 12).toFixed(0));
 
-            let var_annualFoodCosts = annualFoodCosts();
+            let var_annualFoodCosts = finalFoodAnnual();
             $('#food-cost').text('$' + (var_annualFoodCosts / 12).toFixed(0));
 
-            let var_annualCarInsurance = annualCarInsurance();
+            let var_annualCarInsurance = finalCarInsuranceAnnual();
             $('#car-insurance-cost').text('$' + (var_annualCarInsurance / 12).toFixed(0));
 
-            let var_annualCarOwnership = annualCarOwnership();
+            let var_annualCarOwnership = finalCarOwnershipAnnual();
             $('#car-ownership-cost').text('$' + (var_annualCarOwnership / 12).toFixed(0));
 
-            let var_annualPublicTransportation = annualPublicTransportation();
+            let var_annualPublicTransportation = finalPublicTransportationAnnual();
             $('#public-transport-cost').text('$' + (var_annualPublicTransportation / 12).toFixed(0));
 
-            let var_annualHealthInsurance = annualHealthInsurance();
+            let var_annualHealthInsurance = finalHealthInsuranceAnnual();
             $('#health-insurance-cost').text('$' + (var_annualHealthInsurance / 12).toFixed(0));
 
-            let var_annualOutOfPocketCosts = annualOutOfPocketCosts();
+            let var_annualOutOfPocketCosts = finalOutOfPocketAnnual();
             $('#out-of-pocket-cost').text('$' + (var_annualOutOfPocketCosts / 12).toFixed(0));
 
-            let var_annualEntertainmentCosts = annualEntertainmentCosts();
+            let var_annualEntertainmentCosts = finalEntertainmentAnnual();
             $('#entertainment-cost').text('$' + (var_annualEntertainmentCosts / 12).toFixed(0));
 
-            let var_annualMiscellaneousCosts = annualMiscellaneousCosts();
+            let var_annualMiscellaneousCosts = finalMiscellaneousAnnual();
             $('#miscellaneous-cost').text('$' + (var_annualMiscellaneousCosts / 12).toFixed(0));
 
-            let var_savingsYearly = savingsYearly();
-            let var_netTaxesYearly = netTaxesYearly();
+            let var_savingsYearly = finalSavingsAnnual();
+            let var_netTaxesYearly = finalNetTaxesAnnual();
 
-            let var_annualGrossIncome;
-            let var_annualNetIncome;
+            let var_annualGrossIncome = finalGrossIncomeAnnual();
+            let var_annualNetIncome = finalNetIncomeAnnual();
 
-            for(let i = 0; i < 50; i++){
-                ehc_gross_income = ehcCalcGross();
-                mhc_gross_income = mhcCalcGross();
-            }
-
-            if (use_marketplace_health_insurance_bool == true) {
-                var_annualGrossIncome = mhc_gross_income;
-                var_annualNetIncome = mhcNetYearlyIncome();
-            }else {
-                var_annualGrossIncome = ehc_gross_income;
-                var_annualNetIncome = ehcNetYearlyIncome();
-            }
+            // vvv this is handled in the final functions ^^^
+//            if (marketplace_healthcare === "Yes") {
+//                var_annualGrossIncome = mhc_gross_income;
+//                var_annualNetIncome = mhcNetYearlyIncome();
+//            }else {
+//                var_annualGrossIncome = ehc_gross_income;
+//                var_annualNetIncome = ehcNetYearlyIncome();
+//            }
             $('#gross-income-annual').text('$' + var_annualGrossIncome.toFixed(0).toLocaleString());
 
-//            let var_annualNetIncome = annualNetIncome();
             $('#net-income-annual').text('$' + var_annualNetIncome.toFixed(0).toLocaleString());
 
-            let var_annualTotalExpenses = annualTotalExpenses();
+            let var_annualTotalExpenses = finalTotalExpensesAnnual();
             $("#total-monthly-expenses").text('$' + (var_annualTotalExpenses / 12).toFixed(2).toLocaleString());
 
-            let var_grossHourlyIncome = var_annualGrossIncome / 2080;
+            let var_grossHourlyIncome = finalGrossIncomeAnnualHourly();
+//            let var_grossHourlyIncome = var_annualGrossIncome / 2080;
             $('#gross-income-hourly').text('$' + var_grossHourlyIncome.toFixed(2));
 
-            let var_netHourlyIncome = var_annualNetIncome / 2080;
+            let var_netHourlyIncome = finalNetIncomeAnnualHourly();
+//            let var_netHourlyIncome = var_annualNetIncome / 2080;
             $('#net-income-hourly').text('$' + var_netHourlyIncome.toFixed(2));
 
 
-            console.log('SUP DAWG', var_netHourlyIncome);
+            console.log('Net Hourly Income:', var_netHourlyIncome);
         };
         $(document).ready(function(){
             update_page();
@@ -196,7 +199,7 @@
                     Housing
                 </div>
                 <div class="col-3" id="housing-cost">
-                    $1000
+                    Unknown
                 </div>
             </div>
             <div class="row expense-category">
@@ -207,7 +210,7 @@
                     Childcare
                 </div>
                 <div class="col-3" id="childcare-cost">
-                    $1000
+                    Unknown
                 </div>
             </div>
             <div class="row expense-category">
@@ -218,7 +221,7 @@
                     Food
                 </div>
                 <div class="col-3" id="food-cost">
-                    $1000
+                    Unknown
                 </div>
             </div>
             <div class="row expense-category">
@@ -229,7 +232,7 @@
                     Car Insurance
                 </div>
                 <div class="col-3" id="car-insurance-cost">
-                    $1000
+                    Unknown
                 </div>
             </div>
             <div class="row expense-category">
@@ -240,7 +243,7 @@
                     Car Ownership
                 </div>
                 <div class="col-3" id="car-ownership-cost">
-                    $1000
+                    Unknown
                 </div>
             </div>
         </div>
@@ -254,7 +257,7 @@
                     Public Transport
                 </div>
                 <div class="col-3" id="public-transport-cost">
-                    $1000
+                    Unknown
                 </div>
             </div>
             <div class="row expense-category">
@@ -265,7 +268,7 @@
                     Health Insurance
                 </div>
                 <div class="col-3" id="health-insurance-cost">
-                    $1000
+                    Unknown
                 </div>
             </div>
             <div class="row expense-category">
@@ -276,7 +279,7 @@
                     Out of Pocket
                 </div>
                 <div class="col-3" id="out-of-pocket-cost">
-                    $1000
+                    Unknown
                 </div>
             </div>
             <div class="row expense-category">
@@ -287,7 +290,7 @@
                     Entertainment
                 </div>
                 <div class="col-3" id="entertainment-cost">
-                    $1000
+                    Unknown
                 </div>
             </div>
             <div class="row expense-category">
@@ -298,7 +301,7 @@
                     Miscellaneous
                 </div>
                 <div class="col-3" id="miscellaneous-cost">
-                    $1000
+                    Unknown
                 </div>
             </div>
         </div>
@@ -308,7 +311,7 @@
             <h3>Total Monthly Expenses</h3>
         </div>
         <div class="col-12">
-            <h2 id="total-monthly-expenses">$1000</h2>
+            <h2 id="total-monthly-expenses">Unknown</h2>
         </div>
     </div>
 
@@ -322,12 +325,12 @@
                 <h4>Gross Income</h4>
                 <div class="row">
                     <div class="col-8">Annual</div>
-                    <div class="col-4" id="gross-income-annual">$1000</div>
+                    <div class="col-4" id="gross-income-annual">Unknown</div>
                 </div>
 
                 <div class="row">
                     <div class="col-8">Hourly</div>
-                    <div class="col-4" id="gross-income-hourly">$1000</div>
+                    <div class="col-4" id="gross-income-hourly">Unknown</div>
                 </div>
             </div>
 
@@ -335,12 +338,12 @@
                 <h4>Net Income</h4>
                 <div class="row">
                     <div class="col-8">Annual</div>
-                    <div class="col-4" id="net-income-annual">$1000</div>
+                    <div class="col-4" id="net-income-annual">Unknown</div>
                 </div>
 
                 <div class="row">
                     <div class="col-8">Hourly</div>
-                    <div class="col-4" id="net-income-hourly">$1000</div>
+                    <div class="col-4" id="net-income-hourly">Unknown</div>
                 </div>
             </div>
 
