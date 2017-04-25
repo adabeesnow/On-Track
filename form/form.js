@@ -99,6 +99,16 @@ const getParams = query => {
 
 console.log("form.js loaded.");
 
+function calculate_input_data(){
+    localStorage.num_adults = $("#number-of-adults").val();
+    localStorage.num_infants = $("#number-of-infants").val();
+    localStorage.num_preschoolers = $("#number-of-preschoolers").val();
+    localStorage.num_schoolagers = $("#number-of-schoolagers").val();
+    localStorage.num_teenagers = $("#number-of-teenagers").val();
+
+    localStorage.cars = localStorage.num_adults;
+}
+
 function store_input_data() {
     localStorage.num_adults = $("#number-of-adults").val();
     localStorage.num_infants = $("#number-of-infants").val();
