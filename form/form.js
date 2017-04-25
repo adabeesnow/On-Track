@@ -18,7 +18,7 @@ $(document).ready(function () {
                 let teenagers = parseInt($("#number-of-teenagers").val());
                 console.log(infants + preschoolers + schoolagers + teenagers);
                 if (adults > 2 || infants + preschoolers + schoolagers + teenagers > 5){
-                    alert("This form is only accurate for families of up to 2 adults and 5 children.")
+                    alert("This form is only accurate for families of up to 2 adults and 5 children.");
                     return false;
                 }
             }
@@ -106,7 +106,21 @@ function calculate_input_data(){
     localStorage.num_schoolagers = $("#number-of-schoolagers").val();
     localStorage.num_teenagers = $("#number-of-teenagers").val();
 
+    // standard = 1 car per adult
     localStorage.cars = localStorage.num_adults;
+
+    // standard = 1 room per adult, and 1 room per 2 kids
+    let num_kids = localStorage.num_infants
+        + localStorage.num_preschoolers
+        + localStorage.num_schoolagers
+        + localStorage.num_teenagers;
+    let num_kid_rooms;
+    // up to 2 kids per room
+    if (num_kids <= 7) { // excel app only takes up to 8 family members
+        num_kid_rooms = Math.ceil(num_kids / 2);
+    } else {num_kid_rooms = 4} // excel app only goes up to 4 rooms
+    // adult bedrooms is always 1 in the excel app
+    localStorage.rooms = (1 + num_kid_rooms);
 }
 
 function store_input_data() {
