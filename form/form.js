@@ -121,6 +121,13 @@ function calculate_input_data(){
     } else {num_kid_rooms = 4} // excel app only goes up to 4 rooms
     // adult bedrooms is always 1 in the excel app
     localStorage.rooms = (1 + num_kid_rooms);
+    localStorage.estimated_baby_sitting_annual = estimated_baby_sitting_annual;
+    localStorage.use_childcare = use_childcare;
+    localStorage.use_family_care = use_family_care;
+    localStorage.marketplace_healthcare = marketplace_healthcare;
+    localStorage.bus_passes_adult = bus_passes_adult;
+    localStorage.bus_passes_child = bus_passes_child;
+    window.location.href = 'results.html';
 }
 
 function store_input_data() {
