@@ -16,9 +16,8 @@ $(document).ready(function () {
                 let preschoolers = parseInt($("#number-of-preschoolers").val());
                 let schoolagers = parseInt($("#number-of-schoolagers").val());
                 let teenagers = parseInt($("#number-of-teenagers").val());
-                console.log(infants + preschoolers + schoolagers + teenagers);
-                if (adults > 2 || infants + preschoolers + schoolagers + teenagers > 5){
-                    alert("This form is only accurate for families of up to 2 adults and 5 children.");
+                if ((adults + infants + preschoolers + schoolagers + teenagers) > 8){
+                    alert("This form is only accurate for families of up to 8 members.");
                     return false;
                 }
             }
@@ -88,12 +87,17 @@ const getParams = query => {
 console.log("form.js loaded.");
 
 function calculate_input_data(){
-    console.log("FIRST THANGYJANGY");
-    localStorage.num_adults = parseInt($("#number-of-adults").val());
-    localStorage.num_infants = parseInt($("#number-of-infants").val());
-    localStorage.num_preschoolers = parseInt($("#number-of-preschoolers").val());
-    localStorage.num_schoolagers = parseInt($("#number-of-schoolagers").val());
-    localStorage.num_teenagers = parseInt($("#number-of-teenagers").val());
+    let adults = parseInt($("#number-of-adults").val());
+    let infants = parseInt($("#number-of-infants").val());
+    let preschoolers = parseInt($("#number-of-preschoolers").val());
+    let schoolagers = parseInt($("#number-of-schoolagers").val());
+    let teenagers = parseInt($("#number-of-teenagers").val());
+
+    localStorage.num_adults = adults;
+    localStorage.num_infants = infants;
+    localStorage.num_preschoolers = preschoolers;
+    localStorage.num_schoolagers = schoolagers;
+    localStorage.num_teenagers = teenagers;
 
     // standard = 1 car per adult
     localStorage.cars = localStorage.num_adults;
@@ -118,7 +122,12 @@ function calculate_input_data(){
     localStorage.marketplace_healthcare = marketplace_healthcare;
     localStorage.bus_passes_adult = bus_passes_adult;
     localStorage.bus_passes_child = bus_passes_child;
-    window.location.href = 'results.html';
+    if ((adults + infants + preschoolers + schoolagers + teenagers ) > 8) {
+        alert("This form is only accurate for families of up to 8 members.");
+        return false;
+    } else {
+        window.location.href = 'results.html';
+    }
 }
 
 function store_input_data() {
