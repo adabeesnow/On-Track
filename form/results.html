@@ -90,6 +90,9 @@
             }
         }
         @media print{
+            .media-print{
+                display: none;
+            }
             .logo-img{
                 display: none;
             }
@@ -235,7 +238,7 @@
             $('#net-income-annual').text('$' + var_annualNetIncome.toLocaleString(undefined, {maximumFractionDigits:0}));
 
             let var_annualTotalExpenses = finalTotalExpensesAnnual();
-            $("#total-monthly-expenses").text('$' + (var_annualTotalExpenses / 12).toLocaleString(undefined, {maximumFractionDigits:0}));
+            $("#total-monthly-expenses").text('$' + ((var_annualTotalExpenses + var_savingsYearly) / 12).toLocaleString(undefined, {maximumFractionDigits:0}));
 
             let var_grossHourlyIncome = finalGrossIncomeAnnualHourly();
 //            let var_grossHourlyIncome = var_annualGrossIncome / 2080;
@@ -308,7 +311,7 @@
                 <div class="col-7">
                        Housing
                     <a class="btn category-result-button btn-primary" href="form.html?page=1"
-                       role="menuitem"> <span class="fa fa-pencil"></span> </a>
+                       role="menuitem"> <span class="fa fa-pencil media-print"></span> </a>
                 </div>
                 <div class="col-3" id="housing-cost">
                     ...
@@ -321,7 +324,7 @@
                 <div class="col-7">
                     Childcare
                     <a class="btn category-result-button btn-primary" href="form.html?page=2"
-                       role="menuitem"> <span class="fa fa-pencil"></span> </a>
+                       role="menuitem"> <span class="fa fa-pencil media-print"></span> </a>
                 </div>
                 <div class="col-3" id="childcare-cost">
                     ...
@@ -329,12 +332,14 @@
             </div>
             <div class="row expense-category">
                 <div class="col-2 category-image">
-                    <img src="../images/cutlery.png" alt="">
+                    <img src="../images/car.png" alt="">
                 </div>
                 <div class="col-7">
-                    Food
+                    Car Ownership
+                    <a class="btn category-result-button btn-primary" href="form.html?page=4"
+                       role="menuitem"> <span class="fa fa-pencil media-print"></span> </a>
                 </div>
-                <div class="col-3" id="food-cost">
+                <div class="col-3" id="car-ownership-cost">
                     ...
                 </div>
             </div>
@@ -351,14 +356,12 @@
             </div>
             <div class="row expense-category">
                 <div class="col-2 category-image">
-                    <img src="../images/car.png" alt="">
+                    <img src="../images/cutlery.png" alt="">
                 </div>
                 <div class="col-7">
-                    Car Ownership
-                    <a class="btn category-result-button btn-primary" href="form.html?page=4"
-                       role="menuitem"> <span class="fa fa-pencil"></span> </a>
+                    Food
                 </div>
-                <div class="col-3" id="car-ownership-cost">
+                <div class="col-3" id="food-cost">
                     ...
                 </div>
             </div>
@@ -371,7 +374,7 @@
                 <div class="col-7">
                     Public Transit
                     <a class="btn category-result-button btn-primary" href="form.html?page=5"
-                                       role="menuitem"> <span class="fa fa-pencil"></span> </a>
+                                       role="menuitem"> <span class="fa fa-pencil media-print"></span> </a>
                 </div>
                 <div class="col-3" id="public-transport-cost">
                     ...
@@ -384,7 +387,7 @@
                 <div class="col-7">
                     Health Care
                     <a class="btn category-result-button btn-primary" href="form.html?page=3"
-                       role="menuitem"> <span class="fa fa-pencil"></span> </a>
+                       role="menuitem"> <span class="fa fa-pencil media-print"></span> </a>
                 </div>
                 <div class="col-3" id="health-insurance-cost">
                     ...
