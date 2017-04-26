@@ -133,6 +133,7 @@ $(document).ready(function () {
                 });
             }
         });
+        $('body').removeClass("hidden");
     }
     else{
         window.location.assign("login.html");
@@ -240,4 +241,27 @@ let change_password = function(){
 logout = function(){
     localStorage.removeItem("token");
     window.location.reload();
+};
+
+let reset_applicable_figures = function(){
+    $.ajax({
+        url: 'http://www.cottagesofhope.org/weberstate/ontrack/scrape/applicable-figures.php',
+        dataType: "json",
+        success: function(response){
+            console.log(response);
+            let count = response.length;
+            let completed = 0;
+            for(let i = 0; i < count; i++){
+                $.ajax({
+                    url: '../api/v1/api.php?endpoint=entry',
+                    beforeSend: beforeSend,
+                    data: JSON.stringify(response[i]),
+                    success: function(response){
+                        completed++;
+                        console.log(completed, ' of ', count);
+                    }
+                })
+            }
+        }
+    })
 };

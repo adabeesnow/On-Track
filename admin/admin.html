@@ -21,13 +21,40 @@
     </style>
     <script src="../js/lib/jquery.steps.js"></script>
 </head>
-<body>
+<body class="hidden">
 <div id="container" class="col-xs-12">
     <div class="row">
         <div class="col-xs-12
                     col-sm-6 col-sm-offset-3
                     col-lg-4 col-lg-offset-4">
             <div class="panel-group" id="categories">
+            </div>
+            <div class="panel panel-default">
+                <a href="#applicable_figures_form" data-toggle="collapse">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            Applicable Figures
+                        </h4>
+                    </div>
+                </a>
+                <div class="panel-collapse collapse" id="applicable_figures_form">
+                    <div class="panel-body">
+                        <form action="#" onsubmit="reset_applicable_figures(); return false;">
+                            Please make sure, if you reset applicable figures using
+                            this, that the new URL you enter looks like
+                            <a href="http://imgur.com/lUCUCrt.png">this image</a>, found (as of April 2017)
+                            <a href="https://www.irs.gov/instructions/i8962/ch02.html">here</a>. If it does not, everything to do with
+                            applicable figures might explode. Or, more likely, the form will simply
+                            not work.
+                            <div class="form-group">
+                                <label for="username">New Applicable Figures URL</label>
+                                <input type="password" class="form-control" name="new-url"
+                                       id="new-url">
+                            </div>
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">

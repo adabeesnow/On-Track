@@ -6,16 +6,21 @@
  * Time: 10:17 AM
  */
 
+ini_set('log_errors', 1);
+ini_set('error_log', 'error.log');
 
-$url = 'https://taxmap.ntis.gov/taxmap/instr/i1040gi-015.htm';
 
 $url = $_GET['url'];
 
+//echo $url;
+
 $output = file_get_contents($url);
+
 
 $dom = new DOMDocument;
 $dom->loadHTML($output);
 $tables = $dom->getElementsByTagName('tbody');
+
 
 $types = [
     'min',
@@ -34,11 +39,15 @@ foreach ($tables as $table) {
 
     if ($table->childNodes->length > 100) {
         $count = 5;
-        foreach ($table->childNodes as $node) {
+        echo '$LENGTH > 100';
+        foreach (iterator_to_array($table->childNodes) as $node) {
             $index = 0;
-            $current_min = str_replace("$", "", $node->childNodes[0]->textContent);
-            foreach ($node->childNodes as $cell) {
+            $initial_node_children = iterator_to_array($node->childNodes);
+            $current_min = str_replace("$", "", $node->childNodes->item(0)->textContent);
+
+            foreach ($initial_node_children as $cell) {
                 if ($index != 0 and $index != 1) {
+                    echo "Emma";
                     $count++;
                     $entry_name = $types[$index] . '_' . $current_min;
                     echo $types[$index];
@@ -49,24 +58,25 @@ foreach ($tables as $table) {
                     echo ' - ';
                     echo str_replace("$", "", $cell->textContent);
                     echo '<br/>';
+                    echo "Megbert";
 
-                    $icarus = 'https://icarus.cs.weber.edu/~tg46219/cottages/api/v1/entry/';
-
+                    $icarus = '../api/v1/api.php?endpoint=entry';
+//
                     $json_data = json_encode(array(
                         "entryId"=>$count,
                         "entryName"=>$entry_name,
                         "entryValue"=>str_replace("$", "", $cell->textContent),
                         "categoryId"=>$index + 5
                     ));
-
+//
                     $curl = curl_init($icarus);
                     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
                     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
                     curl_setopt($curl, CURLOPT_POSTFIELDS, $json_data);
-
-
+//
+//
                     $json_response = curl_exec($curl);
-
+//
                 }
                 $index++;
             }
