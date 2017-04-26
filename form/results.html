@@ -14,7 +14,7 @@
     <!--Local styles-->
     <link rel="stylesheet" href="form.css">
     <!--Local libs-->
-    <script src="../js/lib/jquery.steps.min.js"></script>
+    <script src="../js/lib/jquery.steps.js"></script>
     <script src="../js/lib/jquery.validate.min.js"></script>
     <script src="../js/lib/alphanum.js"></script>
     <script src="../js/lib/goalSeek.js"></script>
@@ -31,6 +31,12 @@
     <script src="../js/user-inputs.js"></script>
 
     <style>
+        .total-monthly-expenses-title  {
+            font-size: 42pt;
+        }
+        .total-monthly-expenses-amount  {
+            font-size: 42pt;
+        }
         .category-image {
             text-align: center;
         }
@@ -102,6 +108,29 @@
             text-align: right;
         }
 
+        #btn-we-can-help {
+            margin-top: 10px;
+        }
+
+        .gross-and-net-labels {
+            font-size: 24pt;
+        }
+
+        .annual-and-net-labels {
+            font-weight: bold;
+        }
+
+        .gross-and-net-amounts {
+            font-size: 16pt;
+        }
+
+        /* Chrome 29+ */
+        @media print and (-webkit-min-device-pixel-ratio:0)
+        and (min-resolution:.001dpcm) {
+            .chrome-print-fix::first-letter {
+                color: #222;
+            }
+        }
     </style>
 
     <script>
@@ -118,34 +147,34 @@
             let var_annualHousingCosts = finalHousingAnnual();
             console.log(finalHousingAnnual());
             let monthlyHousingCosts = var_annualHousingCosts / 12;
-            $('#housing-cost').text('$' + monthlyHousingCosts.toFixed(0));
+            $('#housing-cost').text('$' + monthlyHousingCosts.toLocaleString(undefined, {maximumFractionDigits:0}));
 
             let var_annualChildcareCosts = finalChildcareAnnual();
-            $('#childcare-cost').text('$' + (var_annualChildcareCosts / 12).toFixed(0));
+            $('#childcare-cost').text('$' + (var_annualChildcareCosts / 12).toLocaleString(undefined, {maximumFractionDigits:0}));
 
             let var_annualFoodCosts = finalFoodAnnual();
-            $('#food-cost').text('$' + (var_annualFoodCosts / 12).toFixed(0));
+            $('#food-cost').text('$' + (var_annualFoodCosts / 12).toLocaleString(undefined, {maximumFractionDigits:0}));
 
             let var_annualCarInsurance = finalCarInsuranceAnnual();
-            $('#car-insurance-cost').text('$' + (var_annualCarInsurance / 12).toFixed(0));
+            $('#car-insurance-cost').text('$' + (var_annualCarInsurance / 12).toLocaleString(undefined, {maximumFractionDigits:0}));
 
             let var_annualCarOwnership = finalCarOwnershipAnnual();
-            $('#car-ownership-cost').text('$' + (var_annualCarOwnership / 12).toFixed(0));
+            $('#car-ownership-cost').text('$' + (var_annualCarOwnership / 12).toLocaleString(undefined, {maximumFractionDigits:0}));
 
             let var_annualPublicTransportation = finalPublicTransportationAnnual();
-            $('#public-transport-cost').text('$' + (var_annualPublicTransportation / 12).toFixed(0));
+            $('#public-transport-cost').text('$' + (var_annualPublicTransportation / 12).toLocaleString(undefined, {maximumFractionDigits:0}));
 
             let var_annualHealthInsurance = finalHealthInsuranceAnnual();
-            $('#health-insurance-cost').text('$' + (var_annualHealthInsurance / 12).toFixed(0));
+            $('#health-insurance-cost').text('$' + (var_annualHealthInsurance / 12).toLocaleString(undefined, {maximumFractionDigits:0}));
 
             let var_annualOutOfPocketCosts = finalOutOfPocketAnnual();
-            $('#out-of-pocket-cost').text('$' + (var_annualOutOfPocketCosts / 12).toFixed(0));
+            $('#out-of-pocket-cost').text('$' + (var_annualOutOfPocketCosts / 12).toLocaleString(undefined, {maximumFractionDigits:0}));
 
             let var_annualEntertainmentCosts = finalEntertainmentAnnual();
-            $('#entertainment-cost').text('$' + (var_annualEntertainmentCosts / 12).toFixed(0));
+            $('#entertainment-cost').text('$' + (var_annualEntertainmentCosts / 12).toLocaleString(undefined, {maximumFractionDigits:0}));
 
             let var_annualMiscellaneousCosts = finalMiscellaneousAnnual();
-            $('#miscellaneous-cost').text('$' + (var_annualMiscellaneousCosts / 12).toFixed(0));
+            $('#miscellaneous-cost').text('$' + (var_annualMiscellaneousCosts / 12).toLocaleString(undefined, {maximumFractionDigits:0}));
 
             let var_savingsYearly = finalSavingsAnnual();
             let var_netTaxesYearly = finalNetTaxesAnnual();
@@ -161,12 +190,12 @@
 //                var_annualGrossIncome = ehc_gross_income;
 //                var_annualNetIncome = ehcNetYearlyIncome();
 //            }
-            $('#gross-income-annual').text('$' + var_annualGrossIncome.toFixed(0).toLocaleString());
+            $('#gross-income-annual').text('$' + var_annualGrossIncome.toLocaleString(undefined, {maximumFractionDigits:0}));
 
-            $('#net-income-annual').text('$' + var_annualNetIncome.toFixed(0).toLocaleString());
+            $('#net-income-annual').text('$' + var_annualNetIncome.toLocaleString(undefined, {maximumFractionDigits:0}));
 
             let var_annualTotalExpenses = finalTotalExpensesAnnual();
-            $("#total-monthly-expenses").text('$' + (var_annualTotalExpenses / 12).toFixed(2).toLocaleString());
+            $("#total-monthly-expenses").text('$' + (var_annualTotalExpenses / 12).toLocaleString(undefined, {maximumFractionDigits:0}));
 
             let var_grossHourlyIncome = finalGrossIncomeAnnualHourly();
 //            let var_grossHourlyIncome = var_annualGrossIncome / 2080;
@@ -185,12 +214,53 @@
     </script>
 </head>
 <body>
-
 <div class="col-12">
+    <div class="col-12 logo-div">
+        <img src="../images/piggy-bank.png" alt="" class="logo-img">
+    </div>
+    <div class="row total-monthly-expenses">
+        <div class="col-12">
+            <h3 class="total-monthly-expenses-title chrome-print-fix">Total Monthly Expenses</h3>
+        </div>
+        <div class="col-12">
+            <h2 id="total-monthly-expenses" class="total-monthly-expenses-amount chrome-print-fix">...</h2>
+        </div>
+    </div>
+    <div class="row income-results">
+        <div class="row col-sm-8 offset-sm-3 col-xs-12">
+            <div class="col-xs-12 col-sm-4">
+                <h4 class="gross-and-net-labels chrome-print-fix">Gross Income</h4>
+                <div class="row">
+                    <div class="annual-and-net-labels gross-and-net-amounts offset-2 col-6">Annual</div>
+                    <div class="gross-and-net-amounts pull-2 col-4" id="gross-income-annual">...</div>
+                </div>
+
+                <div class="row">
+                    <div class="annual-and-net-labels gross-and-net-amounts offset-2 col-6">Hourly</div>
+                    <div class="gross-and-net-amounts pull-2 col-4" id="gross-income-hourly">...</div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4 offset-sm-1">
+                <h4 class="gross-and-net-labels chrome-print-fix">Net Income</h4>
+                <div class="row">
+                    <div class="annual-and-net-labels gross-and-net-amounts offset-2 col-6">Annual</div>
+                    <div class="gross-and-net-amounts pull-2 col-4" id="net-income-annual">...</div>
+                </div>
+
+                <div class="row">
+                    <div class="annual-and-net-labels gross-and-net-amounts offset-2 col-6">Hourly</div>
+                    <div class="gross-and-net-amounts pull-2 col-4" id="net-income-hourly">...</div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
     <div class="row results-categories">
 
 
-        <div class="col-xs-12 col-sm-6">
+        <div class="col-xs-12 col-sm-4 offset-sm-2">
             <div class="row expense-category">
                 <div class="col-2 category-image">
                     <img src="../images/house.png" alt="">
@@ -199,7 +269,7 @@
                     Housing
                 </div>
                 <div class="col-3" id="housing-cost">
-                    Unknown
+                    ...
                 </div>
             </div>
             <div class="row expense-category">
@@ -210,7 +280,7 @@
                     Childcare
                 </div>
                 <div class="col-3" id="childcare-cost">
-                    Unknown
+                    ...
                 </div>
             </div>
             <div class="row expense-category">
@@ -221,7 +291,7 @@
                     Food
                 </div>
                 <div class="col-3" id="food-cost">
-                    Unknown
+                    ...
                 </div>
             </div>
             <div class="row expense-category">
@@ -232,7 +302,7 @@
                     Car Insurance
                 </div>
                 <div class="col-3" id="car-insurance-cost">
-                    Unknown
+                    ...
                 </div>
             </div>
             <div class="row expense-category">
@@ -243,12 +313,11 @@
                     Car Ownership
                 </div>
                 <div class="col-3" id="car-ownership-cost">
-                    Unknown
+                    ...
                 </div>
             </div>
         </div>
-
-        <div class="col-xs-12 col-sm-6">
+        <div class="col-xs-12 col-sm-4">
             <div class="row expense-category">
                 <div class="col-2 category-image">
                     <img src="../images/train.png" alt="">
@@ -257,7 +326,7 @@
                     Public Transport
                 </div>
                 <div class="col-3" id="public-transport-cost">
-                    Unknown
+                    ...
                 </div>
             </div>
             <div class="row expense-category">
@@ -268,7 +337,7 @@
                     Health Insurance
                 </div>
                 <div class="col-3" id="health-insurance-cost">
-                    Unknown
+                    ...
                 </div>
             </div>
             <div class="row expense-category">
@@ -279,7 +348,7 @@
                     Out of Pocket
                 </div>
                 <div class="col-3" id="out-of-pocket-cost">
-                    Unknown
+                    ...
                 </div>
             </div>
             <div class="row expense-category">
@@ -290,7 +359,7 @@
                     Entertainment
                 </div>
                 <div class="col-3" id="entertainment-cost">
-                    Unknown
+                    ...
                 </div>
             </div>
             <div class="row expense-category">
@@ -301,61 +370,22 @@
                     Miscellaneous
                 </div>
                 <div class="col-3" id="miscellaneous-cost">
-                    Unknown
+                    ...
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row total-monthly-expenses">
-        <div class="col-12">
-            <h3>Total Monthly Expenses</h3>
-        </div>
-        <div class="col-12">
-            <h2 id="total-monthly-expenses">Unknown</h2>
-        </div>
-    </div>
-
-    <div class="row income-results">
-
-        <div class="col-12 logo-div">
-            <img src="../images/piggy-bank.png" alt="" class="logo-img">
-        </div>
-        <div class="row col-sm-8 offset-sm-2 col-xs-12">
-            <div class="col-xs-12 col-sm-6">
-                <h4>Gross Income</h4>
-                <div class="row">
-                    <div class="col-8">Annual</div>
-                    <div class="col-4" id="gross-income-annual">Unknown</div>
-                </div>
-
-                <div class="row">
-                    <div class="col-8">Hourly</div>
-                    <div class="col-4" id="gross-income-hourly">Unknown</div>
-                </div>
-            </div>
-
-            <div class="col-xs-12 col-sm-6">
-                <h4>Net Income</h4>
-                <div class="row">
-                    <div class="col-8">Annual</div>
-                    <div class="col-4" id="net-income-annual">Unknown</div>
-                </div>
-
-                <div class="row">
-                    <div class="col-8">Hourly</div>
-                    <div class="col-4" id="net-income-hourly">Unknown</div>
-                </div>
-            </div>
-
-        </div>
-
     </div>
 
     <div class="row we-can-help">
         <div class="col-sm-4 offset-sm-4 col-xs-12">
-            Are you making less than this?
-            <div class="btn btn-empty">
+            Are you making less than this?<br/>
+            <div class="btn btn-empty" id="btn-we-can-help">
                 We can help!
+            </div>
+            <div id="study-description"><br/>
+                The study was designed to calculate the typical costs related to the size and makeup of your household. In some cases, the
+                assumptions made might not represents your household’s actual situation, so we have allowed for adjustments in a few
+                categories. The following pages will walk you through these options.
             </div>
         </div>
     </div>
