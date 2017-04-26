@@ -11,6 +11,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
     <!--Local styles-->
     <link rel="stylesheet" href="form.css">
     <!--Local libs-->
@@ -125,6 +127,10 @@
             border: #64BA89 2px solid;
             color: #64BA89;
         }
+        a.btn.btn-primary{
+            border: 0;
+            background: #64BA89;
+        }
 
         #gross-income-annual,
         #gross-income-hourly,
@@ -150,7 +156,7 @@
         }
 
         .category-result-button {
-            margin-bottom: 10px;
+            float: right;
         }
 
         /* Chrome 29+ */
@@ -300,8 +306,9 @@
                     <img src="../images/house.png" alt="">
                 </div>
                 <div class="col-7">
-                    <a class="btn btn-filled category-result-button" href="form.html?page=1"
-                       role="menuitem">Housing</a>
+                       Housing
+                    <a class="btn category-result-button btn-primary" href="form.html?page=1"
+                       role="menuitem"> <span class="fa fa-pencil"></span> </a>
                 </div>
                 <div class="col-3" id="housing-cost">
                     ...
@@ -312,8 +319,9 @@
                     <img src="../images/parambulator.png" alt="">
                 </div>
                 <div class="col-7">
-                    <a class="btn btn-filled category-result-button" href="form.html?page=2"
-                       role="menuitem">Childcare</a>
+                    Childcare
+                    <a class="btn category-result-button btn-primary" href="form.html?page=2"
+                       role="menuitem"> <span class="fa fa-pencil"></span> </a>
                 </div>
                 <div class="col-3" id="childcare-cost">
                     ...
@@ -346,8 +354,9 @@
                     <img src="../images/car.png" alt="">
                 </div>
                 <div class="col-7">
-                    <a class="btn btn-filled category-result-button" href="form.html?page=4"
-                       role="menuitem">Car Ownership</a>
+                    Car Ownership
+                    <a class="btn category-result-button btn-primary" href="form.html?page=4"
+                       role="menuitem"> <span class="fa fa-pencil"></span> </a>
                 </div>
                 <div class="col-3" id="car-ownership-cost">
                     ...
@@ -360,8 +369,9 @@
                     <img src="../images/train.png" alt="">
                 </div>
                 <div class="col-7">
-                    <a class="btn btn-filled category-result-button" href="form.html?page=5"
-                       role="menuitem">Public Transport</a>
+                    Public Transit
+                    <a class="btn category-result-button btn-primary" href="form.html?page=5"
+                                       role="menuitem"> <span class="fa fa-pencil"></span> </a>
                 </div>
                 <div class="col-3" id="public-transport-cost">
                     ...
@@ -372,8 +382,9 @@
                     <img src="../images/healthcare.png" alt="">
                 </div>
                 <div class="col-7">
-                    Health Insurance<span class="glyphicon glyphicon-pencil"></span><a class="btn category-result-button btn-primary" href="form.html?page=3"
-                       role="menuitem"></a>
+                    Health Care
+                    <a class="btn category-result-button btn-primary" href="form.html?page=3"
+                       role="menuitem"> <span class="fa fa-pencil"></span> </a>
                 </div>
                 <div class="col-3" id="health-insurance-cost">
                     ...
