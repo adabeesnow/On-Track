@@ -43,21 +43,6 @@ $(document).ready(function () {
     const ACTIVE_COLOR = '#64BA89';
     let active_images;
 
-    active_images = document.getElementsByClassName("active-img");
-    for (let i = 0; i < active_images.length; i++) {
-        active_images[i].addEventListener("load", function () {
-            console.log("loaded");
-            let svg = active_images[i].getSVGDocument();
-            console.log(svg);
-            let paths = svg.getElementsByTagName("path");
-            console.log(paths);
-            console.log(paths.length);
-            for (let j = 0; j < paths.length; j++) {
-                paths[j].setAttribute("fill", ACTIVE_COLOR);
-            }
-        });
-    }
-
     qs = (function(a) {
         if (a == "") return {};
         let b = {};
@@ -78,6 +63,9 @@ $(document).ready(function () {
     }
 
 
+    if(localStorage.getItem('num_adults')){
+        $("#page-one-next").removeClass("hidden");
+    }
 
 
     fill_inputs();
@@ -181,7 +169,8 @@ fill_inputs = function(){
         console.log("num rooms", localStorage.getItem("rooms"));
     }
     if(localStorage.getItem("marketplace_healthcare")){
-        $("#marketplace-healthcare").val(parseInt(localStorage.getItem("marketplace_healthcare")));
+        $("#marketplace-healthcare").find("option[value='" + localStorage.getItem("marketplace_healthcare") + "']").attr("selected", true);
+        // $("#marketplace-healthcare").val(localStorage.getItem("marketplace_healthcare"));
     }
     if(localStorage.getItem("cars")){
         $("#cars").val(parseInt(localStorage.getItem("cars")));
