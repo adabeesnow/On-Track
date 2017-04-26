@@ -220,7 +220,11 @@
             $('#miscellaneous-cost').text('$' + (var_annualMiscellaneousCosts / 12).toLocaleString(undefined, {maximumFractionDigits:0}));
 
             let var_savingsYearly = finalSavingsAnnual();
+            $('#final-savings-yearly').text('$' + (var_savingsYearly / 12).toLocaleString(undefined, {maximumFractionDigits:0}));
+
             let var_netTaxesYearly = finalNetTaxesAnnual();
+            $('#net-taxes-yearly').text('$' + (var_netTaxesYearly).toLocaleString(undefined, {maximumFractionDigits:0}));
+
 
             let var_annualGrossIncome = finalGrossIncomeAnnual();
             let var_annualNetIncome = finalNetIncomeAnnual();
@@ -244,12 +248,14 @@
 //            let var_grossHourlyIncome = var_annualGrossIncome / 2080;
             $('#gross-income-hourly').text('$' + var_grossHourlyIncome.toFixed(2));
 
+
+
             let var_netHourlyIncome = finalNetIncomeAnnualHourly();
 //            let var_netHourlyIncome = var_annualNetIncome / 2080;
             $('#net-income-hourly').text('$' + var_netHourlyIncome.toFixed(2));
 
 
-            console.log('Net Hourly Income:', var_netHourlyIncome);
+//            console.log('Net Hourly Income:', var_netHourlyIncome);
         };
         $(document).ready(function(){
             update_page();
@@ -271,7 +277,7 @@
     </div>
     <div class="row income-results">
         <div class="row col-sm-8 offset-sm-3 col-xs-12">
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-12 col-sm-3">
                 <h4 class="gross-and-net-labels chrome-print-fix">Gross Income</h4>
                 <div class="row">
                     <div class="annual-and-net-labels gross-and-net-amounts offset-2 col-6">Annual</div>
@@ -284,7 +290,15 @@
                 </div>
             </div>
 
-            <div class="col-xs-12 col-sm-4 offset-sm-1">
+            <div class="col-xs-12 col-sm-3">
+                <h4 class="gross-and-net-labels chrome-print-fix">Net Taxes</h4>
+                <div class="row">
+                    <div class="annual-and-net-labels gross-and-net-amounts offset-2 col-6">Annual</div>
+                    <div class="gross-and-net-amounts pull-2 col-4" id="net-taxes-yearly">...</div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-3">
                 <h4 class="gross-and-net-labels chrome-print-fix">Net Income</h4>
                 <div class="row">
                     <div class="annual-and-net-labels gross-and-net-amounts offset-2 col-6">Annual</div>
@@ -423,6 +437,19 @@
                     Miscellaneous
                 </div>
                 <div class="col-3" id="miscellaneous-cost">
+                    ...
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 offset-sm-4">
+            <div class="row expense-category">
+                <div class="col-2 category-image">
+                    <img src="../images/misc.png" alt="">
+                </div>
+                <div class="col-7">
+                    Savings
+                </div>
+                <div class="col-3" id="final-savings-yearly">
                     ...
                 </div>
             </div>
