@@ -77,8 +77,26 @@
 
         @media screen and (max-width:1400px){
             .logo-img{
+                max-width:150px;
+                max-height: 150px;
+            }
+        }
+        @media screen and (max-width: 768px){
+            .logo-img{
                 max-width:100px;
                 max-height: 100px;
+            }
+        }
+        @media print{
+            .logo-img{
+                display: none;
+            }
+            body{
+                transform: scale(.65);
+                margin-top: -325px;
+            }
+            .we-can-help{
+                margin: 0;
             }
         }
         .income-results h4{
