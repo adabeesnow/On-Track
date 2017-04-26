@@ -81,12 +81,13 @@ const getParams = query => {
 
 console.log("form.js loaded.");
 
-function verifyInputsAndStepNext() {
-    let adults;
-    let infants;
-    let preschoolers;
-    let schoolagers;
-    let teenagers;
+let adults;
+let infants;
+let preschoolers;
+let schoolagers;
+let teenagers;
+
+function verifyInputs(){
     if ($("#number-of-adults").val() == "") {
         adults = 1;
     } else {
@@ -154,6 +155,9 @@ function verifyInputsAndStepNext() {
     localStorage.marketplace_healthcare = marketplace_healthcare;
     localStorage.bus_passes_adult = bus_passes_adult;
     localStorage.bus_passes_child = bus_passes_child;
+
+}
+function verifyInputsAndStepNext() {
     if ((adults + infants + preschoolers + schoolagers + teenagers ) > 8) {
         alert("This form is only accurate for families of up to 8 members.");
         return false;
@@ -246,19 +250,7 @@ function calculate_input_data() {
 }
 
 function store_input_data() {
-    localStorage.num_adults = $("#number-of-adults").val();
-    localStorage.num_infants = $("#number-of-infants").val();
-    localStorage.num_preschoolers = $("#number-of-preschoolers").val();
-    localStorage.num_schoolagers = $("#number-of-schoolagers").val();
-    localStorage.num_teenagers = $("#number-of-teenagers").val();
-    localStorage.estimated_baby_sitting_annual = parseFloat($("#babysitting-costs").val()) * 12;
-    localStorage.use_childcare = $("#child-care-needed").val();
-    localStorage.use_family_care = $("#family-care").val();
-    localStorage.rooms = $("#number-of-rooms").val();
-    localStorage.marketplace_healthcare = $("#marketplace-healthcare").val();
-    localStorage.cars = $("#cars").val();
-    localStorage.bus_passes_adult = $("#adult-passes").val();
-    localStorage.bus_passes_child = $("#child-passes").val();
+    verifyInputs();
     window.location.href = 'results.html';
 }
 
