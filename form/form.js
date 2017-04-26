@@ -10,13 +10,13 @@ $(document).ready(function () {
         transitionEffect: "slideLeft",
         onStepChanging: function (e, currentIndex, newIndex) {
             console.log("Indices", currentIndex, newIndex);
-            if (currentIndex == 0) {
+            if (currentIndex == 0){
                 let adults = parseInt($("#number-of-adults").val());
                 let infants = parseInt($("#number-of-infants").val());
                 let preschoolers = parseInt($("#number-of-preschoolers").val());
                 let schoolagers = parseInt($("#number-of-schoolagers").val());
                 let teenagers = parseInt($("#number-of-teenagers").val());
-                if ((adults + infants + preschoolers + schoolagers + teenagers) > 8) {
+                if ((adults + infants + preschoolers + schoolagers + teenagers) > 8){
                     alert("This form is only accurate for families of up to 8 members.");
                     return false;
                 }
@@ -26,8 +26,12 @@ $(document).ready(function () {
     });
 
     let fv = multiphase.validate({
-        rules: {},
-        messages: {},
+        rules: {
+
+        },
+        messages: {
+
+        },
         errorLabelContainer: "#error-messages",
         errorElement: "div",
         errorClass: "alert alert-danger"
@@ -38,11 +42,12 @@ $(document).ready(function () {
     const ACTIVE_COLOR = '#64BA89';
     let active_images;
 
-    qs = (function (a) {
+    qs = (function(a) {
         if (a == "") return {};
         let b = {};
-        for (let i = 0; i < a.length; ++i) {
-            let p = a[i].split('=', 2);
+        for (let i = 0; i < a.length; ++i)
+        {
+            let p=a[i].split('=', 2);
             if (p.length == 1)
                 b[p[0]] = "";
             else
@@ -52,12 +57,12 @@ $(document).ready(function () {
     })(window.location.search.substr(1).split('&'));
 
 
-    if (qs['page']) {
+    if(qs['page']){
         wizard.steps("setStep", parseInt(qs['page']));
     }
 
 
-    if (localStorage.getItem('num_adults')) {
+    if(localStorage.getItem('num_adults')){
         $("#page-one-next").removeClass("hidden");
     }
 
@@ -67,16 +72,16 @@ $(document).ready(function () {
 
 const getParams = query => {
     if (!query) {
-        return {};
+        return { };
     }
 
     return (/^[?#]/.test(query) ? query.slice(1) : query)
         .split('&')
         .reduce((params, param) => {
-            let [key, value] = param.split('=');
+            let [ key, value ] = param.split('=');
             params[key] = value ? decodeURIComponent(value.replace(/\+/g, ' ')) : '';
             return params;
-        }, {});
+        }, { });
 };
 
 console.log("form.js loaded.");
@@ -204,6 +209,12 @@ function calculate_input_data() {
     // let preschoolers = parseInt($("#number-of-preschoolers").val());
     // let schoolagers = parseInt($("#number-of-schoolagers").val());
     // let teenagers = parseInt($("#number-of-teenagers").val());
+function calculate_input_data(){
+    let adults = parseInt($("#number-of-adults").val());
+    let infants = parseInt($("#number-of-infants").val());
+    let preschoolers = parseInt($("#number-of-preschoolers").val());
+    let schoolagers = parseInt($("#number-of-schoolagers").val());
+    let teenagers = parseInt($("#number-of-teenagers").val());
 
     localStorage.num_adults = adults;
     localStorage.num_infants = infants;
@@ -224,19 +235,12 @@ function calculate_input_data() {
     // up to 2 kids per room
     if (num_kids <= 6) { // excel app only takes up to 8 family members
         num_kid_rooms = Math.ceil(num_kids / 2);
-    } else {
-        num_kid_rooms = 3
-    } // excel app only goes up to 4 rooms
+    } else {num_kid_rooms = 3} // excel app only goes up to 4 rooms
     console.log("num kid rooms", num_kid_rooms);
     // adult bedrooms is always 1 in the excel app
     localStorage.rooms = (1 + num_kid_rooms);
     localStorage.estimated_baby_sitting_annual = estimated_baby_sitting_annual;
-    if (infants + preschoolers + schoolagers + teenagers > 0) {
-        localStorage.use_childcare = "Yes";
-    } else {
-        localStorage.use_childcare = "No";
-    }
-
+    localStorage.use_childcare = use_childcare;
     localStorage.use_family_care = use_family_care;
     localStorage.marketplace_healthcare = marketplace_healthcare;
     localStorage.bus_passes_adult = bus_passes_adult;
@@ -254,47 +258,47 @@ function store_input_data() {
     window.location.href = 'results.html';
 }
 
-fill_inputs = function () {
-    if (localStorage.getItem("num_adults")) {
+fill_inputs = function(){
+    if(localStorage.getItem("num_adults")){
         $("#number-of-adults").val(parseInt(localStorage.getItem("num_adults")));
         console.log("number of adults", localStorage.getItem("num_adults"));
     }
-    if (localStorage.getItem("num_infants")) {
+    if(localStorage.getItem("num_infants")){
         $("#number-of-infants").val(parseInt(localStorage.getItem("num_infants")));
     }
-    if (localStorage.getItem("num_preschoolers")) {
+    if(localStorage.getItem("num_preschoolers")){
         $("#number-of-preschoolers").val(parseInt(localStorage.getItem("num_preschoolers")));
     }
-    if (localStorage.getItem("num_schoolagers")) {
+    if(localStorage.getItem("num_schoolagers")){
         $("#number-of-schoolagers").val(parseInt(localStorage.getItem("num_schoolagers")));
     }
-    if (localStorage.getItem("num_teenagers")) {
+    if(localStorage.getItem("num_teenagers")){
         $("#number-of-teenagers").val(parseInt(localStorage.getItem("num_teenagers")));
     }
-    if (localStorage.getItem("estimated_baby_sitting_annual")) {
-        $("#babysitting-costs").val(localStorage.getItem("estimated_baby_sitting_annual"));
+    if(localStorage.getItem("estimated_baby_sitting_annual")){
+        $("#babysitting-costs").val(localStorage.getItem("estimated_baby_sitting_annual") / 12);
     }
-    if (localStorage.getItem("use_childcare")) {
+    if(localStorage.getItem("use_childcare")){
         $("#child-care-needed").val(localStorage.getItem("use_childcare"));
     }
-    if (localStorage.getItem("use_family_care")) {
+    if(localStorage.getItem("use_family_care")){
         $("#family-care").val(localStorage.getItem("use_family_care"));
     }
-    if (localStorage.getItem("rooms")) {
+    if(localStorage.getItem("rooms")){
         $("#number-of-rooms").val(parseInt(localStorage.getItem("rooms")));
         console.log("num rooms", localStorage.getItem("rooms"));
     }
-    if (localStorage.getItem("marketplace_healthcare")) {
+    if(localStorage.getItem("marketplace_healthcare")){
         $("#marketplace-healthcare").find("option[value='" + localStorage.getItem("marketplace_healthcare") + "']").attr("selected", true);
         // $("#marketplace-healthcare").val(localStorage.getItem("marketplace_healthcare"));
     }
-    if (localStorage.getItem("cars")) {
+    if(localStorage.getItem("cars")){
         $("#cars").val(parseInt(localStorage.getItem("cars")));
     }
-    if (localStorage.getItem("bus_passes_adult")) {
+    if(localStorage.getItem("bus_passes_adult")){
         $("#adult-passes").val(parseInt(localStorage.getItem("bus_passes_adult")));
     }
-    if (localStorage.getItem("bus_passes_child")) {
+    if(localStorage.getItem("bus_passes_child")){
         $("#child-passes").val(parseInt(localStorage.getItem("bus_passes_child")));
     }
 };
