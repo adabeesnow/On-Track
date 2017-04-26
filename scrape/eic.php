@@ -47,7 +47,6 @@ foreach ($tables as $table) {
 
             foreach ($initial_node_children as $cell) {
                 if ($index != 0 and $index != 1) {
-                    echo "Emma";
                     $count++;
                     $entry_name = $types[$index] . '_' . $current_min;
                     echo $types[$index];
@@ -58,7 +57,6 @@ foreach ($tables as $table) {
                     echo ' - ';
                     echo str_replace("$", "", $cell->textContent);
                     echo '<br/>';
-                    echo "Megbert";
 
                     $icarus = '../api/v1/api.php?endpoint=entry';
 //

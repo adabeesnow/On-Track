@@ -48,10 +48,43 @@
                             not work.
                             <div class="form-group">
                                 <label for="username">New Applicable Figures URL</label>
-                                <input type="password" class="form-control" name="new-url"
+                                <input type="text" class="form-control" name="new-url"
                                        id="new-url">
                             </div>
+                            <div class="hidden" id="a-f-progress">
+                                &nbsp;
+                            </div>
                             <button type="submit" class="btn btn-success">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <a href="#eic-form" data-toggle="collapse">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            Earned Income Tax Credit
+                        </h4>
+                    </div>
+                </a>
+                <div class="panel-collapse collapse" id="eic-form">
+                    <div class="panel-body">
+                        <form action="#" onsubmit="reset_eic(); return false;">
+                            Please make sure, if you reset EITC using
+                            this, that the new URL you enter looks like
+                            <a href="http://imgur.com/0cPK1fA.png">this image</a>, found (as of April 2017)
+                            <a href="https://taxmap.ntis.gov/taxmap/instr/i1040gi-015.htm">here</a>. If it does not, everything to do with
+                            EITC might explode. Or, more likely, the form will simply
+                            not work.
+                            <div class="form-group">
+                                <label for="username">New EITC URL</label>
+                                <input type="text" class="form-control" name="new-url"
+                                       id="new-eic-url">
+                            </div>
+                            <div class="hidden" id="eic-progress">
+                                &nbsp;
+                            </div>
+                            <button type="submit" id="eic-submit" class="btn btn-success">Submit</button>
                         </form>
                     </div>
                 </div>

@@ -145,7 +145,6 @@ let beforeSend = function(request){
         "Authorization",
         "Bearer " + localStorage.getItem("token")
     );
-    console.log("BEFORE SEND");
 };
 
 let update_display_name = function () {
@@ -245,9 +244,11 @@ logout = function(){
 
 let reset_applicable_figures = function(){
     $.ajax({
-        url: 'http://www.cottagesofhope.org/weberstate/ontrack/scrape/applicable-figures.php',
+        url: 'http://www.cottagesofhope.org/weberstate/ontrack/scrape/applicable-figures.php?url=' + $("#new-url").val(),
         dataType: "json",
         success: function(response){
+            let progress = $("#a-f-progress");
+            progress.removeClass("hidden");
             console.log(response);
             let count = response.length;
             let completed = 0;
@@ -258,10 +259,25 @@ let reset_applicable_figures = function(){
                     data: JSON.stringify(response[i]),
                     success: function(response){
                         completed++;
-                        console.log(completed, ' of ', count);
+                        progress.text(completed.toString() + ' of ' + count.toString());
                     }
                 })
             }
         }
     })
+};
+
+let reset_eic = function(){
+    let progress = $("#eic-progress");
+    $.ajax({
+        url: 'http://www.cottagesofhope.org/weberstate/ontrack/scrape/eic.php?url=' + $("#new-eic-url").val(),
+        success: function(response){
+            progress.text("Completed.")
+        },
+        error: function(response){
+            progress.text("There was an error. If this was unexpected and you need this done, please email Tanner Griffin at tanner.w.griffin@gmail.com for help.");
+        }
+    });
+    $("#eic-submit").attr("disabled", "disabled");
+    progress.text("It should be working now. Please wait about 5 minutes. This is a really long and dumb process but it should work given time.")
 };
