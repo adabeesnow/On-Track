@@ -370,11 +370,6 @@ input.alert{
     width: 100%;
 }
 
-
-
-
-
-
 /*Show the number buttons all the time to make it seem more centered*/
 input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {

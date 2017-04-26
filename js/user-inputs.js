@@ -34,16 +34,16 @@ function get_user_inputs_from_local_storage(){
         estimated_baby_sitting_annual = parseFloat(localStorage.getItem("estimated_baby_sitting_annual"));
         use_childcare = localStorage.getItem("use_childcare");
         use_family_care = localStorage.getItem("use_family_care");
-        rooms = localStorage.getItem("rooms");
-        if (rooms === "Standard"){
-            let children = numKids();
-            let adults = numAdults();
-            rooms = Math.ceil(adults / 2) + Math.ceil(children / 2);
-        }
+        rooms = parseInt(localStorage.getItem("rooms"));
+        // if (rooms === "Standard"){
+        //     let children = numKids();
+        //     let adults = numAdults();
+        //     rooms = Math.ceil(adults / 2) + Math.ceil(children / 2);
+        // }
         marketplace_healthcare = localStorage.getItem("marketplace_healthcare");
-        cars = localStorage.getItem("cars");
-        bus_passes_adult = localStorage.getItem("bus_passes_adult");
-        bus_passes_child = localStorage.getItem("bus_passes_child");
+        cars = parseInt(localStorage.getItem("cars"));
+        bus_passes_adult = parseInt(localStorage.getItem("bus_passes_adult"));
+        bus_passes_child = parseInt(localStorage.getItem("bus_passes_child"));
     }
     else{
         console.log("Form not filled out. Please return to the form page to fill it out.")

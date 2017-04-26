@@ -1,5 +1,6 @@
 // GeneratedStandard	J4
 function finalHousingAnnual() {
+    console.log("roomssssssss", rooms);
     return rooms === "Standard" ? costTotalHousing() :
         rooms === 1 ? housing1BedAverageAnnual() :
             rooms === 2 ? housing2BedAverageAnnual() :

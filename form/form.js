@@ -100,25 +100,28 @@ const getParams = query => {
 console.log("form.js loaded.");
 
 function calculate_input_data(){
-    localStorage.num_adults = $("#number-of-adults").val();
-    localStorage.num_infants = $("#number-of-infants").val();
-    localStorage.num_preschoolers = $("#number-of-preschoolers").val();
-    localStorage.num_schoolagers = $("#number-of-schoolagers").val();
-    localStorage.num_teenagers = $("#number-of-teenagers").val();
+    console.log("FIRST THANGYJANGY");
+    localStorage.num_adults = parseInt($("#number-of-adults").val());
+    localStorage.num_infants = parseInt($("#number-of-infants").val());
+    localStorage.num_preschoolers = parseInt($("#number-of-preschoolers").val());
+    localStorage.num_schoolagers = parseInt($("#number-of-schoolagers").val());
+    localStorage.num_teenagers = parseInt($("#number-of-teenagers").val());
 
     // standard = 1 car per adult
     localStorage.cars = localStorage.num_adults;
 
-    // standard = 1 room per adult, and 1 room per 2 kids
-    let num_kids = localStorage.num_infants
-        + localStorage.num_preschoolers
-        + localStorage.num_schoolagers
-        + localStorage.num_teenagers;
+    // standard = 1 room for all adults, and 1 room per 2 kids
+    let num_kids = parseInt(localStorage.num_infants)
+        + parseInt(localStorage.num_preschoolers)
+        + parseInt(localStorage.num_schoolagers)
+        + parseInt(localStorage.num_teenagers);
+    console.log("num kidsSSSSS", num_kids);
     let num_kid_rooms;
     // up to 2 kids per room
-    if (num_kids <= 7) { // excel app only takes up to 8 family members
+    if (num_kids <= 6) { // excel app only takes up to 8 family members
         num_kid_rooms = Math.ceil(num_kids / 2);
-    } else {num_kid_rooms = 4} // excel app only goes up to 4 rooms
+    } else {num_kid_rooms = 3} // excel app only goes up to 4 rooms
+    console.log("num kid rooms", num_kid_rooms);
     // adult bedrooms is always 1 in the excel app
     localStorage.rooms = (1 + num_kid_rooms);
     localStorage.estimated_baby_sitting_annual = estimated_baby_sitting_annual;
@@ -150,6 +153,7 @@ function store_input_data() {
 fill_inputs = function(){
     if(localStorage.getItem("num_adults")){
         $("#number-of-adults").val(parseInt(localStorage.getItem("num_adults")));
+        console.log("number of adults", localStorage.getItem("num_adults"));
     }
     if(localStorage.getItem("num_infants")){
         $("#number-of-infants").val(parseInt(localStorage.getItem("num_infants")));
@@ -174,6 +178,7 @@ fill_inputs = function(){
     }
     if(localStorage.getItem("rooms")){
         $("#number-of-rooms").val(parseInt(localStorage.getItem("rooms")));
+        console.log("num rooms", localStorage.getItem("rooms"));
     }
     if(localStorage.getItem("marketplace_healthcare")){
         $("#marketplace-healthcare").val(parseInt(localStorage.getItem("marketplace_healthcare")));

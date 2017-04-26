@@ -8,6 +8,7 @@ function housing1BedAverageMonthly() {
 }
 // Housing	K8
 function housing1BedAverageAnnual() {
+    console.log("monthly thangzsssss", housing1BedAverageMonthly());
     return housing1BedAverageMonthly() * 12;
 }
 // Housing	L7

@@ -145,16 +145,21 @@
             marketplace_healthcare = localStorage.marketplace_healthcare;
 
             get_user_inputs_from_local_storage();
-
-            for(let i = 0; i < 50; i++){
-                ehc_gross_income = ehcCalculateGrossIncome();
-                mhc_gross_income = mhcCalculateGrossIncome();
+            if(marketplace_healthcare === 'Yes'){
+                for(let i = 0; i < 50; i++){
+                    mhc_gross_income = mhcCalculateGrossIncome();
+                }
+            } else {
+                for(let i = 0; i < 50; i++){
+                    ehc_gross_income = ehcCalculateGrossIncome();
+                }
             }
 
             let var_annualHousingCosts = finalHousingAnnual();
             console.log(finalHousingAnnual());
-            let monthlyHousingCosts = var_annualHousingCosts / 12;
-            $('#housing-cost').text('$' + monthlyHousingCosts.toLocaleString(undefined, {maximumFractionDigits:0}));
+            console.log("num_adults", localStorage.num_adults);
+//            let monthlyHousingCosts = var_annualHousingCosts / 12;
+            $('#housing-cost').text('$' + (var_annualHousingCosts / 12).toLocaleString(undefined, {maximumFractionDigits:0}));
 
             let var_annualChildcareCosts = finalChildcareAnnual();
             $('#childcare-cost').text('$' + (var_annualChildcareCosts / 12).toLocaleString(undefined, {maximumFractionDigits:0}));
